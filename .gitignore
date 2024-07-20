@@ -1,0 +1,14 @@
+# Ignore the BCI directory in datasets
+datasets/BCI/
+datasets/BCI_short/
+
+# Ignore large saved model files
+saved_models/
+
+# Python ignores
+*.pyc
+__pycache__/
+data/__pycache__/
+models/__pycache__/
+options/__pycache__/
+utils/__pycache__/
