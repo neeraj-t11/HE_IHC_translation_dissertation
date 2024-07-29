@@ -10,6 +10,7 @@ import os
 import cv2
 import numpy as np
 from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
+from torch.cuda.amp import GradScaler, autocast
 
 # Load EfficientNet
 def load_image(file_path):
@@ -106,14 +107,25 @@ def train(model, dataloader, optimizer, criterion, device):
     model.train()
     total_loss = 0
     print("Training started...")
+    # for images, labels in dataloader:
+    #     images, labels = images.to(device), labels.to(device)
+    #     optimizer.zero_grad()
+    #     outputs = model(images)
+    #     loss = criterion(outputs, labels)
+    #     loss.backward()
+    #     optimizer.step()
+    #     total_loss += loss.item()
+
     for images, labels in dataloader:
         images, labels = images.to(device), labels.to(device)
-        optimizer.zero_grad()
-        outputs = model(images)
-        loss = criterion(outputs, labels)
-        loss.backward()
-        optimizer.step()
-        total_loss += loss.item()
+        optimizer.zero_grad()   
+        with autocast():
+            outputs = model(images)
+            loss = criterion(outputs, labels)
+        
+        scaler.scale(loss).backward()
+        scaler.step(optimizer)
+        scaler.update()
         
     torch.save(model, "./saved_models/efficientnet_b7")
     print(f"Training finished. Loss: {total_loss / len(dataloader)}")
@@ -144,5 +156,8 @@ def test(model, dataloader, criterion, device):
         print(f"Class {cls} Accuracy: {acc:.2f}%")
 
 if __name__ == "__main__":
+    # Clear GPU memory
+    torch.cuda.empty_cache()
+    scaler = GradScaler()
     train(model, train_loader, optimizer, criterion, device)
     test(model, test_loader, criterion, device)
