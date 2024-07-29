@@ -1,8 +1,9 @@
 import torch
 import torch.nn.functional as F
+import re
 
 class ModelLossWrapper:
-    def __init__(self, model_path="saved_models/resnet100", device='cuda'):
+    def __init__(self, model_path="../saved_models/resnet100", device='cuda'):
         self.model = self.load_model(model_path)
         self.model = self.model.to(device)
         self.model.eval()
@@ -12,27 +13,31 @@ class ModelLossWrapper:
         """Load and return the entire model."""
         model = torch.load(model_path)
         return model
+    
+    def extract_label(self, image_path):
+        # Extracts labels from filenames and categorizes into binary classes
+        grade = image_path.split('_')[-1].replace('.png', '')
+        return 1 if grade == '3+' else 0
 
-    def compute_loss(self, input_image):
+    def compute_loss(self, input_images, img_paths, disc_predictions, usefor):
         """Compute the custom loss using the loaded model."""
-        input_image = input_image.to(self.device)
-        with torch.no_grad():
-            output = self.model(input_image)
-        # Example loss: Mean squared error of the outputs (modify according to actual use-case)
-        loss = F.mse_loss(output, torch.zeros_like(output))
-        return loss
+        if usefor == "generator":
+            labels = [self.extract_label(path) for path in img_paths]
+            labels = torch.tensor(labels, dtype=torch.long, device=self.device)
 
-    def integrate_loss(self, gan_model, input_image, *args, **kwargs):
-        """
-        Integrate the computed loss into the GAN model's training routine.
-        `gan_model` should be an instance of one of the GAN models that has a method `train_step`
-        that can accept an additional loss parameter.
-        """
-        additional_loss = self.compute_loss(input_image)
-        # Here, we assume 'train_step' can handle additional loss
-        return gan_model.train_step(input_image, additional_loss, *args, **kwargs)
-
-
+            input_images = input_images.to(self.device)
+            with torch.no_grad():
+                outputs = self.model(input_images)
+            
+            loss = F.cross_entropy(outputs, labels)
+            return loss
+        
+        if usefor == "discriminator":
+            real_labels = torch.tensor([self.extract_label(path) for path in img_paths], device=self.device)
+            disc_predictions = disc_predictions.to(self.device)
+            
+            loss = F.cross_entropy(disc_predictions, real_labels)
+            return loss
 
 if __name__ == "__main__":
     # Check if CUDA is available, else use CPU
@@ -41,6 +46,11 @@ if __name__ == "__main__":
     model_path = "saved_models/resnet100.pth"
     wrapper = ModelLossWrapper(model_path, device=device)
 
+    input_image = None
+    img_paths = None
+    disc_pred = None
+    usefor = "generator"
+    wrapper.compute_loss(input_image, img_paths, disc_pred ,usefor)
 
 # Simulate a training loop
 # gan_model = SomeGANModel()

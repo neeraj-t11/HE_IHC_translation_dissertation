@@ -7,7 +7,17 @@ import torch.nn as nn
 import numpy as np
 import kornia
 
+import re
 from .classification_wrapper import ModelLossWrapper # line added for classification wrapper 
+
+
+def get_image_IHC_grade(filename):
+    # Regular expression to find a digit(s) optionally followed by a '+' sign just before the '.png'
+    match = re.search(r'(\d+)[+]*\.png$', filename)
+    if match:
+        return int(match.group(1))
+    else:
+        return None  # Return None or appropriate error/exception if format doesn't match
 
 class Pix2PixModel(BaseModel):
     """ This class implements the pix2pix model, for learning a mapping from input images to output images given paired data.
@@ -240,6 +250,11 @@ class Pix2PixModel(BaseModel):
             self.loss_D_real = self.criterionGAN(pred_real, True)
             # combine loss and calculate gradients
             self.loss_D = (self.loss_D_fake + self.loss_D_real) * 0.5
+            
+            # part added for classification wrapper for discriminator
+            class_loss = self.model_wrapper.compute_loss(None, self.image_paths, pred_real, "discriminator")
+            self.loss_D += class_loss * self.opt.lambda_class  # lambda_class is a weighting factor for classification loss
+            
         self.loss_D.backward()
 
     def backward_G(self):
@@ -348,10 +363,12 @@ class Pix2PixModel(BaseModel):
         
 
 
-        # part added for classification wrapper : 
+        # part added for classification wrapper for generator : 
+        
         # Adding classification loss from the ModelLossWrapper
-        class_loss = self.model_wrapper.compute_loss(self.fake_B)
+        class_loss = self.model_wrapper.compute_loss(self.fake_B, self.image_paths, None,"generator")
         self.loss_G += class_loss * self.opt.lambda_class  # lambda_class is a weighting factor for classification loss
+
 
         self.loss_G.backward()
 
