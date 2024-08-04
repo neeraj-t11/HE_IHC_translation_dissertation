@@ -1,0 +1,117 @@
+INFO:root:Application Started
+INFO:root:Working directory: /cs/home/psxnt2/.visdom
+/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet101_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet101_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/kornia/feature/lightglue.py:44: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  @torch.cuda.amp.custom_fwd(cast_inputs=torch.float32)
+/cs/home/psxnt2/HE_IHC_translation_dissertation/models/classification_wrapper.py:14: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model = torch.load(model_path)
+Setting up a new session...
+INFO:tornado.access:200 POST /env/LLVIP2 (::1) 1.17ms
+INFO:tornado.access:101 GET /vis_socket (::1) 1.17ms
+INFO:root:Opened visdom socket from ip: ::1
+INFO:tornado.access:200 POST /win_exists (::1) 0.96ms
+INFO:tornado.access:200 POST /win_exists (::1) 0.81ms
+Using device: cuda:0
+Using device: cuda:0
+----------------- Options ---------------
+                     PONO: False                         
+               batch_size: 2                             
+                    beta1: 0.5                           
+          checkpoints_dir: ./checkpoints                 
+           continue_train: False                         
+                crop_size: 128                           	[default: 256]
+                    ctx_w: 1.0                           
+                 dataroot: ./datasets/BCI_short          	[default: ./datasets/BCI]
+             dataset_mode: aligned                       
+                direction: AtoB                          
+              display_env: LLVIP2                        
+             display_freq: 400                           
+               display_id: 1                             
+            display_ncols: 4                             
+             display_port: 8097                          
+           display_server: http://localhost              
+          display_winsize: 256                           
+                    epoch: latest                        
+              epoch_count: 1                             
+                 gan_mode: vanilla                       
+                  gpu_ids: 0                             
+                init_gain: 0.02                          
+                init_type: normal                        
+                 input_nc: 3                             
+                  isTrain: True                          	[default: None]
+                lambda_L1: 25.0                          
+             lambda_class: 10.0                          
+               lambda_vgg: 2                             
+                load_iter: 0                             	[default: 0]
+                load_size: 320                           
+                       lr: 0.0002                        
+           lr_decay_iters: 50                            
+                lr_policy: linear                        
+         max_dataset_size: inf                           
+                    model: pix2pix                       
+                 n_epochs: 100                           
+           n_epochs_decay: 100                           
+               n_layers_D: 3                             
+                     name: pix2pix_resnet100_dbshort     	[default: pyramidpix2pix]
+                      ndf: 64                            
+                     netD: basic                         
+                     netG: resnet_9blocks                
+                      ngf: 64                            
+               no_dropout: False                         
+                  no_flip: False                         
+                  no_html: False                         
+                     norm: batch                         
+              num_threads: 4                             
+                output_nc: 3                             
+                  pattern: L1_L2_L3_L4                   
+                    phase: train                         
+                pool_size: 0                             
+               preprocess: none                          
+               print_freq: 100                           
+             save_by_iter: False                         
+          save_epoch_freq: 20                            
+         save_latest_freq: 5000                          
+           serial_batches: False                         
+                   suffix:                               
+         update_html_freq: 1000                          
+                use_22ctx: False                         
+                  verbose: False                         
+       vgg_normal_correct: False                         
+                weight_L2: 25                            
+                weight_L3: 25                            
+                weight_L4: 25                            
+              weight_conv: 100                           
+        weight_perceptual: 3e-05                         
+             weight_sobel: 50                            
+         which_perceptual: 4_2                           
+----------------- End -------------------
+dataset [AlignedDataset] was created
+The number of training images = 268
+initialize network with normal
+initialize network with normal
+model [Pix2PixModel] was created
+---------- Networks initialized -------------
+[Network G] Total number of parameters : 11.383 M
+[Network D] Total number of parameters : 2.769 M
+-----------------------------------------------
+create web directory ./checkpoints/pix2pix_resnet100_dbshort/web...
+Traceback (most recent call last):
+  File "/cs/home/psxnt2/HE_IHC_translation_dissertation/train.py", line 45, in <module>
+    model.optimize_parameters()   # calculate loss functions, get gradients, update network weights
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cs/home/psxnt2/HE_IHC_translation_dissertation/models/pix2pix_model.py", line 386, in optimize_parameters
+    self.backward_G()                   # calculate graidents for G
+    ^^^^^^^^^^^^^^^^^
+  File "/cs/home/psxnt2/HE_IHC_translation_dissertation/models/pix2pix_model.py", line 373, in backward_G
+    self.loss_G.backward()
+  File "/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torch/_tensor.py", line 521, in backward
+    torch.autograd.backward(
+  File "/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torch/autograd/__init__.py", line 289, in backward
+    _engine_run_backward(
+  File "/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torch/autograd/graph.py", line 768, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 520.00 MiB. GPU 0 has a total capacity of 15.74 GiB of which 436.69 MiB is free. Including non-PyTorch memory, this process has 15.31 GiB memory in use. Of the allocated memory 12.88 GiB is allocated by PyTorch, and 1.06 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

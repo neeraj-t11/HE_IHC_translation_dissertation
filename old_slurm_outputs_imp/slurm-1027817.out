@@ -1,0 +1,163 @@
+INFO:root:Application Started
+INFO:root:Working directory: /cs/home/psxnt2/.visdom
+/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=EfficientNet_B7_Weights.IMAGENET1K_V1`. You can also use `weights=EfficientNet_B7_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+Downloading: "https://download.pytorch.org/models/efficientnet_b7_lukemelas-c5b4e57e.pth" to /cs/home/psxnt2/.cache/torch/hub/checkpoints/efficientnet_b7_lukemelas-c5b4e57e.pth
+Using device: cuda:0
+  0%|          | 0.00/255M [00:00<?, ?B/s]  3%|▎         | 6.38M/255M [00:00<00:03, 66.5MB/s]  8%|▊         | 19.6M/255M [00:00<00:02, 109MB/s]  14%|█▎        | 34.6M/255M [00:00<00:01, 131MB/s] 21%|██▏       | 54.6M/255M [00:00<00:01, 162MB/s] 29%|██▉       | 74.5M/255M [00:00<00:01, 178MB/s] 37%|███▋      | 94.2M/255M [00:00<00:00, 188MB/s] 45%|████▍     | 114M/255M [00:00<00:00, 192MB/s]  52%|█████▏    | 133M/255M [00:00<00:00, 196MB/s] 60%|█████▉    | 152M/255M [00:00<00:00, 189MB/s] 67%|██████▋   | 171M/255M [00:01<00:00, 194MB/s] 75%|███████▍  | 191M/255M [00:01<00:00, 196MB/s] 83%|████████▎ | 210M/255M [00:01<00:00, 199MB/s] 90%|█████████ | 230M/255M [00:01<00:00, 200MB/s] 98%|█████████▊| 249M/255M [00:01<00:00, 202MB/s]100%|██████████| 255M/255M [00:01<00:00, 185MB/s]
+/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/kornia/feature/lightglue.py:44: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  @torch.cuda.amp.custom_fwd(cast_inputs=torch.float32)
+/cs/home/psxnt2/HE_IHC_translation_dissertation/models/classification_wrapper.py:14: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model = torch.load(model_path)
+/cs/home/psxnt2/HE_IHC_translation_dissertation/models/pix2pix_model.py:67: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = GradScaler()                                                        # line added for mixed precision training
+Setting up a new session...
+INFO:tornado.access:200 POST /env/LLVIP2 (::1) 0.89ms
+INFO:tornado.access:101 GET /vis_socket (::1) 0.82ms
+INFO:root:Opened visdom socket from ip: ::1
+INFO:tornado.access:200 POST /win_exists (::1) 0.93ms
+INFO:tornado.access:200 POST /win_exists (::1) 0.81ms
+Using device: cuda:0
+----------------- Options ---------------
+                     PONO: False                         
+       accumulation_steps: 4                             
+               batch_size: 1                             	[default: 2]
+                    beta1: 0.5                           
+          checkpoints_dir: ./checkpoints                 
+           continue_train: False                         
+                crop_size: 256                           
+                    ctx_w: 1.0                           
+                 dataroot: ./datasets/BCI                
+             dataset_mode: aligned                       
+                direction: AtoB                          
+              display_env: LLVIP2                        
+             display_freq: 400                           
+               display_id: 1                             
+            display_ncols: 4                             
+             display_port: 8097                          
+           display_server: http://localhost              
+          display_winsize: 256                           
+                    epoch: latest                        
+              epoch_count: 1                             
+                 gan_mode: vanilla                       
+                  gpu_ids: 0                             
+                init_gain: 0.02                          
+                init_type: xavier                        	[default: normal]
+                 input_nc: 3                             
+                  isTrain: True                          	[default: None]
+                lambda_L1: 25.0                          
+             lambda_class: 10.0                          
+               lambda_vgg: 2                             
+                load_iter: 0                             	[default: 0]
+                load_size: 320                           
+                       lr: 0.0002                        
+           lr_decay_iters: 50                            
+                lr_policy: linear                        
+         max_dataset_size: inf                           
+                    model: pix2pix                       
+                 n_epochs: 100                           
+           n_epochs_decay: 100                           
+               n_layers_D: 3                             
+                     name: pix2pix_resnet_9blocks_PatchGAN_efficientnet_b7_db	[default: pyramidpix2pix]
+                      ndf: 64                            
+                     netD: basic                         
+                     netG: resnet_9blocks                
+                      ngf: 64                            
+               no_dropout: False                         
+                  no_flip: False                         
+                  no_html: False                         
+                     norm: instance                      	[default: batch]
+              num_threads: 8                             	[default: 4]
+                output_nc: 3                             
+                  pattern: L1_L2_L3_L4                   
+                    phase: train                         
+                pool_size: 0                             
+               preprocess: none                          
+               print_freq: 100                           
+             save_by_iter: False                         
+          save_epoch_freq: 20                            
+         save_latest_freq: 5000                          
+           serial_batches: False                         
+                   suffix:                               
+         update_html_freq: 1000                          
+                use_22ctx: False                         
+                  verbose: False                         
+       vgg_normal_correct: False                         
+                weight_L2: 25                            
+                weight_L3: 25                            
+                weight_L4: 25                            
+              weight_conv: 100                           
+        weight_perceptual: 3e-05                         
+             weight_sobel: 50                            
+         which_perceptual: 4_2                           
+----------------- End -------------------
+dataset [AlignedDataset] was created
+The number of training images = 3896
+initialize network with xavier
+initialize network with xavier
+model [Pix2PixModel] was created
+---------- Networks initialized -------------
+[Network G] Total number of parameters : 11.378 M
+[Network D] Total number of parameters : 2.768 M
+-----------------------------------------------
+create web directory ./checkpoints/pix2pix_resnet_9blocks_PatchGAN_efficientnet_b7_db/web...
+/cs/home/psxnt2/HE_IHC_translation_dissertation/models/pix2pix_model.py:401: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with autocast():
+/cs/home/psxnt2/HE_IHC_translation_dissertation/models/pix2pix_model.py:245: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with autocast():
+/cs/home/psxnt2/HE_IHC_translation_dissertation/models/pix2pix_model.py:412: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with autocast():
+/cs/home/psxnt2/HE_IHC_translation_dissertation/models/pix2pix_model.py:272: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with autocast():
+Traceback (most recent call last):
+  File "/cs/home/psxnt2/HE_IHC_translation_dissertation/train.py", line 45, in <module>
+    model.optimize_parameters()   # calculate loss functions, get gradients, update network weights
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cs/home/psxnt2/HE_IHC_translation_dissertation/models/pix2pix_model.py", line 395, in optimize_parameters
+    self.forward()  # compute fake images: G(A)
+    ^^^^^^^^^^^^^^
+  File "/cs/home/psxnt2/HE_IHC_translation_dissertation/models/pix2pix_model.py", line 162, in forward
+    self.fake_B = self.netG(self.real_A)  # G(A)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torch/nn/parallel/data_parallel.py", line 184, in forward
+    return self.module(*inputs[0], **module_kwargs[0])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cs/home/psxnt2/HE_IHC_translation_dissertation/models/networks.py", line 411, in forward
+    return self.model(input)
+           ^^^^^^^^^^^^^^^^^
+  File "/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torch/nn/modules/container.py", line 219, in forward
+    input = module(input)
+            ^^^^^^^^^^^^^
+  File "/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torch/nn/modules/padding.py", line 359, in forward
+    return F.pad(input, self.padding, 'reflect')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torch/nn/functional.py", line 4552, in pad
+    return torch._C._nn.pad(input, pad, mode, value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 260.00 MiB. GPU 0 has a total capacity of 15.74 GiB of which 260.69 MiB is free. Including non-PyTorch memory, this process has 15.48 GiB memory in use. Of the allocated memory 13.00 GiB is allocated by PyTorch, and 1.11 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

@@ -1,0 +1,324 @@
+INFO:root:Application Started
+INFO:root:Working directory: /cs/home/psxnt2/.visdom
+/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet101_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet101_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/kornia/feature/lightglue.py:44: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  @torch.cuda.amp.custom_fwd(cast_inputs=torch.float32)
+/cs/home/psxnt2/HE_IHC_translation_dissertation/models/classification_wrapper.py:14: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model = torch.load(model_path)
+/cs/home/psxnt2/HE_IHC_translation_dissertation/models/pix2pix_model.py:67: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = GradScaler()                                                        # line added for mixed precision training
+Setting up a new session...
+INFO:tornado.access:200 POST /env/LLVIP2 (::1) 1.12ms
+INFO:tornado.access:101 GET /vis_socket (::1) 1.03ms
+INFO:root:Opened visdom socket from ip: ::1
+INFO:tornado.access:200 POST /win_exists (::1) 0.81ms
+INFO:tornado.access:200 POST /win_exists (::1) 0.77ms
+Using device: cuda:0
+Using device: cuda:0
+----------------- Options ---------------
+                     PONO: False                         
+       accumulation_steps: 4                             
+               batch_size: 1                             	[default: 2]
+                    beta1: 0.5                           
+          checkpoints_dir: ./checkpoints                 
+           continue_train: False                         
+                crop_size: 256                           
+                    ctx_w: 1.0                           
+                 dataroot: ./datasets/BCI                
+             dataset_mode: aligned                       
+                direction: AtoB                          
+              display_env: LLVIP2                        
+             display_freq: 400                           
+               display_id: 1                             
+            display_ncols: 4                             
+             display_port: 8097                          
+           display_server: http://localhost              
+          display_winsize: 256                           
+                    epoch: latest                        
+              epoch_count: 1                             
+                 gan_mode: vanilla                       
+                  gpu_ids: 0                             
+                init_gain: 0.02                          
+                init_type: xavier                        	[default: normal]
+                 input_nc: 3                             
+                  isTrain: True                          	[default: None]
+                lambda_L1: 25.0                          
+             lambda_class: 10.0                          
+               lambda_vgg: 2                             
+                load_iter: 0                             	[default: 0]
+                load_size: 320                           
+                       lr: 0.0002                        
+           lr_decay_iters: 50                            
+                lr_policy: linear                        
+         max_dataset_size: inf                           
+                    model: pix2pix                       
+                 n_epochs: 100                           
+           n_epochs_decay: 100                           
+               n_layers_D: 3                             
+                     name: pix2pix_resnet_9blocks_PatchGAN_efficientnet_b7_db	[default: pyramidpix2pix]
+                      ndf: 64                            
+                     netD: basic                         
+                     netG: resnet_9blocks                
+                      ngf: 64                            
+               no_dropout: False                         
+                  no_flip: False                         
+                  no_html: False                         
+                     norm: instance                      	[default: batch]
+              num_threads: 8                             	[default: 4]
+                output_nc: 3                             
+                  pattern: L1_L2_L3_L4                   
+                    phase: train                         
+                pool_size: 0                             
+               preprocess: none                          
+               print_freq: 100                           
+             save_by_iter: False                         
+          save_epoch_freq: 20                            
+         save_latest_freq: 5000                          
+           serial_batches: False                         
+                   suffix:                               
+         update_html_freq: 1000                          
+                use_22ctx: False                         
+                  verbose: False                         
+       vgg_normal_correct: False                         
+                weight_L2: 25                            
+                weight_L3: 25                            
+                weight_L4: 25                            
+              weight_conv: 100                           
+        weight_perceptual: 3e-05                         
+             weight_sobel: 50                            
+         which_perceptual: 4_2                           
+----------------- End -------------------
+dataset [AlignedDataset] was created
+The number of training images = 3896
+initialize network with xavier
+initialize network with xavier
+model [Pix2PixModel] was created
+---------- Networks initialized -------------
+[Network G] Total number of parameters : 11.378 M
+[Network D] Total number of parameters : 2.768 M
+-----------------------------------------------
+create web directory ./checkpoints/pix2pix_resnet_9blocks_PatchGAN_efficientnet_b7_db/web...
+/cs/home/psxnt2/HE_IHC_translation_dissertation/models/pix2pix_model.py:401: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with autocast():
+/cs/home/psxnt2/HE_IHC_translation_dissertation/models/pix2pix_model.py:245: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with autocast():
+/cs/home/psxnt2/HE_IHC_translation_dissertation/models/pix2pix_model.py:412: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with autocast():
+/cs/home/psxnt2/HE_IHC_translation_dissertation/models/pix2pix_model.py:272: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with autocast():
+INFO:tornado.access:200 POST /events (::1) 2.64ms
+INFO:tornado.access:200 POST /events (::1) 2.58ms
+INFO:tornado.access:200 POST /events (::1) 1.16ms
+INFO:tornado.access:200 POST /events (::1) 38.25ms
+INFO:tornado.access:200 POST /events (::1) 0.54ms
+INFO:tornado.access:200 POST /events (::1) 1.05ms
+INFO:tornado.access:200 POST /events (::1) 1.12ms
+INFO:tornado.access:200 POST /events (::1) 1.11ms
+INFO:tornado.access:200 POST /events (::1) 2.39ms
+INFO:tornado.access:200 POST /events (::1) 36.48ms
+INFO:tornado.access:200 POST /events (::1) 0.45ms
+INFO:tornado.access:200 POST /events (::1) 1.10ms
+INFO:tornado.access:200 POST /events (::1) 1.13ms
+INFO:tornado.access:200 POST /events (::1) 1.21ms
+INFO:tornado.access:200 POST /events (::1) 2.45ms
+INFO:tornado.access:200 POST /events (::1) 35.02ms
+INFO:tornado.access:200 POST /events (::1) 0.41ms
+INFO:tornado.access:200 POST /events (::1) 0.52ms
+INFO:tornado.access:200 POST /events (::1) 1.22ms
+INFO:tornado.access:200 POST /events (::1) 1.18ms
+INFO:tornado.access:200 POST /events (::1) 1.05ms
+INFO:tornado.access:200 POST /events (::1) 32.00ms
+INFO:tornado.access:200 POST /events (::1) 0.53ms
+INFO:tornado.access:200 POST /events (::1) 0.82ms
+INFO:tornado.access:200 POST /events (::1) 2.64ms
+INFO:tornado.access:200 POST /events (::1) 1.25ms
+INFO:tornado.access:200 POST /events (::1) 1.33ms
+INFO:tornado.access:200 POST /events (::1) 36.99ms
+INFO:tornado.access:200 POST /events (::1) 0.57ms
+INFO:tornado.access:200 POST /events (::1) 1.33ms
+INFO:tornado.access:200 POST /events (::1) 1.28ms
+INFO:tornado.access:200 POST /events (::1) 1.31ms
+INFO:tornado.access:200 POST /events (::1) 1.13ms
+INFO:tornado.access:200 POST /events (::1) 22.15ms
+INFO:tornado.access:200 POST /events (::1) 0.76ms
+INFO:tornado.access:200 POST /events (::1) 1.32ms
+INFO:tornado.access:200 POST /events (::1) 1.34ms
+INFO:tornado.access:200 POST /events (::1) 1.39ms
+INFO:tornado.access:200 POST /events (::1) 1.44ms
+INFO:tornado.access:200 POST /events (::1) 38.42ms
+INFO:tornado.access:200 POST /events (::1) 0.62ms
+INFO:tornado.access:200 POST /events (::1) 0.96ms
+INFO:tornado.access:200 POST /events (::1) 1.41ms
+INFO:tornado.access:200 POST /events (::1) 1.48ms
+INFO:tornado.access:200 POST /events (::1) 1.45ms
+INFO:tornado.access:200 POST /events (::1) 42.70ms
+INFO:tornado.access:200 POST /events (::1) 0.68ms
+INFO:tornado.access:200 POST /events (::1) 0.98ms
+INFO:tornado.access:200 POST /events (::1) 0.93ms
+INFO:tornado.access:200 POST /events (::1) 1.54ms
+INFO:tornado.access:200 POST /events (::1) 1.51ms
+INFO:tornado.access:200 POST /events (::1) 34.26ms
+INFO:tornado.access:200 POST /events (::1) 0.55ms
+INFO:tornado.access:200 POST /events (::1) 1.06ms
+INFO:tornado.access:200 POST /events (::1) 2.44ms
+INFO:tornado.access:200 POST /events (::1) 0.79ms
+(epoch: 1, iters: 100, time: 106.554, data: 0.846) G_GAN: 0.606 D_real: 0.713 D_fake: 0.693 G_L1: 19.646 G_L2: 19.685 G_L3: 19.725 G_L4: 19.766 
+(epoch: 1, iters: 200, time: 196.540, data: 0.859) G_GAN: 0.784 D_real: 0.820 D_fake: 0.577 G_L1: 8.655 G_L2: 8.444 G_L3: 8.344 G_L4: 8.291 
+(epoch: 1, iters: 300, time: 288.671, data: 0.857) G_GAN: 0.981 D_real: 0.667 D_fake: 0.589 G_L1: 2.994 G_L2: 2.940 G_L3: 2.874 G_L4: 2.806 
+(epoch: 1, iters: 400, time: 384.480, data: 5.072) G_GAN: 0.702 D_real: 0.739 D_fake: 0.656 G_L1: 5.011 G_L2: 4.975 G_L3: 4.952 G_L4: 4.953 
+(epoch: 1, iters: 500, time: 475.723, data: 0.916) G_GAN: 0.720 D_real: 0.715 D_fake: 0.673 G_L1: 7.621 G_L2: 7.584 G_L3: 7.591 G_L4: 7.607 
+(epoch: 1, iters: 600, time: 565.731, data: 0.855) G_GAN: 0.731 D_real: 0.724 D_fake: 0.635 G_L1: 8.739 G_L2: 8.667 G_L3: 8.651 G_L4: 8.660 
+(epoch: 1, iters: 700, time: 657.367, data: 0.859) G_GAN: 0.860 D_real: 0.451 D_fake: 0.644 G_L1: 4.820 G_L2: 4.247 G_L3: 3.665 G_L4: 3.092 
+(epoch: 1, iters: 800, time: 750.624, data: 2.917) G_GAN: 1.388 D_real: 0.839 D_fake: 0.319 G_L1: 5.381 G_L2: 5.339 G_L3: 5.313 G_L4: 5.288 
+(epoch: 1, iters: 900, time: 840.897, data: 0.972) G_GAN: 1.018 D_real: 1.018 D_fake: 0.415 G_L1: 13.518 G_L2: 13.502 G_L3: 13.510 G_L4: 13.527 
+(epoch: 1, iters: 1000, time: 931.514, data: 0.863) G_GAN: 1.845 D_real: 0.529 D_fake: 0.282 G_L1: 4.939 G_L2: 4.945 G_L3: 4.955 G_L4: 4.969 
+(epoch: 1, iters: 1100, time: 1022.307, data: 1.061) G_GAN: 1.122 D_real: 1.059 D_fake: 0.396 G_L1: 8.357 G_L2: 8.359 G_L3: 8.373 G_L4: 8.389 
+(epoch: 1, iters: 1200, time: 1114.946, data: 2.820) G_GAN: 1.149 D_real: 0.411 D_fake: 0.594 G_L1: 2.032 G_L2: 1.873 G_L3: 1.708 G_L4: 1.519 
+(epoch: 1, iters: 1300, time: 1205.771, data: 0.868) G_GAN: 0.797 D_real: 0.181 D_fake: 0.907 G_L1: 3.523 G_L2: 3.240 G_L3: 2.957 G_L4: 2.664 
+(epoch: 1, iters: 1400, time: 1299.368, data: 0.941) G_GAN: 0.922 D_real: 0.731 D_fake: 0.510 G_L1: 9.920 G_L2: 9.895 G_L3: 9.903 G_L4: 9.920 
+(epoch: 1, iters: 1500, time: 1390.002, data: 0.865) G_GAN: 1.066 D_real: 0.380 D_fake: 0.505 G_L1: 6.647 G_L2: 6.508 G_L3: 6.470 G_L4: 6.435 
+(epoch: 1, iters: 1600, time: 1483.308, data: 2.888) G_GAN: 1.329 D_real: 0.866 D_fake: 0.329 G_L1: 4.243 G_L2: 4.142 G_L3: 4.143 G_L4: 4.151 
+(epoch: 1, iters: 1700, time: 1574.820, data: 1.011) G_GAN: 0.756 D_real: 0.250 D_fake: 0.845 G_L1: 10.790 G_L2: 10.701 G_L3: 10.674 G_L4: 10.686 
+(epoch: 1, iters: 1800, time: 1664.785, data: 0.854) G_GAN: 1.319 D_real: 0.208 D_fake: 0.635 G_L1: 6.855 G_L2: 6.129 G_L3: 5.521 G_L4: 4.896 
+(epoch: 1, iters: 1900, time: 1755.842, data: 0.859) G_GAN: 0.786 D_real: 0.678 D_fake: 0.871 G_L1: 9.353 G_L2: 9.351 G_L3: 9.362 G_L4: 9.368 
+(epoch: 1, iters: 2000, time: 1849.649, data: 4.630) G_GAN: 1.287 D_real: 0.197 D_fake: 0.367 G_L1: 2.956 G_L2: 2.720 G_L3: 2.530 G_L4: 2.433 
+(epoch: 1, iters: 2100, time: 1940.324, data: 0.857) G_GAN: 0.662 D_real: 0.822 D_fake: 0.768 G_L1: 11.020 G_L2: 11.022 G_L3: 11.043 G_L4: 11.066 
+(epoch: 1, iters: 2200, time: 2032.597, data: 0.861) G_GAN: 1.260 D_real: 0.381 D_fake: 0.410 G_L1: 2.371 G_L2: 2.353 G_L3: 2.341 G_L4: 2.330 
+(epoch: 1, iters: 2300, time: 2124.538, data: 0.855) G_GAN: 1.106 D_real: 0.908 D_fake: 0.483 G_L1: 5.400 G_L2: 5.255 G_L3: 5.168 G_L4: 5.093 
+(epoch: 1, iters: 2400, time: 2216.623, data: 2.112) G_GAN: 0.583 D_real: 0.612 D_fake: 0.862 G_L1: 9.917 G_L2: 9.931 G_L3: 9.951 G_L4: 9.972 
+(epoch: 1, iters: 2500, time: 2307.602, data: 0.859) G_GAN: 1.059 D_real: 0.830 D_fake: 0.408 G_L1: 10.284 G_L2: 10.270 G_L3: 10.287 G_L4: 10.309 
+(epoch: 1, iters: 2600, time: 2398.721, data: 0.853) G_GAN: 1.157 D_real: 1.211 D_fake: 0.362 G_L1: 9.126 G_L2: 9.100 G_L3: 9.107 G_L4: 9.123 
+(epoch: 1, iters: 2700, time: 2489.563, data: 1.500) G_GAN: 2.068 D_real: 0.348 D_fake: 0.567 G_L1: 4.078 G_L2: 3.911 G_L3: 3.708 G_L4: 3.396 
+(epoch: 1, iters: 2800, time: 2581.702, data: 3.099) G_GAN: 0.902 D_real: 0.572 D_fake: 0.753 G_L1: 4.856 G_L2: 4.690 G_L3: 4.625 G_L4: 4.613 
+(epoch: 1, iters: 2900, time: 2671.814, data: 0.868) G_GAN: 1.412 D_real: 0.493 D_fake: 0.382 G_L1: 10.318 G_L2: 10.316 G_L3: 10.333 G_L4: 10.349 
+(epoch: 1, iters: 3000, time: 2762.757, data: 0.863) G_GAN: 1.565 D_real: 0.776 D_fake: 0.167 G_L1: 3.524 G_L2: 3.343 G_L3: 3.158 G_L4: 2.960 
+(epoch: 1, iters: 3100, time: 2854.424, data: 0.864) G_GAN: 1.270 D_real: 1.140 D_fake: 0.488 G_L1: 8.069 G_L2: 7.901 G_L3: 7.840 G_L4: 7.838 
+(epoch: 1, iters: 3200, time: 2946.925, data: 2.942) G_GAN: 1.773 D_real: 0.518 D_fake: 0.223 G_L1: 10.507 G_L2: 10.527 G_L3: 10.548 G_L4: 10.572 
+(epoch: 1, iters: 3300, time: 3039.117, data: 1.063) G_GAN: 1.383 D_real: 1.618 D_fake: 0.225 G_L1: 10.933 G_L2: 10.920 G_L3: 10.935 G_L4: 10.954 
+(epoch: 1, iters: 3400, time: 3130.377, data: 0.860) G_GAN: 0.840 D_real: 0.786 D_fake: 0.675 G_L1: 12.135 G_L2: 12.121 G_L3: 12.142 G_L4: 12.164 
+(epoch: 1, iters: 3500, time: 3221.720, data: 0.860) G_GAN: 1.298 D_real: 0.220 D_fake: 0.346 G_L1: 5.209 G_L2: 5.046 G_L3: 4.887 G_L4: 4.720 
+(epoch: 1, iters: 3600, time: 3316.228, data: 2.859) G_GAN: 1.463 D_real: 0.182 D_fake: 0.429 G_L1: 6.142 G_L2: 5.752 G_L3: 5.393 G_L4: 5.182 
+(epoch: 1, iters: 3700, time: 3407.492, data: 0.961) G_GAN: 0.626 D_real: 0.163 D_fake: 1.980 G_L1: 3.840 G_L2: 3.782 G_L3: 3.702 G_L4: 3.580 
+(epoch: 1, iters: 3800, time: 3498.219, data: 0.863) G_GAN: 1.165 D_real: 0.326 D_fake: 0.527 G_L1: 8.686 G_L2: 8.408 G_L3: 8.205 G_L4: 8.095 
+End of epoch 1 / 200 	 Time Taken: 3585 sec
+INFO:tornado.access:200 POST /events (::1) 1.60ms
+INFO:tornado.access:200 POST /events (::1) 34.41ms
+INFO:tornado.access:200 POST /events (::1) 0.52ms
+INFO:tornado.access:200 POST /events (::1) 1.62ms
+INFO:tornado.access:200 POST /events (::1) 1.62ms
+INFO:tornado.access:200 POST /events (::1) 1.51ms
+INFO:tornado.access:200 POST /events (::1) 1.62ms
+INFO:tornado.access:200 POST /events (::1) 23.35ms
+INFO:tornado.access:200 POST /events (::1) 0.56ms
+INFO:tornado.access:200 POST /events (::1) 0.93ms
+INFO:tornado.access:200 POST /events (::1) 1.45ms
+INFO:tornado.access:200 POST /events (::1) 1.68ms
+INFO:tornado.access:200 POST /events (::1) 1.73ms
+INFO:tornado.access:200 POST /events (::1) 29.50ms
+INFO:tornado.access:200 POST /events (::1) 0.54ms
+INFO:tornado.access:200 POST /events (::1) 1.28ms
+INFO:tornado.access:200 POST /events (::1) 1.77ms
+INFO:tornado.access:200 POST /events (::1) 1.76ms
+INFO:tornado.access:200 POST /events (::1) 3.17ms
+INFO:tornado.access:200 POST /events (::1) 29.31ms
+INFO:tornado.access:200 POST /events (::1) 0.61ms
+INFO:tornado.access:200 POST /events (::1) 1.26ms
+INFO:tornado.access:200 POST /events (::1) 1.81ms
+INFO:tornado.access:200 POST /events (::1) 1.82ms
+INFO:tornado.access:200 POST /events (::1) 1.15ms
+INFO:tornado.access:200 POST /events (::1) 30.91ms
+INFO:tornado.access:200 POST /events (::1) 0.64ms
+INFO:tornado.access:200 POST /events (::1) 1.54ms
+INFO:tornado.access:200 POST /events (::1) 1.82ms
+INFO:tornado.access:200 POST /events (::1) 3.21ms
+INFO:tornado.access:200 POST /events (::1) 2.15ms
+INFO:tornado.access:200 POST /events (::1) 29.34ms
+INFO:tornado.access:200 POST /events (::1) 0.56ms
+INFO:tornado.access:200 POST /events (::1) 1.87ms
+INFO:tornado.access:200 POST /events (::1) 1.88ms
+INFO:tornado.access:200 POST /events (::1) 2.00ms
+INFO:tornado.access:200 POST /events (::1) 1.98ms
+INFO:tornado.access:200 POST /events (::1) 30.84ms
+INFO:tornado.access:200 POST /events (::1) 0.58ms
+INFO:tornado.access:200 POST /events (::1) 1.44ms
+INFO:tornado.access:200 POST /events (::1) 1.99ms
+INFO:tornado.access:200 POST /events (::1) 1.98ms
+INFO:tornado.access:200 POST /events (::1) 2.22ms
+INFO:tornado.access:200 POST /events (::1) 25.12ms
+INFO:tornado.access:200 POST /events (::1) 0.59ms
+INFO:tornado.access:200 POST /events (::1) 1.56ms
+INFO:tornado.access:200 POST /events (::1) 2.06ms
+INFO:tornado.access:200 POST /events (::1) 2.10ms
+INFO:tornado.access:200 POST /events (::1) 3.36ms
+INFO:tornado.access:200 POST /events (::1) 33.17ms
+INFO:tornado.access:200 POST /events (::1) 0.62ms
+INFO:tornado.access:200 POST /events (::1) 1.45ms
+INFO:tornado.access:200 POST /events (::1) 0.94ms
+INFO:tornado.access:200 POST /events (::1) 2.18ms
+INFO:tornado.access:200 POST /events (::1) 2.17ms
+INFO:tornado.access:200 POST /events (::1) 20.10ms
+INFO:tornado.access:200 POST /events (::1) 0.50ms
+INFO:tornado.access:200 POST /events (::1) 1.44ms
+INFO:tornado.access:200 POST /events (::1) 2.18ms
+(epoch: 2, iters: 3900, time: 5.493, data: 1.189) G_GAN: 1.095 D_real: 0.192 D_fake: 0.655 G_L1: 4.559 G_L2: 4.514 G_L3: 4.483 G_L4: 4.474 
+(epoch: 2, iters: 4000, time: 100.245, data: 5.000) G_GAN: 1.146 D_real: 0.627 D_fake: 0.451 G_L1: 8.448 G_L2: 8.426 G_L3: 8.345 G_L4: 8.171 
+(epoch: 2, iters: 4100, time: 190.091, data: 0.900) G_GAN: 1.074 D_real: 1.013 D_fake: 0.462 G_L1: 6.700 G_L2: 6.462 G_L3: 6.315 G_L4: 6.264 
+(epoch: 2, iters: 4200, time: 279.977, data: 1.068) G_GAN: 1.439 D_real: 1.320 D_fake: 0.405 G_L1: 4.253 G_L2: 3.955 G_L3: 3.793 G_L4: 3.739 
+(epoch: 2, iters: 4300, time: 372.733, data: 0.861) G_GAN: 1.513 D_real: 0.961 D_fake: 0.441 G_L1: 11.214 G_L2: 10.947 G_L3: 10.740 G_L4: 10.548 
+(epoch: 2, iters: 4400, time: 464.895, data: 3.133) G_GAN: 1.908 D_real: 0.413 D_fake: 0.225 G_L1: 1.702 G_L2: 1.542 G_L3: 1.380 G_L4: 1.220 
+(epoch: 2, iters: 4500, time: 555.418, data: 1.065) G_GAN: 1.083 D_real: 0.184 D_fake: 0.675 G_L1: 2.747 G_L2: 2.376 G_L3: 1.977 G_L4: 1.622 
+(epoch: 2, iters: 4600, time: 646.126, data: 0.854) G_GAN: 1.800 D_real: 0.378 D_fake: 0.205 G_L1: 7.945 G_L2: 7.932 G_L3: 7.911 G_L4: 7.902 
+(epoch: 2, iters: 4700, time: 736.509, data: 0.858) G_GAN: 2.398 D_real: 0.344 D_fake: 0.139 G_L1: 6.243 G_L2: 6.249 G_L3: 6.253 G_L4: 6.255 
+(epoch: 2, iters: 4800, time: 829.571, data: 2.975) G_GAN: 1.565 D_real: 2.583 D_fake: 0.169 G_L1: 5.625 G_L2: 5.528 G_L3: 5.479 G_L4: 5.466 
+(epoch: 2, iters: 4900, time: 920.725, data: 1.279) G_GAN: 1.250 D_real: 0.395 D_fake: 0.620 G_L1: 5.498 G_L2: 5.423 G_L3: 5.388 G_L4: 5.387 
+(epoch: 2, iters: 5000, time: 1012.107, data: 1.133) G_GAN: 1.413 D_real: 0.164 D_fake: 0.507 G_L1: 7.521 G_L2: 7.496 G_L3: 7.491 G_L4: 7.496 
+saving the latest model (epoch 2, total_iters 5000)
+(epoch: 2, iters: 5100, time: 1102.256, data: 0.983) G_GAN: 1.866 D_real: 0.417 D_fake: 0.257 G_L1: 7.769 G_L2: 7.725 G_L3: 7.699 G_L4: 7.711 
+(epoch: 2, iters: 5200, time: 1194.917, data: 2.610) G_GAN: 1.222 D_real: 1.136 D_fake: 0.320 G_L1: 10.152 G_L2: 10.154 G_L3: 10.171 G_L4: 10.189 
+(epoch: 2, iters: 5300, time: 1285.025, data: 0.861) G_GAN: 0.841 D_real: 0.705 D_fake: 0.583 G_L1: 3.571 G_L2: 3.498 G_L3: 3.471 G_L4: 3.469 
+(epoch: 2, iters: 5400, time: 1376.057, data: 0.855) G_GAN: 1.809 D_real: 0.226 D_fake: 0.225 G_L1: 5.124 G_L2: 5.050 G_L3: 5.004 G_L4: 4.994 
+(epoch: 2, iters: 5500, time: 1467.138, data: 0.859) G_GAN: 1.534 D_real: 0.539 D_fake: 0.386 G_L1: 6.068 G_L2: 6.054 G_L3: 6.006 G_L4: 5.902 
+(epoch: 2, iters: 5600, time: 1558.886, data: 2.830) G_GAN: 0.865 D_real: 0.486 D_fake: 0.781 G_L1: 10.456 G_L2: 10.438 G_L3: 10.460 G_L4: 10.491 
+(epoch: 2, iters: 5700, time: 1650.853, data: 1.019) G_GAN: 2.139 D_real: 0.265 D_fake: 0.165 G_L1: 7.022 G_L2: 7.027 G_L3: 7.029 G_L4: 7.023 
+(epoch: 2, iters: 5800, time: 1741.218, data: 0.859) G_GAN: 1.838 D_real: 1.372 D_fake: 0.190 G_L1: 11.994 G_L2: 11.989 G_L3: 12.012 G_L4: 12.034 
+(epoch: 2, iters: 5900, time: 1832.578, data: 0.859) G_GAN: 2.113 D_real: 0.275 D_fake: 0.173 G_L1: 1.426 G_L2: 1.281 G_L3: 1.212 G_L4: 1.167 
+(epoch: 2, iters: 6000, time: 1928.203, data: 4.527) G_GAN: 0.261 D_real: 0.205 D_fake: 2.331 G_L1: 7.372 G_L2: 7.359 G_L3: 7.356 G_L4: 7.368 
+(epoch: 2, iters: 6100, time: 2018.823, data: 1.239) G_GAN: 1.319 D_real: 0.475 D_fake: 0.391 G_L1: 4.579 G_L2: 4.404 G_L3: 4.270 G_L4: 4.209 
+(epoch: 2, iters: 6200, time: 2110.944, data: 0.861) G_GAN: 0.563 D_real: 0.903 D_fake: 1.026 G_L1: 4.849 G_L2: 4.799 G_L3: 4.743 G_L4: 4.669 
+(epoch: 2, iters: 6300, time: 2201.916, data: 0.999) G_GAN: 0.791 D_real: 0.260 D_fake: 0.898 G_L1: 8.412 G_L2: 8.385 G_L3: 8.347 G_L4: 8.265 
+(epoch: 2, iters: 6400, time: 2294.887, data: 2.765) G_GAN: 2.123 D_real: 0.298 D_fake: 0.195 G_L1: 2.027 G_L2: 1.974 G_L3: 1.922 G_L4: 1.867 
+(epoch: 2, iters: 6500, time: 2385.785, data: 0.891) G_GAN: 1.336 D_real: 0.450 D_fake: 0.496 G_L1: 6.235 G_L2: 6.214 G_L3: 6.171 G_L4: 6.096 
+(epoch: 2, iters: 6600, time: 2477.380, data: 0.870) G_GAN: 1.172 D_real: 0.267 D_fake: 0.661 G_L1: 3.903 G_L2: 3.591 G_L3: 3.277 G_L4: 2.974 
+(epoch: 2, iters: 6700, time: 2568.827, data: 1.113) G_GAN: 1.437 D_real: 0.280 D_fake: 0.373 G_L1: 8.520 G_L2: 8.522 G_L3: 8.528 G_L4: 8.532 
+(epoch: 2, iters: 6800, time: 2662.336, data: 3.078) G_GAN: 0.364 D_real: 0.125 D_fake: 1.509 G_L1: 8.566 G_L2: 8.576 G_L3: 8.592 G_L4: 8.609 
+(epoch: 2, iters: 6900, time: 2752.972, data: 0.850) G_GAN: 1.145 D_real: 0.799 D_fake: 0.477 G_L1: 2.546 G_L2: 2.179 G_L3: 1.857 G_L4: 1.533 
+(epoch: 2, iters: 7000, time: 2843.214, data: 0.857) G_GAN: 0.959 D_real: 0.193 D_fake: 0.710 G_L1: 5.628 G_L2: 5.354 G_L3: 5.111 G_L4: 4.969 
+(epoch: 2, iters: 7100, time: 2934.778, data: 0.855) G_GAN: 1.195 D_real: 0.457 D_fake: 0.576 G_L1: 6.354 G_L2: 6.335 G_L3: 6.324 G_L4: 6.302 
+(epoch: 2, iters: 7200, time: 3027.906, data: 3.108) G_GAN: 1.536 D_real: 0.304 D_fake: 0.345 G_L1: 1.744 G_L2: 1.537 G_L3: 1.316 G_L4: 1.075 
+(epoch: 2, iters: 7300, time: 3118.653, data: 0.849) G_GAN: 0.808 D_real: 0.594 D_fake: 0.740 G_L1: 12.490 G_L2: 12.508 G_L3: 12.530 G_L4: 12.551 
+(epoch: 2, iters: 7400, time: 3210.346, data: 0.845) G_GAN: 1.178 D_real: 1.223 D_fake: 0.329 G_L1: 5.068 G_L2: 4.860 G_L3: 4.761 G_L4: 4.750 
+(epoch: 2, iters: 7500, time: 3300.967, data: 0.858) G_GAN: 1.424 D_real: 1.021 D_fake: 0.617 G_L1: 8.045 G_L2: 7.810 G_L3: 7.733 G_L4: 7.746 
+(epoch: 2, iters: 7600, time: 3395.220, data: 2.778) G_GAN: 1.383 D_real: 1.767 D_fake: 0.209 G_L1: 14.605 G_L2: 14.619 G_L3: 14.647 G_L4: 14.676 
+(epoch: 2, iters: 7700, time: 3485.495, data: 0.864) G_GAN: 1.891 D_real: 0.176 D_fake: 0.263 G_L1: 4.381 G_L2: 4.220 G_L3: 4.138 G_L4: 4.113 
+End of epoch 2 / 200 	 Time Taken: 3568 sec
+INFO:tornado.access:200 POST /events (::1) 3.59ms
+INFO:tornado.access:200 POST /events (::1) 2.23ms
+INFO:tornado.access:200 POST /events (::1) 36.12ms
+INFO:tornado.access:200 POST /events (::1) 0.64ms
+INFO:tornado.access:200 POST /events (::1) 2.21ms
+INFO:tornado.access:200 POST /events (::1) 2.28ms
+INFO:tornado.access:200 POST /events (::1) 2.27ms
+INFO:tornado.access:200 POST /events (::1) 2.28ms
+INFO:tornado.access:200 POST /events (::1) 31.96ms
+INFO:tornado.access:200 POST /events (::1) 0.66ms
+INFO:tornado.access:200 POST /events (::1) 2.11ms
+INFO:tornado.access:200 POST /events (::1) 1.38ms
+INFO:tornado.access:200 POST /events (::1) 2.35ms
+INFO:tornado.access:200 POST /events (::1) 2.33ms
+INFO:tornado.access:200 POST /events (::1) 30.91ms
+INFO:tornado.access:200 POST /events (::1) 0.52ms
+INFO:tornado.access:200 POST /events (::1) 1.56ms
+slurmstepd: error: *** JOB 1027818 ON tamar CANCELLED AT 2024-08-02T04:25:02 ***

@@ -1,0 +1,1234 @@
+INFO:root:Application Started
+INFO:root:Working directory: /cs/home/psxnt2/.visdom
+/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet101_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet101_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+/cs/home/psxnt2/miniconda3/envs/neeraj_dissertation/lib/python3.11/site-packages/kornia/feature/lightglue.py:44: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  @torch.cuda.amp.custom_fwd(cast_inputs=torch.float32)
+/cs/home/psxnt2/HE_IHC_translation_dissertation/models/classification_wrapper.py:14: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model = torch.load(model_path)
+/cs/home/psxnt2/HE_IHC_translation_dissertation/models/pix2pix_model.py:67: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = GradScaler()                                                        # line added for mixed precision training
+Setting up a new session...
+INFO:tornado.access:200 POST /env/LLVIP2 (::1) 1.18ms
+INFO:tornado.access:101 GET /vis_socket (::1) 1.03ms
+INFO:root:Opened visdom socket from ip: ::1
+INFO:tornado.access:200 POST /win_exists (::1) 0.55ms
+INFO:tornado.access:200 POST /win_exists (::1) 0.43ms
+Using device: cuda:0
+Using device: cuda:0
+----------------- Options ---------------
+                     PONO: False                         
+       accumulation_steps: 4                             
+               batch_size: 1                             	[default: 2]
+                    beta1: 0.5                           
+          checkpoints_dir: ./checkpoints                 
+           continue_train: False                         
+                crop_size: 256                           
+                    ctx_w: 1.0                           
+                 dataroot: ./datasets/BCI_short          	[default: ./datasets/BCI]
+             dataset_mode: aligned                       
+                direction: AtoB                          
+              display_env: LLVIP2                        
+             display_freq: 400                           
+               display_id: 1                             
+            display_ncols: 4                             
+             display_port: 8097                          
+           display_server: http://localhost              
+          display_winsize: 256                           
+                    epoch: latest                        
+              epoch_count: 1                             
+                 gan_mode: vanilla                       
+                  gpu_ids: 0                             
+                init_gain: 0.02                          
+                init_type: normal                        
+                 input_nc: 3                             
+                  isTrain: True                          	[default: None]
+                lambda_L1: 25.0                          
+             lambda_class: 10.0                          
+               lambda_vgg: 2                             
+                load_iter: 0                             	[default: 0]
+                load_size: 320                           
+                       lr: 0.0002                        
+           lr_decay_iters: 50                            
+                lr_policy: linear                        
+         max_dataset_size: inf                           
+                    model: pix2pix                       
+                 n_epochs: 100                           
+           n_epochs_decay: 100                           
+               n_layers_D: 3                             
+                     name: pix2pix_resnet100_dbshort     	[default: pyramidpix2pix]
+                      ndf: 64                            
+                     netD: basic                         
+                     netG: attention_unet_32             	[default: resnet_9blocks]
+                      ngf: 64                            
+               no_dropout: False                         
+                  no_flip: False                         
+                  no_html: False                         
+                     norm: batch                         
+              num_threads: 4                             
+                output_nc: 3                             
+                  pattern: L1_L2_L3_L4                   
+                    phase: train                         
+                pool_size: 0                             
+               preprocess: none                          
+               print_freq: 100                           
+             save_by_iter: False                         
+          save_epoch_freq: 20                            
+         save_latest_freq: 5000                          
+           serial_batches: False                         
+                   suffix:                               
+         update_html_freq: 1000                          
+                use_22ctx: False                         
+                  verbose: False                         
+       vgg_normal_correct: False                         
+                weight_L2: 25                            
+                weight_L3: 25                            
+                weight_L4: 25                            
+              weight_conv: 100                           
+        weight_perceptual: 3e-05                         
+             weight_sobel: 50                            
+         which_perceptual: 4_2                           
+----------------- End -------------------
+dataset [AlignedDataset] was created
+The number of training images = 268
+initialize network with normal
+initialize network with normal
+model [Pix2PixModel] was created
+---------- Networks initialized -------------
+[Network G] Total number of parameters : 17.435 M
+[Network D] Total number of parameters : 2.769 M
+-----------------------------------------------
+create web directory ./checkpoints/pix2pix_resnet100_dbshort/web...
+/cs/home/psxnt2/HE_IHC_translation_dissertation/models/pix2pix_model.py:401: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with autocast():
+/cs/home/psxnt2/HE_IHC_translation_dissertation/models/pix2pix_model.py:245: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with autocast():
+/cs/home/psxnt2/HE_IHC_translation_dissertation/models/pix2pix_model.py:412: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with autocast():
+/cs/home/psxnt2/HE_IHC_translation_dissertation/models/pix2pix_model.py:272: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with autocast():
+INFO:tornado.access:200 POST /events (::1) 3.85ms
+INFO:tornado.access:200 POST /events (::1) 2.48ms
+(epoch: 1, iters: 100, time: 48.170, data: 0.381) G_GAN: 0.774 D_real: 0.892 D_fake: 0.615 G_L1: 4.201 G_L2: 3.025 G_L3: 2.640 G_L4: 2.373 
+(epoch: 1, iters: 200, time: 89.625, data: 0.390) G_GAN: 0.864 D_real: 0.749 D_fake: 0.679 G_L1: 8.445 G_L2: 8.330 G_L3: 8.298 G_L4: 8.272 
+End of epoch 1 / 200 	 Time Taken: 117 sec
+INFO:tornado.access:200 POST /events (::1) 1.21ms
+INFO:tornado.access:200 POST /events (::1) 50.29ms
+INFO:tornado.access:200 POST /events (::1) 0.47ms
+INFO:tornado.access:200 POST /events (::1) 0.54ms
+INFO:tornado.access:200 POST /events (::1) 1.07ms
+(epoch: 2, iters: 300, time: 14.491, data: 0.387) G_GAN: 0.822 D_real: 0.589 D_fake: 0.720 G_L1: 8.178 G_L2: 8.052 G_L3: 8.031 G_L4: 8.039 
+(epoch: 2, iters: 400, time: 58.553, data: 3.030) G_GAN: 1.163 D_real: 0.452 D_fake: 0.530 G_L1: 6.495 G_L2: 6.275 G_L3: 6.164 G_L4: 6.099 
+(epoch: 2, iters: 500, time: 100.029, data: 0.393) G_GAN: 1.042 D_real: 0.482 D_fake: 0.652 G_L1: 5.821 G_L2: 5.431 G_L3: 5.260 G_L4: 5.153 
+End of epoch 2 / 200 	 Time Taken: 115 sec
+INFO:tornado.access:200 POST /events (::1) 1.96ms
+INFO:tornado.access:200 POST /events (::1) 1.04ms
+INFO:tornado.access:200 POST /events (::1) 61.25ms
+INFO:tornado.access:200 POST /events (::1) 0.53ms
+INFO:tornado.access:200 POST /events (::1) 0.56ms
+(epoch: 3, iters: 600, time: 27.676, data: 0.390) G_GAN: 1.892 D_real: 0.503 D_fake: 0.260 G_L1: 6.576 G_L2: 6.339 G_L3: 6.299 G_L4: 6.301 
+(epoch: 3, iters: 700, time: 69.211, data: 0.769) G_GAN: 1.318 D_real: 0.647 D_fake: 0.387 G_L1: 5.194 G_L2: 5.058 G_L3: 5.042 G_L4: 5.047 
+(epoch: 3, iters: 800, time: 111.628, data: 1.720) G_GAN: 1.018 D_real: 0.480 D_fake: 0.677 G_L1: 3.613 G_L2: 3.146 G_L3: 3.001 G_L4: 2.970 
+End of epoch 3 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 1.13ms
+INFO:tornado.access:200 POST /events (::1) 2.36ms
+(epoch: 4, iters: 900, time: 40.605, data: 0.389) G_GAN: 1.149 D_real: 0.422 D_fake: 0.569 G_L1: 6.538 G_L2: 6.377 G_L3: 6.313 G_L4: 6.300 
+(epoch: 4, iters: 1000, time: 82.151, data: 0.389) G_GAN: 1.655 D_real: 0.758 D_fake: 0.369 G_L1: 6.547 G_L2: 6.509 G_L3: 6.503 G_L4: 6.508 
+End of epoch 4 / 200 	 Time Taken: 112 sec
+INFO:tornado.access:200 POST /events (::1) 1.13ms
+INFO:tornado.access:200 POST /events (::1) 57.53ms
+INFO:tornado.access:200 POST /events (::1) 0.60ms
+INFO:tornado.access:200 POST /events (::1) 0.85ms
+INFO:tornado.access:200 POST /events (::1) 0.94ms
+(epoch: 5, iters: 1100, time: 12.360, data: 0.390) G_GAN: 1.416 D_real: 0.211 D_fake: 0.457 G_L1: 12.078 G_L2: 12.066 G_L3: 12.080 G_L4: 12.101 
+(epoch: 5, iters: 1200, time: 55.436, data: 1.786) G_GAN: 1.294 D_real: 1.525 D_fake: 0.082 G_L1: 8.216 G_L2: 8.104 G_L3: 8.102 G_L4: 8.121 
+(epoch: 5, iters: 1300, time: 97.112, data: 0.389) G_GAN: 1.549 D_real: 0.166 D_fake: 0.641 G_L1: 5.946 G_L2: 5.693 G_L3: 5.609 G_L4: 5.587 
+End of epoch 5 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 0.85ms
+INFO:tornado.access:200 POST /events (::1) 1.51ms
+INFO:tornado.access:200 POST /events (::1) 40.57ms
+INFO:tornado.access:200 POST /events (::1) 0.46ms
+INFO:tornado.access:200 POST /events (::1) 0.51ms
+(epoch: 6, iters: 1400, time: 25.715, data: 0.392) G_GAN: 2.502 D_real: 0.187 D_fake: 0.433 G_L1: 7.756 G_L2: 7.325 G_L3: 6.975 G_L4: 6.753 
+(epoch: 6, iters: 1500, time: 67.364, data: 0.383) G_GAN: 2.153 D_real: 0.175 D_fake: 0.133 G_L1: 7.585 G_L2: 7.475 G_L3: 7.428 G_L4: 7.426 
+(epoch: 6, iters: 1600, time: 110.050, data: 1.949) G_GAN: 2.449 D_real: 0.036 D_fake: 0.447 G_L1: 8.301 G_L2: 8.215 G_L3: 8.180 G_L4: 8.182 
+End of epoch 6 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 0.82ms
+INFO:tornado.access:200 POST /events (::1) 1.25ms
+(epoch: 7, iters: 1700, time: 39.556, data: 0.603) G_GAN: 2.740 D_real: 0.103 D_fake: 0.475 G_L1: 7.295 G_L2: 7.132 G_L3: 7.059 G_L4: 7.007 
+(epoch: 7, iters: 1800, time: 80.777, data: 0.389) G_GAN: 2.527 D_real: 0.150 D_fake: 0.131 G_L1: 9.630 G_L2: 9.100 G_L3: 8.669 G_L4: 8.223 
+End of epoch 7 / 200 	 Time Taken: 112 sec
+INFO:tornado.access:200 POST /events (::1) 1.24ms
+INFO:tornado.access:200 POST /events (::1) 27.87ms
+INFO:tornado.access:200 POST /events (::1) 0.47ms
+INFO:tornado.access:200 POST /events (::1) 1.04ms
+INFO:tornado.access:200 POST /events (::1) 1.11ms
+(epoch: 8, iters: 1900, time: 10.797, data: 0.389) G_GAN: 2.319 D_real: 0.285 D_fake: 0.413 G_L1: 7.682 G_L2: 7.593 G_L3: 7.539 G_L4: 7.514 
+(epoch: 8, iters: 2000, time: 54.804, data: 2.996) G_GAN: 3.821 D_real: 0.030 D_fake: 0.030 G_L1: 4.029 G_L2: 3.812 G_L3: 3.745 G_L4: 3.684 
+(epoch: 8, iters: 2100, time: 96.254, data: 0.388) G_GAN: 2.869 D_real: 0.270 D_fake: 0.884 G_L1: 4.751 G_L2: 4.133 G_L3: 3.565 G_L4: 2.926 
+End of epoch 8 / 200 	 Time Taken: 114 sec
+INFO:tornado.access:200 POST /events (::1) 1.29ms
+INFO:tornado.access:200 POST /events (::1) 1.13ms
+INFO:tornado.access:200 POST /events (::1) 62.34ms
+INFO:tornado.access:200 POST /events (::1) 0.69ms
+INFO:tornado.access:200 POST /events (::1) 0.88ms
+(epoch: 9, iters: 2200, time: 23.987, data: 0.390) G_GAN: 2.150 D_real: 0.182 D_fake: 0.329 G_L1: 7.748 G_L2: 7.754 G_L3: 7.768 G_L4: 7.779 
+(epoch: 9, iters: 2300, time: 65.396, data: 0.499) G_GAN: 2.175 D_real: 0.170 D_fake: 0.709 G_L1: 2.627 G_L2: 2.112 G_L3: 1.699 G_L4: 1.370 
+(epoch: 9, iters: 2400, time: 108.309, data: 1.867) G_GAN: 3.023 D_real: 0.040 D_fake: 0.072 G_L1: 13.444 G_L2: 13.457 G_L3: 13.483 G_L4: 13.515 
+End of epoch 9 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 0.76ms
+INFO:tornado.access:200 POST /events (::1) 0.86ms
+(epoch: 10, iters: 2500, time: 37.135, data: 0.384) G_GAN: 4.065 D_real: 0.247 D_fake: 0.761 G_L1: 6.960 G_L2: 6.620 G_L3: 6.353 G_L4: 6.166 
+(epoch: 10, iters: 2600, time: 78.616, data: 0.385) G_GAN: 1.857 D_real: 0.255 D_fake: 0.964 G_L1: 4.468 G_L2: 4.365 G_L3: 4.325 G_L4: 4.299 
+End of epoch 10 / 200 	 Time Taken: 112 sec
+INFO:tornado.access:200 POST /events (::1) 0.74ms
+INFO:tornado.access:200 POST /events (::1) 32.39ms
+INFO:tornado.access:200 POST /events (::1) 0.59ms
+INFO:tornado.access:200 POST /events (::1) 1.11ms
+INFO:tornado.access:200 POST /events (::1) 1.41ms
+(epoch: 11, iters: 2700, time: 9.292, data: 0.388) G_GAN: 2.175 D_real: 0.645 D_fake: 0.089 G_L1: 3.980 G_L2: 3.818 G_L3: 3.758 G_L4: 3.741 
+(epoch: 11, iters: 2800, time: 52.146, data: 1.937) G_GAN: 3.221 D_real: 0.656 D_fake: 0.032 G_L1: 8.004 G_L2: 7.868 G_L3: 7.797 G_L4: 7.772 
+(epoch: 11, iters: 2900, time: 93.238, data: 0.561) G_GAN: 1.409 D_real: 0.095 D_fake: 0.634 G_L1: 3.585 G_L2: 3.215 G_L3: 3.003 G_L4: 2.882 
+End of epoch 11 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 1.47ms
+INFO:tornado.access:200 POST /events (::1) 1.30ms
+INFO:tornado.access:200 POST /events (::1) 51.26ms
+INFO:tornado.access:200 POST /events (::1) 0.62ms
+INFO:tornado.access:200 POST /events (::1) 1.26ms
+(epoch: 12, iters: 3000, time: 23.009, data: 0.659) G_GAN: 1.205 D_real: 0.005 D_fake: 0.457 G_L1: 10.693 G_L2: 10.202 G_L3: 9.841 G_L4: 9.580 
+(epoch: 12, iters: 3100, time: 64.063, data: 0.388) G_GAN: 2.652 D_real: 0.339 D_fake: 1.185 G_L1: 6.508 G_L2: 6.317 G_L3: 6.193 G_L4: 6.123 
+(epoch: 12, iters: 3200, time: 106.800, data: 1.713) G_GAN: 1.340 D_real: 1.517 D_fake: 0.082 G_L1: 3.570 G_L2: 2.891 G_L3: 2.322 G_L4: 1.936 
+End of epoch 12 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 1.59ms
+INFO:tornado.access:200 POST /events (::1) 1.51ms
+(epoch: 13, iters: 3300, time: 35.910, data: 0.389) G_GAN: 2.821 D_real: 0.155 D_fake: 0.427 G_L1: 7.868 G_L2: 7.641 G_L3: 7.576 G_L4: 7.567 
+(epoch: 13, iters: 3400, time: 77.377, data: 0.386) G_GAN: 2.440 D_real: 0.528 D_fake: 0.852 G_L1: 2.597 G_L2: 2.346 G_L3: 2.160 G_L4: 1.969 
+End of epoch 13 / 200 	 Time Taken: 112 sec
+INFO:tornado.access:200 POST /events (::1) 1.49ms
+INFO:tornado.access:200 POST /events (::1) 41.16ms
+INFO:tornado.access:200 POST /events (::1) 0.38ms
+INFO:tornado.access:200 POST /events (::1) 0.73ms
+INFO:tornado.access:200 POST /events (::1) 0.81ms
+(epoch: 14, iters: 3500, time: 7.660, data: 0.635) G_GAN: 3.426 D_real: 0.117 D_fake: 0.045 G_L1: 3.344 G_L2: 2.963 G_L3: 2.694 G_L4: 2.569 
+(epoch: 14, iters: 3600, time: 50.123, data: 1.726) G_GAN: 2.338 D_real: 0.179 D_fake: 0.143 G_L1: 10.135 G_L2: 10.089 G_L3: 10.096 G_L4: 10.109 
+(epoch: 14, iters: 3700, time: 91.708, data: 0.389) G_GAN: 2.590 D_real: 0.061 D_fake: 0.071 G_L1: 8.478 G_L2: 8.378 G_L3: 8.323 G_L4: 8.312 
+End of epoch 14 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 1.53ms
+INFO:tornado.access:200 POST /events (::1) 1.55ms
+INFO:tornado.access:200 POST /events (::1) 29.41ms
+INFO:tornado.access:200 POST /events (::1) 0.46ms
+INFO:tornado.access:200 POST /events (::1) 1.63ms
+(epoch: 15, iters: 3800, time: 21.037, data: 0.388) G_GAN: 2.447 D_real: 0.764 D_fake: 0.502 G_L1: 4.308 G_L2: 4.134 G_L3: 3.991 G_L4: 3.846 
+(epoch: 15, iters: 3900, time: 62.427, data: 0.399) G_GAN: 4.160 D_real: 0.020 D_fake: 0.018 G_L1: 8.814 G_L2: 8.810 G_L3: 8.828 G_L4: 8.849 
+(epoch: 15, iters: 4000, time: 107.112, data: 3.913) G_GAN: 3.198 D_real: 0.183 D_fake: 0.037 G_L1: 3.849 G_L2: 3.460 G_L3: 3.182 G_L4: 3.054 
+End of epoch 15 / 200 	 Time Taken: 115 sec
+INFO:tornado.access:200 POST /events (::1) 1.61ms
+INFO:tornado.access:200 POST /events (::1) 1.59ms
+(epoch: 16, iters: 4100, time: 33.987, data: 0.383) G_GAN: 2.769 D_real: 2.309 D_fake: 1.193 G_L1: 13.425 G_L2: 13.398 G_L3: 13.409 G_L4: 13.426 
+(epoch: 16, iters: 4200, time: 75.471, data: 0.392) G_GAN: 1.855 D_real: 0.393 D_fake: 0.083 G_L1: 2.118 G_L2: 1.849 G_L3: 1.682 G_L4: 1.488 
+End of epoch 16 / 200 	 Time Taken: 111 sec
+INFO:tornado.access:200 POST /events (::1) 1.62ms
+INFO:tornado.access:200 POST /events (::1) 27.61ms
+INFO:tornado.access:200 POST /events (::1) 0.48ms
+INFO:tornado.access:200 POST /events (::1) 1.58ms
+INFO:tornado.access:200 POST /events (::1) 1.65ms
+(epoch: 17, iters: 4300, time: 5.491, data: 0.390) G_GAN: 2.359 D_real: 0.313 D_fake: 0.199 G_L1: 7.107 G_L2: 6.942 G_L3: 6.877 G_L4: 6.860 
+(epoch: 17, iters: 4400, time: 48.557, data: 1.780) G_GAN: 3.463 D_real: 0.019 D_fake: 1.334 G_L1: 5.195 G_L2: 5.034 G_L3: 4.897 G_L4: 4.785 
+(epoch: 17, iters: 4500, time: 90.104, data: 0.392) G_GAN: 2.588 D_real: 0.032 D_fake: 0.094 G_L1: 4.178 G_L2: 3.862 G_L3: 3.622 G_L4: 3.431 
+End of epoch 17 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 2.98ms
+INFO:tornado.access:200 POST /events (::1) 1.72ms
+INFO:tornado.access:200 POST /events (::1) 51.04ms
+INFO:tornado.access:200 POST /events (::1) 0.51ms
+INFO:tornado.access:200 POST /events (::1) 1.08ms
+(epoch: 18, iters: 4600, time: 18.875, data: 0.391) G_GAN: 2.870 D_real: 2.725 D_fake: 0.017 G_L1: 9.245 G_L2: 9.200 G_L3: 9.207 G_L4: 9.228 
+(epoch: 18, iters: 4700, time: 60.461, data: 0.387) G_GAN: 4.405 D_real: 0.087 D_fake: 0.020 G_L1: 9.817 G_L2: 9.801 G_L3: 9.812 G_L4: 9.832 
+(epoch: 18, iters: 4800, time: 102.945, data: 1.774) G_GAN: 2.950 D_real: 0.042 D_fake: 0.638 G_L1: 3.532 G_L2: 2.943 G_L3: 2.467 G_L4: 2.080 
+End of epoch 18 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 1.72ms
+INFO:tornado.access:200 POST /events (::1) 1.27ms
+(epoch: 19, iters: 4900, time: 32.646, data: 0.627) G_GAN: 1.630 D_real: 1.841 D_fake: 0.075 G_L1: 9.379 G_L2: 9.248 G_L3: 9.221 G_L4: 9.222 
+(epoch: 19, iters: 5000, time: 73.650, data: 0.389) G_GAN: 3.082 D_real: 0.010 D_fake: 0.363 G_L1: 7.106 G_L2: 7.025 G_L3: 7.000 G_L4: 6.997 
+saving the latest model (epoch 19, total_iters 5000)
+End of epoch 19 / 200 	 Time Taken: 112 sec
+INFO:tornado.access:200 POST /events (::1) 1.73ms
+INFO:tornado.access:200 POST /events (::1) 37.15ms
+INFO:tornado.access:200 POST /events (::1) 0.49ms
+INFO:tornado.access:200 POST /events (::1) 1.02ms
+INFO:tornado.access:200 POST /events (::1) 1.19ms
+(epoch: 20, iters: 5100, time: 4.253, data: 0.395) G_GAN: 3.961 D_real: 0.004 D_fake: 0.019 G_L1: 6.028 G_L2: 5.658 G_L3: 5.336 G_L4: 5.083 
+(epoch: 20, iters: 5200, time: 47.096, data: 1.868) G_GAN: 4.038 D_real: 0.005 D_fake: 0.021 G_L1: 7.538 G_L2: 7.469 G_L3: 7.448 G_L4: 7.433 
+(epoch: 20, iters: 5300, time: 88.768, data: 0.393) G_GAN: 2.686 D_real: 0.642 D_fake: 0.089 G_L1: 4.546 G_L2: 3.998 G_L3: 3.557 G_L4: 3.180 
+saving the model at the end of epoch 20, iters 5360
+End of epoch 20 / 200 	 Time Taken: 114 sec
+INFO:tornado.access:200 POST /events (::1) 1.54ms
+INFO:tornado.access:200 POST /events (::1) 1.19ms
+INFO:tornado.access:200 POST /events (::1) 29.60ms
+INFO:tornado.access:200 POST /events (::1) 0.45ms
+INFO:tornado.access:200 POST /events (::1) 1.10ms
+(epoch: 21, iters: 5400, time: 17.291, data: 0.387) G_GAN: 1.857 D_real: 0.245 D_fake: 0.199 G_L1: 7.275 G_L2: 7.129 G_L3: 7.051 G_L4: 7.010 
+(epoch: 21, iters: 5500, time: 58.269, data: 0.391) G_GAN: 3.224 D_real: 0.762 D_fake: 0.052 G_L1: 5.560 G_L2: 5.173 G_L3: 4.863 G_L4: 4.628 
+(epoch: 21, iters: 5600, time: 100.874, data: 1.632) G_GAN: 2.276 D_real: 0.222 D_fake: 0.489 G_L1: 9.967 G_L2: 9.906 G_L3: 9.894 G_L4: 9.906 
+End of epoch 21 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 1.09ms
+INFO:tornado.access:200 POST /events (::1) 1.16ms
+(epoch: 22, iters: 5700, time: 30.611, data: 0.394) G_GAN: 2.708 D_real: 0.148 D_fake: 0.132 G_L1: 6.984 G_L2: 6.949 G_L3: 6.932 G_L4: 6.932 
+(epoch: 22, iters: 5800, time: 72.095, data: 0.392) G_GAN: 2.214 D_real: 0.158 D_fake: 0.153 G_L1: 7.634 G_L2: 7.579 G_L3: 7.536 G_L4: 7.496 
+End of epoch 22 / 200 	 Time Taken: 111 sec
+INFO:tornado.access:200 POST /events (::1) 1.86ms
+INFO:tornado.access:200 POST /events (::1) 23.35ms
+INFO:tornado.access:200 POST /events (::1) 0.52ms
+INFO:tornado.access:200 POST /events (::1) 1.25ms
+INFO:tornado.access:200 POST /events (::1) 3.15ms
+(epoch: 23, iters: 5900, time: 2.565, data: 0.382) G_GAN: 2.650 D_real: 0.056 D_fake: 0.141 G_L1: 4.566 G_L2: 4.420 G_L3: 4.361 G_L4: 4.342 
+(epoch: 23, iters: 6000, time: 47.323, data: 3.955) G_GAN: 2.615 D_real: 0.207 D_fake: 0.085 G_L1: 2.866 G_L2: 2.525 G_L3: 2.283 G_L4: 2.174 
+(epoch: 23, iters: 6100, time: 88.810, data: 0.389) G_GAN: 0.765 D_real: 1.067 D_fake: 0.756 G_L1: 9.690 G_L2: 9.665 G_L3: 9.667 G_L4: 9.680 
+End of epoch 23 / 200 	 Time Taken: 115 sec
+INFO:tornado.access:200 POST /events (::1) 1.92ms
+INFO:tornado.access:200 POST /events (::1) 1.99ms
+INFO:tornado.access:200 POST /events (::1) 39.25ms
+INFO:tornado.access:200 POST /events (::1) 0.47ms
+INFO:tornado.access:200 POST /events (::1) 0.89ms
+(epoch: 24, iters: 6200, time: 15.897, data: 0.387) G_GAN: 1.554 D_real: 0.093 D_fake: 0.998 G_L1: 2.835 G_L2: 2.494 G_L3: 2.246 G_L4: 2.095 
+(epoch: 24, iters: 6300, time: 57.205, data: 0.387) G_GAN: 4.335 D_real: 0.020 D_fake: 0.015 G_L1: 6.772 G_L2: 6.558 G_L3: 6.459 G_L4: 6.445 
+(epoch: 24, iters: 6400, time: 100.105, data: 1.708) G_GAN: 3.900 D_real: 0.015 D_fake: 0.027 G_L1: 5.708 G_L2: 5.306 G_L3: 4.929 G_L4: 4.594 
+End of epoch 24 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 1.96ms
+INFO:tornado.access:200 POST /events (::1) 1.97ms
+INFO:tornado.access:200 POST /events (::1) 0.91ms
+(epoch: 25, iters: 6500, time: 29.100, data: 0.384) G_GAN: 1.959 D_real: 0.111 D_fake: 1.237 G_L1: 4.653 G_L2: 4.536 G_L3: 4.492 G_L4: 4.482 
+(epoch: 25, iters: 6600, time: 70.466, data: 0.390) G_GAN: 1.269 D_real: 0.522 D_fake: 0.419 G_L1: 5.704 G_L2: 5.259 G_L3: 5.022 G_L4: 4.873 
+(epoch: 25, iters: 6700, time: 112.003, data: 0.389) G_GAN: 1.920 D_real: 0.705 D_fake: 0.231 G_L1: 10.375 G_L2: 10.082 G_L3: 9.826 G_L4: 9.549 
+End of epoch 25 / 200 	 Time Taken: 112 sec
+INFO:tornado.access:200 POST /events (::1) 29.36ms
+INFO:tornado.access:200 POST /events (::1) 0.57ms
+INFO:tornado.access:200 POST /events (::1) 1.45ms
+INFO:tornado.access:200 POST /events (::1) 2.01ms
+(epoch: 26, iters: 6800, time: 44.121, data: 1.778) G_GAN: 2.917 D_real: 0.059 D_fake: 0.355 G_L1: 7.150 G_L2: 7.030 G_L3: 6.979 G_L4: 6.960 
+(epoch: 26, iters: 6900, time: 85.681, data: 0.386) G_GAN: 4.607 D_real: 0.013 D_fake: 0.012 G_L1: 4.116 G_L2: 3.918 G_L3: 3.775 G_L4: 3.683 
+End of epoch 26 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 0.98ms
+INFO:tornado.access:200 POST /events (::1) 0.94ms
+INFO:tornado.access:200 POST /events (::1) 27.07ms
+INFO:tornado.access:200 POST /events (::1) 0.56ms
+INFO:tornado.access:200 POST /events (::1) 1.53ms
+(epoch: 27, iters: 7000, time: 14.119, data: 0.480) G_GAN: 1.443 D_real: 1.376 D_fake: 0.428 G_L1: 3.596 G_L2: 2.909 G_L3: 2.287 G_L4: 1.840 
+(epoch: 27, iters: 7100, time: 55.123, data: 0.385) G_GAN: 2.741 D_real: 0.037 D_fake: 0.130 G_L1: 5.298 G_L2: 5.134 G_L3: 4.977 G_L4: 4.839 
+(epoch: 27, iters: 7200, time: 98.023, data: 1.805) G_GAN: 3.163 D_real: 0.839 D_fake: 0.051 G_L1: 6.493 G_L2: 6.356 G_L3: 6.236 G_L4: 6.179 
+End of epoch 27 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 2.09ms
+INFO:tornado.access:200 POST /events (::1) 1.35ms
+INFO:tornado.access:200 POST /events (::1) 3.65ms
+(epoch: 28, iters: 7300, time: 27.181, data: 0.387) G_GAN: 5.263 D_real: 0.023 D_fake: 1.697 G_L1: 9.214 G_L2: 9.154 G_L3: 9.159 G_L4: 9.177 
+(epoch: 28, iters: 7400, time: 68.536, data: 0.390) G_GAN: 0.958 D_real: 0.888 D_fake: 0.132 G_L1: 2.938 G_L2: 2.381 G_L3: 1.889 G_L4: 1.506 
+(epoch: 28, iters: 7500, time: 109.820, data: 0.642) G_GAN: 2.262 D_real: 0.095 D_fake: 0.456 G_L1: 4.836 G_L2: 4.442 G_L3: 4.187 G_L4: 4.037 
+End of epoch 28 / 200 	 Time Taken: 111 sec
+INFO:tornado.access:200 POST /events (::1) 28.54ms
+INFO:tornado.access:200 POST /events (::1) 0.47ms
+INFO:tornado.access:200 POST /events (::1) 1.03ms
+INFO:tornado.access:200 POST /events (::1) 3.49ms
+(epoch: 29, iters: 7600, time: 41.802, data: 1.775) G_GAN: 3.702 D_real: 0.053 D_fake: 0.679 G_L1: 6.636 G_L2: 6.463 G_L3: 6.364 G_L4: 6.307 
+(epoch: 29, iters: 7700, time: 83.068, data: 0.392) G_GAN: 3.223 D_real: 0.040 D_fake: 0.197 G_L1: 1.980 G_L2: 1.736 G_L3: 1.568 G_L4: 1.449 
+End of epoch 29 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 1.15ms
+INFO:tornado.access:200 POST /events (::1) 1.98ms
+INFO:tornado.access:200 POST /events (::1) 46.47ms
+INFO:tornado.access:200 POST /events (::1) 0.51ms
+INFO:tornado.access:200 POST /events (::1) 2.19ms
+(epoch: 30, iters: 7800, time: 12.554, data: 0.390) G_GAN: 3.847 D_real: 0.097 D_fake: 0.031 G_L1: 4.245 G_L2: 3.867 G_L3: 3.595 G_L4: 3.343 
+(epoch: 30, iters: 7900, time: 54.071, data: 0.392) G_GAN: 2.189 D_real: 0.082 D_fake: 0.210 G_L1: 2.956 G_L2: 2.254 G_L3: 1.645 G_L4: 1.260 
+(epoch: 30, iters: 8000, time: 99.040, data: 3.831) G_GAN: 3.609 D_real: 0.066 D_fake: 0.619 G_L1: 3.398 G_L2: 2.818 G_L3: 2.291 G_L4: 1.831 
+End of epoch 30 / 200 	 Time Taken: 115 sec
+INFO:tornado.access:200 POST /events (::1) 2.22ms
+INFO:tornado.access:200 POST /events (::1) 2.23ms
+INFO:tornado.access:200 POST /events (::1) 2.23ms
+(epoch: 31, iters: 8100, time: 25.653, data: 0.389) G_GAN: 3.140 D_real: 0.391 D_fake: 0.342 G_L1: 7.546 G_L2: 7.497 G_L3: 7.486 G_L4: 7.484 
+(epoch: 31, iters: 8200, time: 67.199, data: 0.384) G_GAN: 2.693 D_real: 3.267 D_fake: 0.228 G_L1: 8.771 G_L2: 8.698 G_L3: 8.669 G_L4: 8.694 
+(epoch: 31, iters: 8300, time: 108.812, data: 0.701) G_GAN: 2.274 D_real: 0.029 D_fake: 0.278 G_L1: 4.893 G_L2: 4.840 G_L3: 4.823 G_L4: 4.825 
+End of epoch 31 / 200 	 Time Taken: 112 sec
+INFO:tornado.access:200 POST /events (::1) 30.57ms
+INFO:tornado.access:200 POST /events (::1) 0.54ms
+INFO:tornado.access:200 POST /events (::1) 1.78ms
+INFO:tornado.access:200 POST /events (::1) 2.22ms
+(epoch: 32, iters: 8400, time: 40.663, data: 2.010) G_GAN: 2.143 D_real: 0.109 D_fake: 0.252 G_L1: 4.896 G_L2: 4.724 G_L3: 4.603 G_L4: 4.539 
+(epoch: 32, iters: 8500, time: 82.039, data: 0.390) G_GAN: 2.390 D_real: 1.040 D_fake: 0.069 G_L1: 5.053 G_L2: 4.724 G_L3: 4.536 G_L4: 4.450 
+End of epoch 32 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 2.27ms
+INFO:tornado.access:200 POST /events (::1) 1.23ms
+INFO:tornado.access:200 POST /events (::1) 19.73ms
+INFO:tornado.access:200 POST /events (::1) 0.60ms
+INFO:tornado.access:200 POST /events (::1) 2.02ms
+(epoch: 33, iters: 8600, time: 11.049, data: 0.391) G_GAN: 2.093 D_real: 0.510 D_fake: 0.963 G_L1: 2.796 G_L2: 2.387 G_L3: 2.063 G_L4: 1.782 
+(epoch: 33, iters: 8700, time: 52.716, data: 0.390) G_GAN: 1.613 D_real: 0.635 D_fake: 0.111 G_L1: 3.205 G_L2: 2.671 G_L3: 2.209 G_L4: 1.851 
+(epoch: 33, iters: 8800, time: 95.833, data: 1.750) G_GAN: 1.936 D_real: 0.278 D_fake: 1.227 G_L1: 6.186 G_L2: 5.966 G_L3: 5.814 G_L4: 5.735 
+End of epoch 33 / 200 	 Time Taken: 114 sec
+INFO:tornado.access:200 POST /events (::1) 2.33ms
+INFO:tornado.access:200 POST /events (::1) 1.40ms
+INFO:tornado.access:200 POST /events (::1) 2.37ms
+(epoch: 34, iters: 8900, time: 23.933, data: 0.392) G_GAN: 5.164 D_real: 0.011 D_fake: 0.007 G_L1: 8.239 G_L2: 8.223 G_L3: 8.227 G_L4: 8.237 
+(epoch: 34, iters: 9000, time: 65.485, data: 0.389) G_GAN: 6.459 D_real: 0.168 D_fake: 0.002 G_L1: 4.734 G_L2: 4.678 G_L3: 4.658 G_L4: 4.668 
+(epoch: 34, iters: 9100, time: 106.576, data: 0.385) G_GAN: 2.836 D_real: 0.011 D_fake: 0.989 G_L1: 2.483 G_L2: 2.257 G_L3: 2.001 G_L4: 1.767 
+End of epoch 34 / 200 	 Time Taken: 111 sec
+INFO:tornado.access:200 POST /events (::1) 39.27ms
+INFO:tornado.access:200 POST /events (::1) 0.61ms
+INFO:tornado.access:200 POST /events (::1) 2.14ms
+INFO:tornado.access:200 POST /events (::1) 2.35ms
+(epoch: 35, iters: 9200, time: 38.987, data: 1.853) G_GAN: 3.655 D_real: 0.004 D_fake: 0.036 G_L1: 4.867 G_L2: 4.668 G_L3: 4.510 G_L4: 4.389 
+(epoch: 35, iters: 9300, time: 80.260, data: 0.386) G_GAN: 2.759 D_real: 0.026 D_fake: 0.178 G_L1: 9.437 G_L2: 9.364 G_L3: 9.340 G_L4: 9.336 
+End of epoch 35 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 1.87ms
+INFO:tornado.access:200 POST /events (::1) 1.70ms
+INFO:tornado.access:200 POST /events (::1) 33.05ms
+INFO:tornado.access:200 POST /events (::1) 0.57ms
+INFO:tornado.access:200 POST /events (::1) 1.95ms
+(epoch: 36, iters: 9400, time: 9.178, data: 0.386) G_GAN: 2.896 D_real: 0.125 D_fake: 0.766 G_L1: 2.714 G_L2: 2.240 G_L3: 1.803 G_L4: 1.422 
+(epoch: 36, iters: 9500, time: 50.734, data: 0.386) G_GAN: 2.873 D_real: 1.498 D_fake: 0.064 G_L1: 4.534 G_L2: 4.332 G_L3: 4.176 G_L4: 4.120 
+(epoch: 36, iters: 9600, time: 93.470, data: 1.963) G_GAN: 2.016 D_real: 0.011 D_fake: 0.979 G_L1: 5.839 G_L2: 5.689 G_L3: 5.587 G_L4: 5.518 
+End of epoch 36 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 2.45ms
+INFO:tornado.access:200 POST /events (::1) 2.53ms
+INFO:tornado.access:200 POST /events (::1) 2.48ms
+(epoch: 37, iters: 9700, time: 22.532, data: 0.530) G_GAN: 5.280 D_real: 0.271 D_fake: 0.004 G_L1: 10.229 G_L2: 10.232 G_L3: 10.248 G_L4: 10.271 
+(epoch: 37, iters: 9800, time: 63.939, data: 0.390) G_GAN: 3.159 D_real: 0.021 D_fake: 0.052 G_L1: 11.061 G_L2: 11.061 G_L3: 11.075 G_L4: 11.092 
+(epoch: 37, iters: 9900, time: 105.527, data: 0.389) G_GAN: 1.111 D_real: 0.938 D_fake: 0.827 G_L1: 3.222 G_L2: 2.911 G_L3: 2.672 G_L4: 2.486 
+End of epoch 37 / 200 	 Time Taken: 111 sec
+INFO:tornado.access:200 POST /events (::1) 21.66ms
+INFO:tornado.access:200 POST /events (::1) 0.48ms
+INFO:tornado.access:200 POST /events (::1) 2.50ms
+INFO:tornado.access:200 POST /events (::1) 1.02ms
+(epoch: 38, iters: 10000, time: 40.202, data: 4.657) G_GAN: 1.676 D_real: 0.122 D_fake: 0.112 G_L1: 2.960 G_L2: 2.652 G_L3: 2.401 G_L4: 2.203 
+saving the latest model (epoch 38, total_iters 10000)
+(epoch: 38, iters: 10100, time: 82.052, data: 0.386) G_GAN: 1.861 D_real: 0.113 D_fake: 0.359 G_L1: 7.128 G_L2: 6.889 G_L3: 6.775 G_L4: 6.776 
+End of epoch 38 / 200 	 Time Taken: 116 sec
+INFO:tornado.access:200 POST /events (::1) 2.61ms
+INFO:tornado.access:200 POST /events (::1) 1.58ms
+INFO:tornado.access:200 POST /events (::1) 28.06ms
+INFO:tornado.access:200 POST /events (::1) 0.50ms
+INFO:tornado.access:200 POST /events (::1) 1.60ms
+(epoch: 39, iters: 10200, time: 7.733, data: 0.385) G_GAN: 2.276 D_real: 0.153 D_fake: 0.210 G_L1: 3.120 G_L2: 2.854 G_L3: 2.642 G_L4: 2.438 
+(epoch: 39, iters: 10300, time: 48.985, data: 0.384) G_GAN: 1.841 D_real: 0.419 D_fake: 0.118 G_L1: 3.855 G_L2: 3.584 G_L3: 3.402 G_L4: 3.330 
+(epoch: 39, iters: 10400, time: 92.094, data: 1.810) G_GAN: 2.113 D_real: 0.020 D_fake: 0.223 G_L1: 3.268 G_L2: 2.986 G_L3: 2.813 G_L4: 2.710 
+End of epoch 39 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 2.55ms
+INFO:tornado.access:200 POST /events (::1) 2.50ms
+INFO:tornado.access:200 POST /events (::1) 2.56ms
+(epoch: 40, iters: 10500, time: 21.024, data: 0.394) G_GAN: 1.509 D_real: 0.732 D_fake: 0.112 G_L1: 3.089 G_L2: 2.625 G_L3: 2.207 G_L4: 1.904 
+(epoch: 40, iters: 10600, time: 62.808, data: 0.390) G_GAN: 2.359 D_real: 2.438 D_fake: 0.090 G_L1: 3.782 G_L2: 3.230 G_L3: 2.747 G_L4: 2.315 
+(epoch: 40, iters: 10700, time: 104.068, data: 0.388) G_GAN: 3.718 D_real: 1.019 D_fake: 0.704 G_L1: 7.645 G_L2: 7.608 G_L3: 7.594 G_L4: 7.596 
+saving the model at the end of epoch 40, iters 10720
+End of epoch 40 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 31.34ms
+INFO:tornado.access:200 POST /events (::1) 0.56ms
+INFO:tornado.access:200 POST /events (::1) 1.71ms
+INFO:tornado.access:200 POST /events (::1) 1.10ms
+(epoch: 41, iters: 10800, time: 34.973, data: 1.539) G_GAN: 1.907 D_real: 0.073 D_fake: 0.343 G_L1: 5.369 G_L2: 5.353 G_L3: 5.359 G_L4: 5.373 
+(epoch: 41, iters: 10900, time: 76.309, data: 0.387) G_GAN: 3.983 D_real: 2.397 D_fake: 0.016 G_L1: 3.028 G_L2: 2.768 G_L3: 2.600 G_L4: 2.483 
+End of epoch 41 / 200 	 Time Taken: 112 sec
+INFO:tornado.access:200 POST /events (::1) 2.63ms
+INFO:tornado.access:200 POST /events (::1) 1.57ms
+INFO:tornado.access:200 POST /events (::1) 35.23ms
+INFO:tornado.access:200 POST /events (::1) 0.40ms
+INFO:tornado.access:200 POST /events (::1) 1.32ms
+(epoch: 42, iters: 11000, time: 6.018, data: 0.397) G_GAN: 4.740 D_real: 0.005 D_fake: 0.010 G_L1: 7.103 G_L2: 7.029 G_L3: 7.012 G_L4: 7.026 
+(epoch: 42, iters: 11100, time: 47.295, data: 0.386) G_GAN: 2.267 D_real: 0.015 D_fake: 0.215 G_L1: 4.748 G_L2: 4.511 G_L3: 4.356 G_L4: 4.302 
+(epoch: 42, iters: 11200, time: 90.241, data: 1.876) G_GAN: 4.929 D_real: 0.010 D_fake: 0.008 G_L1: 3.302 G_L2: 2.954 G_L3: 2.731 G_L4: 2.568 
+End of epoch 42 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 1.86ms
+INFO:tornado.access:200 POST /events (::1) 2.75ms
+INFO:tornado.access:200 POST /events (::1) 1.64ms
+(epoch: 43, iters: 11300, time: 19.197, data: 0.393) G_GAN: 4.189 D_real: 0.003 D_fake: 0.018 G_L1: 10.032 G_L2: 9.856 G_L3: 9.769 G_L4: 9.742 
+(epoch: 43, iters: 11400, time: 60.746, data: 0.605) G_GAN: 2.241 D_real: 1.123 D_fake: 0.163 G_L1: 9.601 G_L2: 9.544 G_L3: 9.551 G_L4: 9.565 
+(epoch: 43, iters: 11500, time: 101.986, data: 0.387) G_GAN: 1.661 D_real: 0.128 D_fake: 1.392 G_L1: 3.905 G_L2: 3.620 G_L3: 3.388 G_L4: 3.226 
+End of epoch 43 / 200 	 Time Taken: 112 sec
+INFO:tornado.access:200 POST /events (::1) 28.33ms
+INFO:tornado.access:200 POST /events (::1) 0.64ms
+INFO:tornado.access:200 POST /events (::1) 2.56ms
+INFO:tornado.access:200 POST /events (::1) 2.74ms
+(epoch: 44, iters: 11600, time: 33.880, data: 1.665) G_GAN: 3.319 D_real: 0.036 D_fake: 0.043 G_L1: 8.028 G_L2: 7.927 G_L3: 7.898 G_L4: 7.907 
+(epoch: 44, iters: 11700, time: 75.482, data: 0.391) G_GAN: 1.893 D_real: 0.832 D_fake: 0.791 G_L1: 2.488 G_L2: 2.103 G_L3: 1.726 G_L4: 1.381 
+End of epoch 44 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 2.78ms
+INFO:tornado.access:200 POST /events (::1) 2.74ms
+INFO:tornado.access:200 POST /events (::1) 27.10ms
+INFO:tornado.access:200 POST /events (::1) 0.51ms
+INFO:tornado.access:200 POST /events (::1) 2.54ms
+(epoch: 45, iters: 11800, time: 4.015, data: 0.381) G_GAN: 1.599 D_real: 0.668 D_fake: 0.188 G_L1: 3.491 G_L2: 3.335 G_L3: 3.252 G_L4: 3.196 
+(epoch: 45, iters: 11900, time: 45.398, data: 0.388) G_GAN: 2.324 D_real: 0.007 D_fake: 0.205 G_L1: 6.451 G_L2: 6.411 G_L3: 6.385 G_L4: 6.390 
+(epoch: 45, iters: 12000, time: 90.668, data: 4.355) G_GAN: 2.805 D_real: 0.064 D_fake: 0.078 G_L1: 4.467 G_L2: 4.327 G_L3: 4.208 G_L4: 4.134 
+End of epoch 45 / 200 	 Time Taken: 115 sec
+INFO:tornado.access:200 POST /events (::1) 2.79ms
+INFO:tornado.access:200 POST /events (::1) 1.87ms
+INFO:tornado.access:200 POST /events (::1) 3.76ms
+(epoch: 46, iters: 12100, time: 17.777, data: 0.583) G_GAN: 1.689 D_real: 0.094 D_fake: 0.484 G_L1: 2.802 G_L2: 2.416 G_L3: 2.105 G_L4: 1.876 
+(epoch: 46, iters: 12200, time: 59.288, data: 0.386) G_GAN: 4.084 D_real: 0.009 D_fake: 0.018 G_L1: 10.111 G_L2: 10.103 G_L3: 10.097 G_L4: 10.080 
+(epoch: 46, iters: 12300, time: 100.460, data: 0.388) G_GAN: 3.085 D_real: 0.019 D_fake: 1.565 G_L1: 2.687 G_L2: 2.379 G_L3: 2.157 G_L4: 2.011 
+End of epoch 46 / 200 	 Time Taken: 112 sec
+INFO:tornado.access:200 POST /events (::1) 42.13ms
+INFO:tornado.access:200 POST /events (::1) 0.58ms
+INFO:tornado.access:200 POST /events (::1) 1.83ms
+INFO:tornado.access:200 POST /events (::1) 2.87ms
+(epoch: 47, iters: 12400, time: 31.970, data: 1.813) G_GAN: 3.288 D_real: 0.037 D_fake: 0.044 G_L1: 8.343 G_L2: 8.181 G_L3: 8.148 G_L4: 8.165 
+(epoch: 47, iters: 12500, time: 73.295, data: 0.391) G_GAN: 3.251 D_real: 1.007 D_fake: 0.020 G_L1: 4.932 G_L2: 4.507 G_L3: 4.256 G_L4: 4.081 
+End of epoch 47 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 2.88ms
+INFO:tornado.access:200 POST /events (::1) 2.56ms
+INFO:tornado.access:200 POST /events (::1) 24.72ms
+INFO:tornado.access:200 POST /events (::1) 0.51ms
+INFO:tornado.access:200 POST /events (::1) 2.16ms
+(epoch: 48, iters: 12600, time: 2.808, data: 0.385) G_GAN: 3.903 D_real: 0.971 D_fake: 0.022 G_L1: 4.263 G_L2: 4.017 G_L3: 3.883 G_L4: 3.797 
+(epoch: 48, iters: 12700, time: 44.088, data: 0.384) G_GAN: 1.786 D_real: 0.113 D_fake: 0.246 G_L1: 8.175 G_L2: 8.099 G_L3: 8.070 G_L4: 8.065 
+(epoch: 48, iters: 12800, time: 86.556, data: 1.721) G_GAN: 4.244 D_real: 0.015 D_fake: 0.018 G_L1: 6.268 G_L2: 6.244 G_L3: 6.248 G_L4: 6.261 
+End of epoch 48 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 2.96ms
+INFO:tornado.access:200 POST /events (::1) 2.94ms
+INFO:tornado.access:200 POST /events (::1) 1.93ms
+(epoch: 49, iters: 12900, time: 16.062, data: 0.390) G_GAN: 2.817 D_real: 0.019 D_fake: 0.094 G_L1: 2.662 G_L2: 2.266 G_L3: 1.925 G_L4: 1.612 
+(epoch: 49, iters: 13000, time: 57.487, data: 0.390) G_GAN: 4.206 D_real: 0.523 D_fake: 0.011 G_L1: 4.462 G_L2: 4.054 G_L3: 3.743 G_L4: 3.504 
+(epoch: 49, iters: 13100, time: 98.939, data: 0.389) G_GAN: 5.949 D_real: 0.640 D_fake: 0.004 G_L1: 3.132 G_L2: 2.944 G_L3: 2.828 G_L4: 2.754 
+End of epoch 49 / 200 	 Time Taken: 112 sec
+INFO:tornado.access:200 POST /events (::1) 26.48ms
+INFO:tornado.access:200 POST /events (::1) 0.67ms
+INFO:tornado.access:200 POST /events (::1) 2.41ms
+INFO:tornado.access:200 POST /events (::1) 1.52ms
+INFO:tornado.access:200 POST /events (::1) 2.98ms
+(epoch: 50, iters: 13200, time: 30.262, data: 1.556) G_GAN: 1.583 D_real: 0.042 D_fake: 0.679 G_L1: 10.073 G_L2: 10.069 G_L3: 10.079 G_L4: 10.094 
+(epoch: 50, iters: 13300, time: 71.773, data: 0.388) G_GAN: 2.868 D_real: 0.023 D_fake: 0.096 G_L1: 4.271 G_L2: 4.090 G_L3: 3.907 G_L4: 3.778 
+(epoch: 50, iters: 13400, time: 113.165, data: 0.389) G_GAN: 2.045 D_real: 0.233 D_fake: 0.108 G_L1: 4.013 G_L2: 3.916 G_L3: 3.844 G_L4: 3.781 
+End of epoch 50 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 1.95ms
+INFO:tornado.access:200 POST /events (::1) 20.20ms
+INFO:tornado.access:200 POST /events (::1) 0.69ms
+INFO:tornado.access:200 POST /events (::1) 2.35ms
+(epoch: 51, iters: 13500, time: 42.610, data: 0.396) G_GAN: 1.711 D_real: 3.600 D_fake: 0.069 G_L1: 2.761 G_L2: 2.320 G_L3: 1.977 G_L4: 1.731 
+(epoch: 51, iters: 13600, time: 84.945, data: 1.499) G_GAN: 4.519 D_real: 0.025 D_fake: 0.016 G_L1: 6.511 G_L2: 6.516 G_L3: 6.523 G_L4: 6.529 
+End of epoch 51 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 2.85ms
+INFO:tornado.access:200 POST /events (::1) 1.50ms
+INFO:tornado.access:200 POST /events (::1) 4.47ms
+(epoch: 52, iters: 13700, time: 14.292, data: 0.388) G_GAN: 3.478 D_real: 0.022 D_fake: 0.026 G_L1: 4.075 G_L2: 3.863 G_L3: 3.658 G_L4: 3.483 
+(epoch: 52, iters: 13800, time: 55.641, data: 0.391) G_GAN: 1.194 D_real: 0.722 D_fake: 0.086 G_L1: 6.535 G_L2: 6.380 G_L3: 6.347 G_L4: 6.352 
+(epoch: 52, iters: 13900, time: 96.938, data: 0.387) G_GAN: 2.996 D_real: 0.211 D_fake: 0.142 G_L1: 3.089 G_L2: 2.980 G_L3: 2.899 G_L4: 2.828 
+End of epoch 52 / 200 	 Time Taken: 111 sec
+INFO:tornado.access:200 POST /events (::1) 30.57ms
+INFO:tornado.access:200 POST /events (::1) 0.49ms
+INFO:tornado.access:200 POST /events (::1) 3.08ms
+INFO:tornado.access:200 POST /events (::1) 3.07ms
+INFO:tornado.access:200 POST /events (::1) 3.12ms
+(epoch: 53, iters: 14000, time: 30.846, data: 3.819) G_GAN: 4.373 D_real: 0.020 D_fake: 2.255 G_L1: 2.541 G_L2: 2.315 G_L3: 2.164 G_L4: 2.016 
+(epoch: 53, iters: 14100, time: 72.553, data: 0.387) G_GAN: 1.973 D_real: 0.667 D_fake: 0.133 G_L1: 5.665 G_L2: 5.532 G_L3: 5.478 G_L4: 5.471 
+(epoch: 53, iters: 14200, time: 113.919, data: 0.381) G_GAN: 2.613 D_real: 0.078 D_fake: 0.163 G_L1: 8.427 G_L2: 8.212 G_L3: 8.028 G_L4: 7.848 
+End of epoch 53 / 200 	 Time Taken: 115 sec
+INFO:tornado.access:200 POST /events (::1) 1.56ms
+INFO:tornado.access:200 POST /events (::1) 41.94ms
+INFO:tornado.access:200 POST /events (::1) 0.38ms
+INFO:tornado.access:200 POST /events (::1) 1.51ms
+(epoch: 54, iters: 14300, time: 40.871, data: 0.389) G_GAN: 3.052 D_real: 0.021 D_fake: 1.221 G_L1: 8.404 G_L2: 8.348 G_L3: 8.335 G_L4: 8.338 
+(epoch: 54, iters: 14400, time: 83.563, data: 1.746) G_GAN: 3.211 D_real: 0.089 D_fake: 0.073 G_L1: 4.475 G_L2: 4.133 G_L3: 3.869 G_L4: 3.683 
+End of epoch 54 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 2.89ms
+INFO:tornado.access:200 POST /events (::1) 3.21ms
+INFO:tornado.access:200 POST /events (::1) 3.17ms
+(epoch: 55, iters: 14500, time: 12.690, data: 0.399) G_GAN: 3.050 D_real: 0.184 D_fake: 0.132 G_L1: 5.251 G_L2: 4.543 G_L3: 3.931 G_L4: 3.417 
+(epoch: 55, iters: 14600, time: 53.788, data: 0.390) G_GAN: 2.999 D_real: 0.200 D_fake: 0.083 G_L1: 8.198 G_L2: 8.161 G_L3: 8.166 G_L4: 8.177 
+(epoch: 55, iters: 14700, time: 95.169, data: 0.397) G_GAN: 1.484 D_real: 0.535 D_fake: 0.260 G_L1: 2.317 G_L2: 1.973 G_L3: 1.653 G_L4: 1.339 
+End of epoch 55 / 200 	 Time Taken: 111 sec
+INFO:tornado.access:200 POST /events (::1) 27.03ms
+INFO:tornado.access:200 POST /events (::1) 0.51ms
+INFO:tornado.access:200 POST /events (::1) 2.40ms
+INFO:tornado.access:200 POST /events (::1) 3.21ms
+INFO:tornado.access:200 POST /events (::1) 2.25ms
+(epoch: 56, iters: 14800, time: 26.589, data: 1.640) G_GAN: 2.045 D_real: 0.318 D_fake: 0.163 G_L1: 3.920 G_L2: 3.736 G_L3: 3.601 G_L4: 3.493 
+(epoch: 56, iters: 14900, time: 67.882, data: 0.390) G_GAN: 1.984 D_real: 0.211 D_fake: 0.188 G_L1: 3.015 G_L2: 2.636 G_L3: 2.368 G_L4: 2.209 
+(epoch: 56, iters: 15000, time: 108.914, data: 0.387) G_GAN: 4.396 D_real: 0.069 D_fake: 0.019 G_L1: 2.412 G_L2: 2.057 G_L3: 1.758 G_L4: 1.482 
+saving the latest model (epoch 56, total_iters 15000)
+End of epoch 56 / 200 	 Time Taken: 112 sec
+INFO:tornado.access:200 POST /events (::1) 1.65ms
+INFO:tornado.access:200 POST /events (::1) 26.80ms
+INFO:tornado.access:200 POST /events (::1) 0.56ms
+INFO:tornado.access:200 POST /events (::1) 2.62ms
+(epoch: 57, iters: 15100, time: 38.748, data: 0.389) G_GAN: 2.782 D_real: 0.005 D_fake: 0.309 G_L1: 3.864 G_L2: 3.504 G_L3: 3.197 G_L4: 2.923 
+(epoch: 57, iters: 15200, time: 81.219, data: 1.466) G_GAN: 2.991 D_real: 0.028 D_fake: 0.076 G_L1: 2.849 G_L2: 2.598 G_L3: 2.383 G_L4: 2.175 
+End of epoch 57 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 3.30ms
+INFO:tornado.access:200 POST /events (::1) 4.79ms
+INFO:tornado.access:200 POST /events (::1) 3.34ms
+(epoch: 58, iters: 15300, time: 11.022, data: 0.403) G_GAN: 2.394 D_real: 0.021 D_fake: 0.074 G_L1: 6.333 G_L2: 6.266 G_L3: 6.244 G_L4: 6.240 
+(epoch: 58, iters: 15400, time: 53.242, data: 0.392) G_GAN: 4.684 D_real: 0.167 D_fake: 0.020 G_L1: 7.917 G_L2: 7.819 G_L3: 7.812 G_L4: 7.822 
+(epoch: 58, iters: 15500, time: 95.176, data: 0.548) G_GAN: 4.007 D_real: 0.007 D_fake: 0.020 G_L1: 7.455 G_L2: 7.373 G_L3: 7.336 G_L4: 7.336 
+End of epoch 58 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 46.54ms
+INFO:tornado.access:200 POST /events (::1) 0.54ms
+INFO:tornado.access:200 POST /events (::1) 2.35ms
+INFO:tornado.access:200 POST /events (::1) 3.30ms
+INFO:tornado.access:200 POST /events (::1) 3.36ms
+(epoch: 59, iters: 15600, time: 26.395, data: 1.740) G_GAN: 1.168 D_real: 0.323 D_fake: 0.643 G_L1: 4.270 G_L2: 3.689 G_L3: 3.183 G_L4: 2.763 
+(epoch: 59, iters: 15700, time: 69.127, data: 0.389) G_GAN: 4.272 D_real: 0.066 D_fake: 0.016 G_L1: 1.876 G_L2: 1.661 G_L3: 1.541 G_L4: 1.457 
+(epoch: 59, iters: 15800, time: 112.573, data: 0.391) G_GAN: 4.733 D_real: 0.027 D_fake: 0.009 G_L1: 3.596 G_L2: 3.364 G_L3: 3.250 G_L4: 3.224 
+End of epoch 59 / 200 	 Time Taken: 117 sec
+INFO:tornado.access:200 POST /events (::1) 3.39ms
+INFO:tornado.access:200 POST /events (::1) 37.37ms
+INFO:tornado.access:200 POST /events (::1) 0.49ms
+INFO:tornado.access:200 POST /events (::1) 3.41ms
+(epoch: 60, iters: 15900, time: 38.359, data: 0.388) G_GAN: 1.670 D_real: 0.464 D_fake: 0.266 G_L1: 6.391 G_L2: 6.237 G_L3: 6.148 G_L4: 6.090 
+(epoch: 60, iters: 16000, time: 85.084, data: 4.979) G_GAN: 1.331 D_real: 1.256 D_fake: 0.610 G_L1: 4.323 G_L2: 3.992 G_L3: 3.756 G_L4: 3.578 
+saving the model at the end of epoch 60, iters 16080
+End of epoch 60 / 200 	 Time Taken: 119 sec
+INFO:tornado.access:200 POST /events (::1) 1.59ms
+INFO:tornado.access:200 POST /events (::1) 2.51ms
+INFO:tornado.access:200 POST /events (::1) 2.92ms
+(epoch: 61, iters: 16100, time: 9.927, data: 0.395) G_GAN: 3.980 D_real: 0.359 D_fake: 0.655 G_L1: 7.435 G_L2: 7.389 G_L3: 7.381 G_L4: 7.390 
+(epoch: 61, iters: 16200, time: 53.738, data: 0.388) G_GAN: 3.108 D_real: 0.246 D_fake: 1.306 G_L1: 2.950 G_L2: 2.521 G_L3: 2.070 G_L4: 1.696 
+(epoch: 61, iters: 16300, time: 95.744, data: 0.389) G_GAN: 4.821 D_real: 0.167 D_fake: 1.647 G_L1: 7.450 G_L2: 7.433 G_L3: 7.426 G_L4: 7.429 
+End of epoch 61 / 200 	 Time Taken: 116 sec
+INFO:tornado.access:200 POST /events (::1) 26.87ms
+INFO:tornado.access:200 POST /events (::1) 0.54ms
+INFO:tornado.access:200 POST /events (::1) 3.17ms
+INFO:tornado.access:200 POST /events (::1) 3.54ms
+INFO:tornado.access:200 POST /events (::1) 3.59ms
+(epoch: 62, iters: 16400, time: 24.012, data: 1.740) G_GAN: 3.065 D_real: 0.022 D_fake: 0.926 G_L1: 7.687 G_L2: 7.623 G_L3: 7.597 G_L4: 7.605 
+(epoch: 62, iters: 16500, time: 68.008, data: 0.636) G_GAN: 2.784 D_real: 0.030 D_fake: 0.460 G_L1: 11.115 G_L2: 10.635 G_L3: 10.254 G_L4: 9.873 
+(epoch: 62, iters: 16600, time: 112.647, data: 0.386) G_GAN: 1.602 D_real: 0.166 D_fake: 0.180 G_L1: 4.261 G_L2: 4.022 G_L3: 3.869 G_L4: 3.812 
+End of epoch 62 / 200 	 Time Taken: 119 sec
+INFO:tornado.access:200 POST /events (::1) 3.50ms
+INFO:tornado.access:200 POST /events (::1) 39.87ms
+INFO:tornado.access:200 POST /events (::1) 0.52ms
+INFO:tornado.access:200 POST /events (::1) 2.38ms
+(epoch: 63, iters: 16700, time: 37.522, data: 0.386) G_GAN: 3.061 D_real: 0.004 D_fake: 0.936 G_L1: 11.489 G_L2: 11.486 G_L3: 11.495 G_L4: 11.507 
+(epoch: 63, iters: 16800, time: 83.364, data: 2.186) G_GAN: 2.621 D_real: 0.278 D_fake: 0.062 G_L1: 3.005 G_L2: 2.742 G_L3: 2.502 G_L4: 2.291 
+End of epoch 63 / 200 	 Time Taken: 122 sec
+INFO:tornado.access:200 POST /events (::1) 2.52ms
+INFO:tornado.access:200 POST /events (::1) 2.47ms
+INFO:tornado.access:200 POST /events (::1) 3.59ms
+(epoch: 64, iters: 16900, time: 7.601, data: 0.391) G_GAN: 1.841 D_real: 0.015 D_fake: 0.978 G_L1: 2.421 G_L2: 2.155 G_L3: 1.899 G_L4: 1.667 
+(epoch: 64, iters: 17000, time: 51.358, data: 0.628) G_GAN: 1.531 D_real: 0.521 D_fake: 0.332 G_L1: 3.714 G_L2: 3.597 G_L3: 3.520 G_L4: 3.504 
+(epoch: 64, iters: 17100, time: 95.109, data: 1.119) G_GAN: 3.410 D_real: 0.153 D_fake: 0.179 G_L1: 7.713 G_L2: 7.694 G_L3: 7.694 G_L4: 7.701 
+End of epoch 64 / 200 	 Time Taken: 120 sec
+INFO:tornado.access:200 POST /events (::1) 41.70ms
+INFO:tornado.access:200 POST /events (::1) 0.43ms
+INFO:tornado.access:200 POST /events (::1) 2.02ms
+INFO:tornado.access:200 POST /events (::1) 3.69ms
+INFO:tornado.access:200 POST /events (::1) 3.59ms
+(epoch: 65, iters: 17200, time: 24.178, data: 2.196) G_GAN: 4.828 D_real: 0.189 D_fake: 0.011 G_L1: 8.661 G_L2: 8.641 G_L3: 8.642 G_L4: 8.656 
+(epoch: 65, iters: 17300, time: 66.845, data: 0.388) G_GAN: 2.572 D_real: 0.085 D_fake: 0.500 G_L1: 7.795 G_L2: 7.733 G_L3: 7.726 G_L4: 7.739 
+(epoch: 65, iters: 17400, time: 110.602, data: 0.393) G_GAN: 1.166 D_real: 0.864 D_fake: 0.575 G_L1: 6.677 G_L2: 6.574 G_L3: 6.536 G_L4: 6.533 
+End of epoch 65 / 200 	 Time Taken: 119 sec
+INFO:tornado.access:200 POST /events (::1) 1.68ms
+INFO:tornado.access:200 POST /events (::1) 31.56ms
+INFO:tornado.access:200 POST /events (::1) 0.60ms
+INFO:tornado.access:200 POST /events (::1) 3.38ms
+(epoch: 66, iters: 17500, time: 37.180, data: 0.388) G_GAN: 2.731 D_real: 0.071 D_fake: 0.097 G_L1: 4.393 G_L2: 4.040 G_L3: 3.698 G_L4: 3.438 
+(epoch: 66, iters: 17600, time: 82.324, data: 2.348) G_GAN: 1.234 D_real: 1.070 D_fake: 0.455 G_L1: 2.443 G_L2: 2.111 G_L3: 1.816 G_L4: 1.515 
+End of epoch 66 / 200 	 Time Taken: 120 sec
+INFO:tornado.access:200 POST /events (::1) 3.80ms
+INFO:tornado.access:200 POST /events (::1) 1.67ms
+INFO:tornado.access:200 POST /events (::1) 2.13ms
+(epoch: 67, iters: 17700, time: 6.464, data: 0.669) G_GAN: 1.748 D_real: 0.129 D_fake: 0.881 G_L1: 3.826 G_L2: 3.655 G_L3: 3.513 G_L4: 3.421 
+(epoch: 67, iters: 17800, time: 50.709, data: 0.389) G_GAN: 1.857 D_real: 0.952 D_fake: 0.123 G_L1: 5.350 G_L2: 4.655 G_L3: 4.068 G_L4: 3.571 
+(epoch: 67, iters: 17900, time: 95.227, data: 0.509) G_GAN: 4.326 D_real: 0.372 D_fake: 0.791 G_L1: 3.730 G_L2: 3.559 G_L3: 3.462 G_L4: 3.408 
+End of epoch 67 / 200 	 Time Taken: 119 sec
+INFO:tornado.access:200 POST /events (::1) 33.34ms
+INFO:tornado.access:200 POST /events (::1) 0.53ms
+INFO:tornado.access:200 POST /events (::1) 3.68ms
+INFO:tornado.access:200 POST /events (::1) 3.73ms
+INFO:tornado.access:200 POST /events (::1) 2.34ms
+(epoch: 68, iters: 18000, time: 25.581, data: 5.629) G_GAN: 2.779 D_real: 0.003 D_fake: 1.075 G_L1: 7.131 G_L2: 7.012 G_L3: 6.918 G_L4: 6.845 
+(epoch: 68, iters: 18100, time: 69.200, data: 0.517) G_GAN: 2.882 D_real: 0.052 D_fake: 0.190 G_L1: 4.899 G_L2: 4.727 G_L3: 4.572 G_L4: 4.506 
+(epoch: 68, iters: 18200, time: 114.747, data: 0.566) G_GAN: 2.322 D_real: 0.111 D_fake: 0.716 G_L1: 2.956 G_L2: 2.459 G_L3: 1.974 G_L4: 1.575 
+End of epoch 68 / 200 	 Time Taken: 125 sec
+INFO:tornado.access:200 POST /events (::1) 3.00ms
+INFO:tornado.access:200 POST /events (::1) 36.58ms
+INFO:tornado.access:200 POST /events (::1) 0.44ms
+INFO:tornado.access:200 POST /events (::1) 1.93ms
+(epoch: 69, iters: 18300, time: 33.328, data: 0.389) G_GAN: 2.608 D_real: 0.021 D_fake: 0.726 G_L1: 3.701 G_L2: 3.390 G_L3: 3.120 G_L4: 2.843 
+(epoch: 69, iters: 18400, time: 78.812, data: 1.817) G_GAN: 3.112 D_real: 0.069 D_fake: 0.175 G_L1: 14.809 G_L2: 14.825 G_L3: 14.850 G_L4: 14.879 
+End of epoch 69 / 200 	 Time Taken: 119 sec
+INFO:tornado.access:200 POST /events (::1) 3.95ms
+INFO:tornado.access:200 POST /events (::1) 3.80ms
+INFO:tornado.access:200 POST /events (::1) 3.84ms
+(epoch: 70, iters: 18500, time: 4.677, data: 0.395) G_GAN: 2.167 D_real: 0.586 D_fake: 0.120 G_L1: 8.540 G_L2: 8.507 G_L3: 8.499 G_L4: 8.491 
+(epoch: 70, iters: 18600, time: 49.179, data: 0.391) G_GAN: 2.576 D_real: 1.247 D_fake: 0.100 G_L1: 1.419 G_L2: 1.166 G_L3: 0.999 G_L4: 0.858 
+(epoch: 70, iters: 18700, time: 93.422, data: 0.392) G_GAN: 3.239 D_real: 0.172 D_fake: 0.048 G_L1: 4.159 G_L2: 3.854 G_L3: 3.578 G_L4: 3.380 
+End of epoch 70 / 200 	 Time Taken: 119 sec
+INFO:tornado.access:200 POST /events (::1) 39.66ms
+INFO:tornado.access:200 POST /events (::1) 0.56ms
+INFO:tornado.access:200 POST /events (::1) 3.41ms
+INFO:tornado.access:200 POST /events (::1) 3.86ms
+INFO:tornado.access:200 POST /events (::1) 3.90ms
+(epoch: 71, iters: 18800, time: 20.478, data: 1.944) G_GAN: 1.435 D_real: 0.181 D_fake: 0.319 G_L1: 5.901 G_L2: 5.846 G_L3: 5.845 G_L4: 5.855 
+(epoch: 71, iters: 18900, time: 65.403, data: 0.396) G_GAN: 1.419 D_real: 0.602 D_fake: 0.388 G_L1: 2.124 G_L2: 1.840 G_L3: 1.598 G_L4: 1.361 
+(epoch: 71, iters: 19000, time: 109.936, data: 0.398) G_GAN: 1.242 D_real: 0.206 D_fake: 1.087 G_L1: 6.260 G_L2: 6.212 G_L3: 6.198 G_L4: 6.183 
+End of epoch 71 / 200 	 Time Taken: 122 sec
+INFO:tornado.access:200 POST /events (::1) 3.87ms
+INFO:tornado.access:200 POST /events (::1) 38.63ms
+INFO:tornado.access:200 POST /events (::1) 0.53ms
+INFO:tornado.access:200 POST /events (::1) 2.59ms
+(epoch: 72, iters: 19100, time: 32.233, data: 0.513) G_GAN: 2.307 D_real: 0.279 D_fake: 0.457 G_L1: 4.220 G_L2: 3.945 G_L3: 3.696 G_L4: 3.544 
+(epoch: 72, iters: 19200, time: 79.488, data: 1.949) G_GAN: 2.265 D_real: 0.002 D_fake: 0.606 G_L1: 12.416 G_L2: 12.228 G_L3: 12.142 G_L4: 12.125 
+End of epoch 72 / 200 	 Time Taken: 121 sec
+INFO:tornado.access:200 POST /events (::1) 3.94ms
+INFO:tornado.access:200 POST /events (::1) 3.93ms
+INFO:tornado.access:200 POST /events (::1) 3.98ms
+(epoch: 73, iters: 19300, time: 2.574, data: 0.400) G_GAN: 2.114 D_real: 0.082 D_fake: 1.523 G_L1: 13.704 G_L2: 13.481 G_L3: 13.340 G_L4: 13.248 
+(epoch: 73, iters: 19400, time: 46.800, data: 0.392) G_GAN: 2.075 D_real: 1.086 D_fake: 0.131 G_L1: 2.377 G_L2: 2.009 G_L3: 1.726 G_L4: 1.487 
+(epoch: 73, iters: 19500, time: 91.859, data: 0.885) G_GAN: 3.344 D_real: 0.102 D_fake: 0.186 G_L1: 15.101 G_L2: 15.119 G_L3: 15.140 G_L4: 15.162 
+End of epoch 73 / 200 	 Time Taken: 120 sec
+INFO:tornado.access:200 POST /events (::1) 18.05ms
+INFO:tornado.access:200 POST /events (::1) 0.42ms
+INFO:tornado.access:200 POST /events (::1) 1.59ms
+INFO:tornado.access:200 POST /events (::1) 5.47ms
+INFO:tornado.access:200 POST /events (::1) 2.91ms
+(epoch: 74, iters: 19600, time: 17.993, data: 1.978) G_GAN: 3.494 D_real: 0.009 D_fake: 0.384 G_L1: 5.165 G_L2: 4.861 G_L3: 4.531 G_L4: 4.248 
+(epoch: 74, iters: 19700, time: 61.417, data: 0.396) G_GAN: 5.094 D_real: 3.480 D_fake: 0.004 G_L1: 11.055 G_L2: 11.057 G_L3: 11.076 G_L4: 11.099 
+(epoch: 74, iters: 19800, time: 105.672, data: 0.391) G_GAN: 3.094 D_real: 0.037 D_fake: 0.964 G_L1: 5.982 G_L2: 5.789 G_L3: 5.670 G_L4: 5.589 
+End of epoch 74 / 200 	 Time Taken: 120 sec
+INFO:tornado.access:200 POST /events (::1) 4.01ms
+INFO:tornado.access:200 POST /events (::1) 35.64ms
+INFO:tornado.access:200 POST /events (::1) 0.52ms
+INFO:tornado.access:200 POST /events (::1) 4.03ms
+INFO:tornado.access:200 POST /events (::1) 4.03ms
+(epoch: 75, iters: 19900, time: 31.030, data: 0.389) G_GAN: 5.504 D_real: 0.041 D_fake: 0.005 G_L1: 2.000 G_L2: 1.743 G_L3: 1.572 G_L4: 1.411 
+(epoch: 75, iters: 20000, time: 79.501, data: 5.829) G_GAN: 1.377 D_real: 0.291 D_fake: 0.457 G_L1: 5.480 G_L2: 5.432 G_L3: 5.415 G_L4: 5.411 
+saving the latest model (epoch 75, total_iters 20000)
+(epoch: 75, iters: 20100, time: 123.463, data: 0.556) G_GAN: 1.803 D_real: 0.753 D_fake: 0.062 G_L1: 7.084 G_L2: 7.017 G_L3: 7.000 G_L4: 6.988 
+End of epoch 75 / 200 	 Time Taken: 123 sec
+INFO:tornado.access:200 POST /events (::1) 4.02ms
+INFO:tornado.access:200 POST /events (::1) 3.95ms
+(epoch: 76, iters: 20200, time: 46.473, data: 0.568) G_GAN: 2.311 D_real: 0.282 D_fake: 0.131 G_L1: 8.876 G_L2: 8.750 G_L3: 8.744 G_L4: 8.763 
+(epoch: 76, iters: 20300, time: 90.030, data: 0.398) G_GAN: 1.713 D_real: 0.129 D_fake: 0.608 G_L1: 2.279 G_L2: 1.974 G_L3: 1.731 G_L4: 1.502 
+End of epoch 76 / 200 	 Time Taken: 120 sec
+INFO:tornado.access:200 POST /events (::1) 46.24ms
+INFO:tornado.access:200 POST /events (::1) 0.64ms
+INFO:tornado.access:200 POST /events (::1) 3.67ms
+INFO:tornado.access:200 POST /events (::1) 3.48ms
+INFO:tornado.access:200 POST /events (::1) 4.11ms
+(epoch: 77, iters: 20400, time: 16.655, data: 2.049) G_GAN: 2.649 D_real: 0.071 D_fake: 0.137 G_L1: 4.536 G_L2: 4.350 G_L3: 4.234 G_L4: 4.171 
+(epoch: 77, iters: 20500, time: 61.172, data: 0.396) G_GAN: 4.256 D_real: 0.048 D_fake: 0.016 G_L1: 4.374 G_L2: 4.260 G_L3: 4.196 G_L4: 4.185 
+(epoch: 77, iters: 20600, time: 104.475, data: 0.393) G_GAN: 2.349 D_real: 0.779 D_fake: 0.091 G_L1: 3.108 G_L2: 2.744 G_L3: 2.422 G_L4: 2.173 
+End of epoch 77 / 200 	 Time Taken: 120 sec
+INFO:tornado.access:200 POST /events (::1) 4.15ms
+INFO:tornado.access:200 POST /events (::1) 31.00ms
+INFO:tornado.access:200 POST /events (::1) 0.58ms
+INFO:tornado.access:200 POST /events (::1) 3.19ms
+INFO:tornado.access:200 POST /events (::1) 4.14ms
+(epoch: 78, iters: 20700, time: 29.105, data: 0.613) G_GAN: 3.159 D_real: 0.004 D_fake: 0.055 G_L1: 7.866 G_L2: 7.809 G_L3: 7.783 G_L4: 7.771 
+(epoch: 78, iters: 20800, time: 75.507, data: 2.117) G_GAN: 2.333 D_real: 0.424 D_fake: 0.195 G_L1: 3.249 G_L2: 2.915 G_L3: 2.599 G_L4: 2.336 
+(epoch: 78, iters: 20900, time: 120.543, data: 0.725) G_GAN: 2.737 D_real: 0.022 D_fake: 0.102 G_L1: 2.629 G_L2: 2.343 G_L3: 2.107 G_L4: 1.872 
+End of epoch 78 / 200 	 Time Taken: 122 sec
+INFO:tornado.access:200 POST /events (::1) 4.29ms
+INFO:tornado.access:200 POST /events (::1) 4.80ms
+(epoch: 79, iters: 21000, time: 43.923, data: 0.387) G_GAN: 3.371 D_real: 0.005 D_fake: 0.087 G_L1: 10.448 G_L2: 10.224 G_L3: 9.984 G_L4: 9.777 
+(epoch: 79, iters: 21100, time: 87.282, data: 0.387) G_GAN: 3.591 D_real: 0.011 D_fake: 0.051 G_L1: 4.844 G_L2: 4.783 G_L3: 4.756 G_L4: 4.746 
+End of epoch 79 / 200 	 Time Taken: 119 sec
+INFO:tornado.access:200 POST /events (::1) 33.30ms
+INFO:tornado.access:200 POST /events (::1) 0.71ms
+INFO:tornado.access:200 POST /events (::1) 4.13ms
+INFO:tornado.access:200 POST /events (::1) 4.21ms
+INFO:tornado.access:200 POST /events (::1) 4.19ms
+(epoch: 80, iters: 21200, time: 15.215, data: 1.939) G_GAN: 2.066 D_real: 0.701 D_fake: 0.840 G_L1: 2.741 G_L2: 2.566 G_L3: 2.468 G_L4: 2.432 
+(epoch: 80, iters: 21300, time: 59.719, data: 0.595) G_GAN: 2.656 D_real: 0.077 D_fake: 0.924 G_L1: 3.971 G_L2: 3.322 G_L3: 2.681 G_L4: 2.126 
+(epoch: 80, iters: 21400, time: 103.375, data: 0.391) G_GAN: 1.700 D_real: 0.211 D_fake: 0.291 G_L1: 4.399 G_L2: 3.993 G_L3: 3.656 G_L4: 3.441 
+saving the model at the end of epoch 80, iters 21440
+End of epoch 80 / 200 	 Time Taken: 121 sec
+INFO:tornado.access:200 POST /events (::1) 4.21ms
+INFO:tornado.access:200 POST /events (::1) 33.01ms
+INFO:tornado.access:200 POST /events (::1) 0.54ms
+INFO:tornado.access:200 POST /events (::1) 2.86ms
+INFO:tornado.access:200 POST /events (::1) 3.89ms
+(epoch: 81, iters: 21500, time: 27.771, data: 0.384) G_GAN: 2.868 D_real: 0.206 D_fake: 0.168 G_L1: 7.140 G_L2: 7.097 G_L3: 7.056 G_L4: 7.045 
+(epoch: 81, iters: 21600, time: 75.600, data: 2.070) G_GAN: 2.312 D_real: 0.219 D_fake: 0.060 G_L1: 5.472 G_L2: 5.253 G_L3: 5.116 G_L4: 5.041 
+(epoch: 81, iters: 21700, time: 118.954, data: 0.388) G_GAN: 3.192 D_real: 0.423 D_fake: 0.047 G_L1: 3.980 G_L2: 3.534 G_L3: 3.104 G_L4: 2.788 
+End of epoch 81 / 200 	 Time Taken: 122 sec
+INFO:tornado.access:200 POST /events (::1) 4.32ms
+INFO:tornado.access:200 POST /events (::1) 4.33ms
+(epoch: 82, iters: 21800, time: 41.159, data: 0.680) G_GAN: 1.347 D_real: 0.780 D_fake: 0.178 G_L1: 4.208 G_L2: 3.993 G_L3: 3.850 G_L4: 3.767 
+(epoch: 82, iters: 21900, time: 87.453, data: 0.533) G_GAN: 2.805 D_real: 0.009 D_fake: 2.291 G_L1: 2.578 G_L2: 2.238 G_L3: 1.926 G_L4: 1.597 
+End of epoch 82 / 200 	 Time Taken: 120 sec
+INFO:tornado.access:200 POST /events (::1) 20.42ms
+INFO:tornado.access:200 POST /events (::1) 0.77ms
+INFO:tornado.access:200 POST /events (::1) 4.30ms
+INFO:tornado.access:200 POST /events (::1) 4.30ms
+INFO:tornado.access:200 POST /events (::1) 4.43ms
+(epoch: 83, iters: 22000, time: 16.250, data: 5.220) G_GAN: 2.357 D_real: 0.155 D_fake: 0.555 G_L1: 4.069 G_L2: 3.917 G_L3: 3.804 G_L4: 3.730 
+(epoch: 83, iters: 22100, time: 59.727, data: 0.386) G_GAN: 2.294 D_real: 0.246 D_fake: 0.218 G_L1: 4.370 G_L2: 4.253 G_L3: 4.203 G_L4: 4.193 
+(epoch: 83, iters: 22200, time: 105.775, data: 0.397) G_GAN: 2.877 D_real: 0.031 D_fake: 0.279 G_L1: 12.213 G_L2: 12.213 G_L3: 12.221 G_L4: 12.232 
+End of epoch 83 / 200 	 Time Taken: 125 sec
+INFO:tornado.access:200 POST /events (::1) 3.68ms
+INFO:tornado.access:200 POST /events (::1) 22.13ms
+INFO:tornado.access:200 POST /events (::1) 0.64ms
+INFO:tornado.access:200 POST /events (::1) 4.25ms
+INFO:tornado.access:200 POST /events (::1) 5.95ms
+(epoch: 84, iters: 22300, time: 25.341, data: 0.388) G_GAN: 2.213 D_real: 0.226 D_fake: 0.710 G_L1: 4.599 G_L2: 4.373 G_L3: 4.207 G_L4: 4.081 
+(epoch: 84, iters: 22400, time: 69.993, data: 1.671) G_GAN: 3.758 D_real: 0.192 D_fake: 0.027 G_L1: 4.675 G_L2: 4.582 G_L3: 4.544 G_L4: 4.538 
+(epoch: 84, iters: 22500, time: 115.274, data: 0.617) G_GAN: 2.586 D_real: 0.884 D_fake: 0.783 G_L1: 7.615 G_L2: 7.540 G_L3: 7.511 G_L4: 7.523 
+End of epoch 84 / 200 	 Time Taken: 120 sec
+INFO:tornado.access:200 POST /events (::1) 2.00ms
+INFO:tornado.access:200 POST /events (::1) 4.45ms
+(epoch: 85, iters: 22600, time: 39.514, data: 0.392) G_GAN: 1.998 D_real: 0.704 D_fake: 0.329 G_L1: 3.933 G_L2: 3.712 G_L3: 3.538 G_L4: 3.446 
+(epoch: 85, iters: 22700, time: 82.962, data: 0.391) G_GAN: 3.236 D_real: 0.110 D_fake: 2.356 G_L1: 7.918 G_L2: 7.824 G_L3: 7.803 G_L4: 7.809 
+End of epoch 85 / 200 	 Time Taken: 119 sec
+INFO:tornado.access:200 POST /events (::1) 34.07ms
+INFO:tornado.access:200 POST /events (::1) 0.57ms
+INFO:tornado.access:200 POST /events (::1) 4.01ms
+INFO:tornado.access:200 POST /events (::1) 4.41ms
+INFO:tornado.access:200 POST /events (::1) 4.41ms
+(epoch: 86, iters: 22800, time: 11.120, data: 2.013) G_GAN: 3.206 D_real: 0.005 D_fake: 0.253 G_L1: 14.625 G_L2: 14.647 G_L3: 14.674 G_L4: 14.700 
+(epoch: 86, iters: 22900, time: 55.966, data: 0.389) G_GAN: 2.296 D_real: 0.599 D_fake: 0.072 G_L1: 2.975 G_L2: 2.685 G_L3: 2.476 G_L4: 2.357 
+(epoch: 86, iters: 23000, time: 99.586, data: 0.393) G_GAN: 1.905 D_real: 0.513 D_fake: 0.393 G_L1: 6.637 G_L2: 6.457 G_L3: 6.390 G_L4: 6.394 
+End of epoch 86 / 200 	 Time Taken: 121 sec
+INFO:tornado.access:200 POST /events (::1) 4.48ms
+INFO:tornado.access:200 POST /events (::1) 17.32ms
+INFO:tornado.access:200 POST /events (::1) 0.41ms
+INFO:tornado.access:200 POST /events (::1) 1.98ms
+INFO:tornado.access:200 POST /events (::1) 4.56ms
+(epoch: 87, iters: 23100, time: 24.520, data: 0.389) G_GAN: 3.238 D_real: 0.002 D_fake: 0.175 G_L1: 19.216 G_L2: 19.211 G_L3: 19.245 G_L4: 19.303 
+(epoch: 87, iters: 23200, time: 70.801, data: 2.200) G_GAN: 3.130 D_real: 0.693 D_fake: 0.029 G_L1: 2.575 G_L2: 2.268 G_L3: 2.047 G_L4: 1.920 
+(epoch: 87, iters: 23300, time: 114.329, data: 0.396) G_GAN: 2.222 D_real: 0.129 D_fake: 0.476 G_L1: 4.361 G_L2: 3.811 G_L3: 3.270 G_L4: 2.733 
+End of epoch 87 / 200 	 Time Taken: 121 sec
+INFO:tornado.access:200 POST /events (::1) 3.34ms
+INFO:tornado.access:200 POST /events (::1) 4.64ms
+(epoch: 88, iters: 23400, time: 38.970, data: 0.608) G_GAN: 2.437 D_real: 0.149 D_fake: 1.251 G_L1: 6.116 G_L2: 6.048 G_L3: 6.033 G_L4: 6.048 
+(epoch: 88, iters: 23500, time: 82.446, data: 0.389) G_GAN: 4.351 D_real: 0.078 D_fake: 0.868 G_L1: 6.366 G_L2: 6.315 G_L3: 6.301 G_L4: 6.309 
+End of epoch 88 / 200 	 Time Taken: 120 sec
+INFO:tornado.access:200 POST /events (::1) 34.13ms
+INFO:tornado.access:200 POST /events (::1) 0.62ms
+INFO:tornado.access:200 POST /events (::1) 4.12ms
+INFO:tornado.access:200 POST /events (::1) 4.63ms
+INFO:tornado.access:200 POST /events (::1) 4.82ms
+(epoch: 89, iters: 23600, time: 9.745, data: 2.040) G_GAN: 1.875 D_real: 0.712 D_fake: 0.105 G_L1: 6.650 G_L2: 6.636 G_L3: 6.648 G_L4: 6.662 
+(epoch: 89, iters: 23700, time: 53.768, data: 0.392) G_GAN: 3.625 D_real: 0.578 D_fake: 0.447 G_L1: 2.914 G_L2: 2.765 G_L3: 2.637 G_L4: 2.522 
+(epoch: 89, iters: 23800, time: 96.831, data: 0.391) G_GAN: 2.495 D_real: 0.259 D_fake: 0.181 G_L1: 3.534 G_L2: 3.168 G_L3: 2.926 G_L4: 2.761 
+End of epoch 89 / 200 	 Time Taken: 120 sec
+INFO:tornado.access:200 POST /events (::1) 6.30ms
+INFO:tornado.access:200 POST /events (::1) 33.03ms
+INFO:tornado.access:200 POST /events (::1) 0.55ms
+INFO:tornado.access:200 POST /events (::1) 4.68ms
+INFO:tornado.access:200 POST /events (::1) 4.79ms
+(epoch: 90, iters: 23900, time: 22.408, data: 0.390) G_GAN: 2.231 D_real: 0.273 D_fake: 0.193 G_L1: 5.284 G_L2: 5.087 G_L3: 4.940 G_L4: 4.849 
+(epoch: 90, iters: 24000, time: 73.069, data: 6.044) G_GAN: 1.901 D_real: 0.034 D_fake: 0.872 G_L1: 2.621 G_L2: 2.334 G_L3: 2.073 G_L4: 1.801 
+(epoch: 90, iters: 24100, time: 116.548, data: 0.389) G_GAN: 1.277 D_real: 0.976 D_fake: 0.209 G_L1: 3.145 G_L2: 2.715 G_L3: 2.324 G_L4: 1.939 
+End of epoch 90 / 200 	 Time Taken: 125 sec
+INFO:tornado.access:200 POST /events (::1) 2.24ms
+INFO:tornado.access:200 POST /events (::1) 4.71ms
+(epoch: 91, iters: 24200, time: 36.523, data: 0.426) G_GAN: 1.904 D_real: 1.525 D_fake: 0.087 G_L1: 2.333 G_L2: 1.969 G_L3: 1.610 G_L4: 1.267 
+(epoch: 91, iters: 24300, time: 82.062, data: 0.391) G_GAN: 2.803 D_real: 0.089 D_fake: 0.127 G_L1: 2.930 G_L2: 2.646 G_L3: 2.368 G_L4: 2.102 
+End of epoch 91 / 200 	 Time Taken: 120 sec
+INFO:tornado.access:200 POST /events (::1) 15.82ms
+INFO:tornado.access:200 POST /events (::1) 0.50ms
+INFO:tornado.access:200 POST /events (::1) 4.29ms
+INFO:tornado.access:200 POST /events (::1) 4.78ms
+INFO:tornado.access:200 POST /events (::1) 4.86ms
+(epoch: 92, iters: 24400, time: 7.339, data: 1.765) G_GAN: 2.717 D_real: 0.299 D_fake: 0.563 G_L1: 2.014 G_L2: 1.806 G_L3: 1.621 G_L4: 1.422 
+(epoch: 92, iters: 24500, time: 50.901, data: 0.390) G_GAN: 1.568 D_real: 0.625 D_fake: 0.242 G_L1: 5.739 G_L2: 5.582 G_L3: 5.462 G_L4: 5.422 
+(epoch: 92, iters: 24600, time: 97.007, data: 0.387) G_GAN: 2.440 D_real: 0.742 D_fake: 0.071 G_L1: 2.710 G_L2: 2.385 G_L3: 2.098 G_L4: 1.864 
+End of epoch 92 / 200 	 Time Taken: 121 sec
+INFO:tornado.access:200 POST /events (::1) 4.79ms
+INFO:tornado.access:200 POST /events (::1) 26.69ms
+INFO:tornado.access:200 POST /events (::1) 0.52ms
+INFO:tornado.access:200 POST /events (::1) 4.60ms
+INFO:tornado.access:200 POST /events (::1) 2.80ms
+(epoch: 93, iters: 24700, time: 19.720, data: 0.400) G_GAN: 2.880 D_real: 0.039 D_fake: 0.093 G_L1: 7.409 G_L2: 7.361 G_L3: 7.352 G_L4: 7.357 
+(epoch: 93, iters: 24800, time: 65.019, data: 1.920) G_GAN: 3.101 D_real: 0.741 D_fake: 0.133 G_L1: 3.407 G_L2: 3.231 G_L3: 3.073 G_L4: 2.943 
+(epoch: 93, iters: 24900, time: 110.219, data: 0.388) G_GAN: 2.641 D_real: 0.023 D_fake: 0.366 G_L1: 11.806 G_L2: 11.808 G_L3: 11.819 G_L4: 11.835 
+End of epoch 93 / 200 	 Time Taken: 120 sec
+INFO:tornado.access:200 POST /events (::1) 4.85ms
+INFO:tornado.access:200 POST /events (::1) 2.27ms
+(epoch: 94, iters: 25000, time: 33.667, data: 0.519) G_GAN: 2.036 D_real: 1.355 D_fake: 0.054 G_L1: 2.264 G_L2: 1.957 G_L3: 1.681 G_L4: 1.409 
+saving the latest model (epoch 94, total_iters 25000)
+(epoch: 94, iters: 25100, time: 77.879, data: 0.388) G_GAN: 1.696 D_real: 0.535 D_fake: 0.300 G_L1: 2.442 G_L2: 2.144 G_L3: 1.868 G_L4: 1.664 
+End of epoch 94 / 200 	 Time Taken: 119 sec
+INFO:tornado.access:200 POST /events (::1) 35.99ms
+INFO:tornado.access:200 POST /events (::1) 0.51ms
+INFO:tornado.access:200 POST /events (::1) 3.27ms
+INFO:tornado.access:200 POST /events (::1) 6.53ms
+INFO:tornado.access:200 POST /events (::1) 2.99ms
+(epoch: 95, iters: 25200, time: 5.946, data: 1.891) G_GAN: 2.656 D_real: 0.052 D_fake: 0.154 G_L1: 12.314 G_L2: 12.045 G_L3: 11.853 G_L4: 11.714 
+(epoch: 95, iters: 25300, time: 49.904, data: 0.386) G_GAN: 1.043 D_real: 1.718 D_fake: 0.305 G_L1: 4.111 G_L2: 3.693 G_L3: 3.364 G_L4: 3.110 
+(epoch: 95, iters: 25400, time: 93.336, data: 0.394) G_GAN: 2.489 D_real: 0.776 D_fake: 0.023 G_L1: 4.965 G_L2: 4.741 G_L3: 4.622 G_L4: 4.563 
+End of epoch 95 / 200 	 Time Taken: 120 sec
+INFO:tornado.access:200 POST /events (::1) 4.91ms
+INFO:tornado.access:200 POST /events (::1) 33.85ms
+INFO:tornado.access:200 POST /events (::1) 0.57ms
+INFO:tornado.access:200 POST /events (::1) 4.81ms
+INFO:tornado.access:200 POST /events (::1) 4.97ms
+(epoch: 96, iters: 25500, time: 19.091, data: 0.649) G_GAN: 3.456 D_real: 0.627 D_fake: 0.037 G_L1: 2.490 G_L2: 2.188 G_L3: 1.978 G_L4: 1.865 
+(epoch: 96, iters: 25600, time: 65.689, data: 1.748) G_GAN: 3.456 D_real: 0.021 D_fake: 0.389 G_L1: 2.328 G_L2: 2.028 G_L3: 1.733 G_L4: 1.454 
+(epoch: 96, iters: 25700, time: 109.774, data: 0.390) G_GAN: 2.286 D_real: 0.066 D_fake: 0.216 G_L1: 16.226 G_L2: 16.255 G_L3: 16.287 G_L4: 16.320 
+End of epoch 96 / 200 	 Time Taken: 122 sec
+INFO:tornado.access:200 POST /events (::1) 4.98ms
+INFO:tornado.access:200 POST /events (::1) 5.01ms
+(epoch: 97, iters: 25800, time: 32.619, data: 0.385) G_GAN: 2.245 D_real: 0.251 D_fake: 0.411 G_L1: 2.004 G_L2: 1.694 G_L3: 1.462 G_L4: 1.280 
+(epoch: 97, iters: 25900, time: 77.810, data: 0.627) G_GAN: 2.174 D_real: 0.133 D_fake: 0.925 G_L1: 6.214 G_L2: 6.172 G_L3: 6.161 G_L4: 6.160 
+End of epoch 97 / 200 	 Time Taken: 119 sec
+INFO:tornado.access:200 POST /events (::1) 34.16ms
+INFO:tornado.access:200 POST /events (::1) 0.66ms
+INFO:tornado.access:200 POST /events (::1) 3.40ms
+INFO:tornado.access:200 POST /events (::1) 5.02ms
+INFO:tornado.access:200 POST /events (::1) 5.06ms
+(epoch: 98, iters: 26000, time: 9.395, data: 7.008) G_GAN: 2.499 D_real: 0.014 D_fake: 0.175 G_L1: 7.988 G_L2: 7.945 G_L3: 7.934 G_L4: 7.934 
+(epoch: 98, iters: 26100, time: 53.197, data: 0.394) G_GAN: 1.836 D_real: 0.015 D_fake: 0.339 G_L1: 14.014 G_L2: 14.031 G_L3: 14.056 G_L4: 14.086 
+(epoch: 98, iters: 26200, time: 97.080, data: 0.392) G_GAN: 0.604 D_real: 0.853 D_fake: 0.213 G_L1: 3.979 G_L2: 3.764 G_L3: 3.640 G_L4: 3.592 
+End of epoch 98 / 200 	 Time Taken: 125 sec
+INFO:tornado.access:200 POST /events (::1) 3.40ms
+INFO:tornado.access:200 POST /events (::1) 15.65ms
+INFO:tornado.access:200 POST /events (::1) 0.52ms
+INFO:tornado.access:200 POST /events (::1) 3.37ms
+INFO:tornado.access:200 POST /events (::1) 3.89ms
+(epoch: 99, iters: 26300, time: 17.037, data: 0.395) G_GAN: 4.066 D_real: 0.090 D_fake: 0.030 G_L1: 6.723 G_L2: 6.646 G_L3: 6.618 G_L4: 6.606 
+(epoch: 99, iters: 26400, time: 62.755, data: 1.769) G_GAN: 2.823 D_real: 0.328 D_fake: 0.175 G_L1: 14.069 G_L2: 14.072 G_L3: 14.087 G_L4: 14.103 
+(epoch: 99, iters: 26500, time: 107.420, data: 0.390) G_GAN: 2.204 D_real: 0.007 D_fake: 0.254 G_L1: 10.980 G_L2: 10.668 G_L3: 10.432 G_L4: 10.232 
+End of epoch 99 / 200 	 Time Taken: 121 sec
+INFO:tornado.access:200 POST /events (::1) 4.78ms
+INFO:tornado.access:200 POST /events (::1) 6.89ms
+INFO:tornado.access:200 POST /events (::1) 35.12ms
+INFO:tornado.access:200 POST /events (::1) 0.51ms
+INFO:tornado.access:200 POST /events (::1) 2.57ms
+(epoch: 100, iters: 26600, time: 31.312, data: 0.391) G_GAN: 3.159 D_real: 0.078 D_fake: 1.180 G_L1: 2.531 G_L2: 2.162 G_L3: 1.794 G_L4: 1.483 
+(epoch: 100, iters: 26700, time: 75.237, data: 0.393) G_GAN: 2.271 D_real: 1.758 D_fake: 0.028 G_L1: 3.755 G_L2: 3.468 G_L3: 3.219 G_L4: 3.067 
+(epoch: 100, iters: 26800, time: 119.961, data: 2.049) G_GAN: 2.141 D_real: 0.231 D_fake: 0.611 G_L1: 2.446 G_L2: 2.105 G_L3: 1.792 G_L4: 1.519 
+saving the model at the end of epoch 100, iters 26800
+End of epoch 100 / 200 	 Time Taken: 120 sec
+INFO:tornado.access:200 POST /events (::1) 5.20ms
+INFO:tornado.access:200 POST /events (::1) 2.97ms
+(epoch: 101, iters: 26900, time: 46.023, data: 0.390) G_GAN: 1.679 D_real: 1.756 D_fake: 0.121 G_L1: 2.987 G_L2: 2.717 G_L3: 2.426 G_L4: 2.089 
+(epoch: 101, iters: 27000, time: 90.283, data: 0.407) G_GAN: 1.010 D_real: 0.414 D_fake: 0.465 G_L1: 2.340 G_L2: 2.043 G_L3: 1.766 G_L4: 1.536 
+End of epoch 101 / 200 	 Time Taken: 119 sec
+INFO:tornado.access:200 POST /events (::1) 5.22ms
+INFO:tornado.access:200 POST /events (::1) 25.32ms
+INFO:tornado.access:200 POST /events (::1) 0.52ms
+INFO:tornado.access:200 POST /events (::1) 5.21ms
+INFO:tornado.access:200 POST /events (::1) 5.17ms
+(epoch: 102, iters: 27100, time: 14.608, data: 0.392) G_GAN: 1.589 D_real: 0.239 D_fake: 0.308 G_L1: 3.081 G_L2: 2.770 G_L3: 2.525 G_L4: 2.384 
+(epoch: 102, iters: 27200, time: 60.521, data: 1.524) G_GAN: 2.290 D_real: 0.005 D_fake: 0.123 G_L1: 7.300 G_L2: 7.272 G_L3: 7.270 G_L4: 7.278 
+(epoch: 102, iters: 27300, time: 105.938, data: 0.494) G_GAN: 3.475 D_real: 0.103 D_fake: 0.943 G_L1: 8.071 G_L2: 8.045 G_L3: 8.048 G_L4: 8.058 
+End of epoch 102 / 200 	 Time Taken: 121 sec
+INFO:tornado.access:200 POST /events (::1) 3.27ms
+INFO:tornado.access:200 POST /events (::1) 5.22ms
+INFO:tornado.access:200 POST /events (::1) 29.37ms
+INFO:tornado.access:200 POST /events (::1) 0.53ms
+INFO:tornado.access:200 POST /events (::1) 5.15ms
+(epoch: 103, iters: 27400, time: 27.786, data: 0.394) G_GAN: 1.497 D_real: 0.663 D_fake: 0.216 G_L1: 4.726 G_L2: 4.590 G_L3: 4.493 G_L4: 4.467 
+(epoch: 103, iters: 27500, time: 71.359, data: 0.400) G_GAN: 3.986 D_real: 0.002 D_fake: 0.042 G_L1: 9.743 G_L2: 9.604 G_L3: 9.509 G_L4: 9.470 
+(epoch: 103, iters: 27600, time: 115.976, data: 1.447) G_GAN: 3.726 D_real: 0.012 D_fake: 0.882 G_L1: 8.588 G_L2: 8.311 G_L3: 8.063 G_L4: 7.803 
+End of epoch 103 / 200 	 Time Taken: 117 sec
+INFO:tornado.access:200 POST /events (::1) 5.24ms
+INFO:tornado.access:200 POST /events (::1) 5.24ms
+(epoch: 104, iters: 27700, time: 40.578, data: 0.385) G_GAN: 2.892 D_real: 0.027 D_fake: 0.311 G_L1: 9.838 G_L2: 9.790 G_L3: 9.796 G_L4: 9.813 
+(epoch: 104, iters: 27800, time: 82.530, data: 0.390) G_GAN: 3.049 D_real: 0.039 D_fake: 0.804 G_L1: 2.816 G_L2: 2.706 G_L3: 2.624 G_L4: 2.546 
+End of epoch 104 / 200 	 Time Taken: 114 sec
+INFO:tornado.access:200 POST /events (::1) 5.25ms
+INFO:tornado.access:200 POST /events (::1) 39.53ms
+INFO:tornado.access:200 POST /events (::1) 0.55ms
+INFO:tornado.access:200 POST /events (::1) 5.24ms
+INFO:tornado.access:200 POST /events (::1) 2.10ms
+(epoch: 105, iters: 27900, time: 12.891, data: 0.395) G_GAN: 2.813 D_real: 0.000 D_fake: 0.198 G_L1: 9.518 G_L2: 9.091 G_L3: 8.685 G_L4: 8.246 
+(epoch: 105, iters: 28000, time: 60.965, data: 6.552) G_GAN: 2.159 D_real: 0.058 D_fake: 0.387 G_L1: 4.910 G_L2: 4.523 G_L3: 4.194 G_L4: 3.968 
+(epoch: 105, iters: 28100, time: 103.657, data: 0.391) G_GAN: 1.049 D_real: 1.214 D_fake: 0.225 G_L1: 3.717 G_L2: 3.427 G_L3: 3.138 G_L4: 2.929 
+End of epoch 105 / 200 	 Time Taken: 120 sec
+INFO:tornado.access:200 POST /events (::1) 3.85ms
+INFO:tornado.access:200 POST /events (::1) 5.31ms
+INFO:tornado.access:200 POST /events (::1) 39.41ms
+INFO:tornado.access:200 POST /events (::1) 0.56ms
+INFO:tornado.access:200 POST /events (::1) 5.34ms
+(epoch: 106, iters: 28200, time: 26.591, data: 0.388) G_GAN: 2.116 D_real: 0.036 D_fake: 0.267 G_L1: 5.277 G_L2: 5.147 G_L3: 5.051 G_L4: 5.007 
+(epoch: 106, iters: 28300, time: 68.956, data: 0.392) G_GAN: 2.918 D_real: 0.121 D_fake: 0.471 G_L1: 4.478 G_L2: 4.300 G_L3: 4.207 G_L4: 4.172 
+(epoch: 106, iters: 28400, time: 112.822, data: 1.863) G_GAN: 2.360 D_real: 0.390 D_fake: 1.315 G_L1: 3.427 G_L2: 3.095 G_L3: 2.778 G_L4: 2.536 
+End of epoch 106 / 200 	 Time Taken: 116 sec
+INFO:tornado.access:200 POST /events (::1) 5.37ms
+INFO:tornado.access:200 POST /events (::1) 2.57ms
+(epoch: 107, iters: 28500, time: 38.692, data: 0.386) G_GAN: 2.800 D_real: 0.161 D_fake: 0.375 G_L1: 4.625 G_L2: 4.552 G_L3: 4.531 G_L4: 4.527 
+(epoch: 107, iters: 28600, time: 81.764, data: 0.387) G_GAN: 0.597 D_real: 2.056 D_fake: 0.027 G_L1: 5.013 G_L2: 4.921 G_L3: 4.877 G_L4: 4.868 
+End of epoch 107 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 5.45ms
+INFO:tornado.access:200 POST /events (::1) 25.33ms
+INFO:tornado.access:200 POST /events (::1) 0.50ms
+INFO:tornado.access:200 POST /events (::1) 4.12ms
+INFO:tornado.access:200 POST /events (::1) 5.44ms
+(epoch: 108, iters: 28700, time: 11.380, data: 0.389) G_GAN: 2.341 D_real: 0.219 D_fake: 0.336 G_L1: 3.058 G_L2: 2.869 G_L3: 2.712 G_L4: 2.592 
+(epoch: 108, iters: 28800, time: 54.488, data: 1.676) G_GAN: 2.736 D_real: 0.031 D_fake: 0.312 G_L1: 15.399 G_L2: 15.415 G_L3: 15.439 G_L4: 15.471 
+(epoch: 108, iters: 28900, time: 96.983, data: 0.390) G_GAN: 1.412 D_real: 0.664 D_fake: 0.357 G_L1: 2.483 G_L2: 2.107 G_L3: 1.833 G_L4: 1.671 
+End of epoch 108 / 200 	 Time Taken: 116 sec
+INFO:tornado.access:200 POST /events (::1) 5.40ms
+INFO:tornado.access:200 POST /events (::1) 3.63ms
+INFO:tornado.access:200 POST /events (::1) 41.02ms
+INFO:tornado.access:200 POST /events (::1) 0.50ms
+INFO:tornado.access:200 POST /events (::1) 4.19ms
+(epoch: 109, iters: 29000, time: 24.591, data: 0.386) G_GAN: 1.762 D_real: 2.050 D_fake: 0.055 G_L1: 7.213 G_L2: 7.204 G_L3: 7.215 G_L4: 7.229 
+(epoch: 109, iters: 29100, time: 66.844, data: 0.390) G_GAN: 3.855 D_real: 0.165 D_fake: 0.518 G_L1: 3.311 G_L2: 3.058 G_L3: 2.886 G_L4: 2.788 
+(epoch: 109, iters: 29200, time: 110.096, data: 1.898) G_GAN: 2.407 D_real: 0.229 D_fake: 0.181 G_L1: 5.397 G_L2: 4.932 G_L3: 4.402 G_L4: 3.928 
+End of epoch 109 / 200 	 Time Taken: 115 sec
+INFO:tornado.access:200 POST /events (::1) 2.39ms
+INFO:tornado.access:200 POST /events (::1) 4.64ms
+(epoch: 110, iters: 29300, time: 39.715, data: 0.388) G_GAN: 3.118 D_real: 0.003 D_fake: 0.155 G_L1: 9.358 G_L2: 9.314 G_L3: 9.290 G_L4: 9.280 
+(epoch: 110, iters: 29400, time: 81.453, data: 0.386) G_GAN: 2.029 D_real: 1.029 D_fake: 0.138 G_L1: 2.763 G_L2: 2.467 G_L3: 2.197 G_L4: 1.970 
+End of epoch 110 / 200 	 Time Taken: 114 sec
+INFO:tornado.access:200 POST /events (::1) 3.73ms
+INFO:tornado.access:200 POST /events (::1) 28.40ms
+INFO:tornado.access:200 POST /events (::1) 0.65ms
+INFO:tornado.access:200 POST /events (::1) 5.47ms
+INFO:tornado.access:200 POST /events (::1) 7.30ms
+(epoch: 111, iters: 29500, time: 9.071, data: 0.389) G_GAN: 1.794 D_real: 0.207 D_fake: 0.133 G_L1: 3.693 G_L2: 3.420 G_L3: 3.227 G_L4: 3.172 
+(epoch: 111, iters: 29600, time: 54.155, data: 2.073) G_GAN: 3.392 D_real: 0.243 D_fake: 0.074 G_L1: 3.827 G_L2: 3.445 G_L3: 3.031 G_L4: 2.753 
+(epoch: 111, iters: 29700, time: 95.816, data: 0.387) G_GAN: 2.637 D_real: 0.540 D_fake: 0.140 G_L1: 9.614 G_L2: 9.624 G_L3: 9.641 G_L4: 9.658 
+End of epoch 111 / 200 	 Time Taken: 116 sec
+INFO:tornado.access:200 POST /events (::1) 4.75ms
+INFO:tornado.access:200 POST /events (::1) 4.41ms
+INFO:tornado.access:200 POST /events (::1) 41.68ms
+INFO:tornado.access:200 POST /events (::1) 0.64ms
+INFO:tornado.access:200 POST /events (::1) 5.56ms
+(epoch: 112, iters: 29800, time: 22.335, data: 0.391) G_GAN: 2.831 D_real: 1.119 D_fake: 0.052 G_L1: 2.197 G_L2: 1.934 G_L3: 1.707 G_L4: 1.491 
+(epoch: 112, iters: 29900, time: 65.361, data: 0.390) G_GAN: 2.684 D_real: 0.000 D_fake: 0.180 G_L1: 9.869 G_L2: 9.443 G_L3: 9.077 G_L4: 8.785 
+(epoch: 112, iters: 30000, time: 114.511, data: 6.811) G_GAN: 2.459 D_real: 0.059 D_fake: 0.341 G_L1: 3.538 G_L2: 3.204 G_L3: 2.954 G_L4: 2.818 
+saving the latest model (epoch 112, total_iters 30000)
+End of epoch 112 / 200 	 Time Taken: 121 sec
+INFO:tornado.access:200 POST /events (::1) 5.56ms
+INFO:tornado.access:200 POST /events (::1) 2.55ms
+(epoch: 113, iters: 30100, time: 36.002, data: 0.744) G_GAN: 2.855 D_real: 0.005 D_fake: 0.253 G_L1: 14.960 G_L2: 14.935 G_L3: 14.929 G_L4: 14.939 
+(epoch: 113, iters: 30200, time: 78.712, data: 0.533) G_GAN: 2.330 D_real: 0.151 D_fake: 0.166 G_L1: 1.888 G_L2: 1.603 G_L3: 1.406 G_L4: 1.251 
+End of epoch 113 / 200 	 Time Taken: 114 sec
+INFO:tornado.access:200 POST /events (::1) 5.63ms
+INFO:tornado.access:200 POST /events (::1) 29.48ms
+INFO:tornado.access:200 POST /events (::1) 0.58ms
+INFO:tornado.access:200 POST /events (::1) 5.55ms
+INFO:tornado.access:200 POST /events (::1) 5.69ms
+(epoch: 114, iters: 30300, time: 7.890, data: 0.424) G_GAN: 1.083 D_real: 0.799 D_fake: 0.380 G_L1: 4.461 G_L2: 4.260 G_L3: 4.113 G_L4: 4.064 
+(epoch: 114, iters: 30400, time: 51.437, data: 2.314) G_GAN: 2.943 D_real: 0.053 D_fake: 0.307 G_L1: 5.430 G_L2: 5.249 G_L3: 5.176 G_L4: 5.164 
+(epoch: 114, iters: 30500, time: 93.603, data: 0.389) G_GAN: 2.365 D_real: 0.003 D_fake: 0.387 G_L1: 9.226 G_L2: 9.036 G_L3: 8.861 G_L4: 8.726 
+End of epoch 114 / 200 	 Time Taken: 115 sec
+INFO:tornado.access:200 POST /events (::1) 5.67ms
+INFO:tornado.access:200 POST /events (::1) 2.54ms
+INFO:tornado.access:200 POST /events (::1) 36.53ms
+INFO:tornado.access:200 POST /events (::1) 0.55ms
+INFO:tornado.access:200 POST /events (::1) 5.22ms
+(epoch: 115, iters: 30600, time: 21.442, data: 0.682) G_GAN: 2.042 D_real: 0.199 D_fake: 1.550 G_L1: 2.194 G_L2: 1.941 G_L3: 1.693 G_L4: 1.450 
+(epoch: 115, iters: 30700, time: 62.974, data: 0.650) G_GAN: 3.523 D_real: 0.004 D_fake: 0.059 G_L1: 6.898 G_L2: 6.751 G_L3: 6.629 G_L4: 6.567 
+(epoch: 115, iters: 30800, time: 106.958, data: 1.794) G_GAN: 1.928 D_real: 0.000 D_fake: 0.414 G_L1: 14.380 G_L2: 14.300 G_L3: 14.275 G_L4: 14.276 
+End of epoch 115 / 200 	 Time Taken: 115 sec
+INFO:tornado.access:200 POST /events (::1) 5.73ms
+INFO:tornado.access:200 POST /events (::1) 3.30ms
+(epoch: 116, iters: 30900, time: 35.225, data: 0.389) G_GAN: 2.452 D_real: 0.011 D_fake: 0.538 G_L1: 7.362 G_L2: 7.160 G_L3: 7.100 G_L4: 7.116 
+(epoch: 116, iters: 31000, time: 76.984, data: 0.477) G_GAN: 1.206 D_real: 0.883 D_fake: 0.204 G_L1: 1.802 G_L2: 1.503 G_L3: 1.293 G_L4: 1.122 
+End of epoch 116 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 7.62ms
+INFO:tornado.access:200 POST /events (::1) 31.08ms
+INFO:tornado.access:200 POST /events (::1) 0.47ms
+INFO:tornado.access:200 POST /events (::1) 5.52ms
+INFO:tornado.access:200 POST /events (::1) 5.79ms
+(epoch: 117, iters: 31100, time: 6.095, data: 0.619) G_GAN: 2.831 D_real: 0.000 D_fake: 0.410 G_L1: 11.745 G_L2: 11.707 G_L3: 11.701 G_L4: 11.737 
+(epoch: 117, iters: 31200, time: 49.784, data: 2.049) G_GAN: 2.555 D_real: 0.194 D_fake: 0.450 G_L1: 1.910 G_L2: 1.665 G_L3: 1.465 G_L4: 1.279 
+(epoch: 117, iters: 31300, time: 92.852, data: 0.386) G_GAN: 2.560 D_real: 0.002 D_fake: 0.436 G_L1: 14.632 G_L2: 14.640 G_L3: 14.646 G_L4: 14.634 
+End of epoch 117 / 200 	 Time Taken: 116 sec
+INFO:tornado.access:200 POST /events (::1) 5.80ms
+INFO:tornado.access:200 POST /events (::1) 5.80ms
+INFO:tornado.access:200 POST /events (::1) 47.92ms
+INFO:tornado.access:200 POST /events (::1) 0.57ms
+INFO:tornado.access:200 POST /events (::1) 5.26ms
+(epoch: 118, iters: 31400, time: 20.532, data: 0.722) G_GAN: 1.781 D_real: 0.320 D_fake: 0.419 G_L1: 2.209 G_L2: 1.867 G_L3: 1.571 G_L4: 1.298 
+(epoch: 118, iters: 31500, time: 62.251, data: 0.461) G_GAN: 2.270 D_real: 0.018 D_fake: 0.464 G_L1: 6.253 G_L2: 5.986 G_L3: 5.745 G_L4: 5.521 
+(epoch: 118, iters: 31600, time: 106.041, data: 1.906) G_GAN: 2.589 D_real: 0.000 D_fake: 0.299 G_L1: 9.454 G_L2: 8.967 G_L3: 8.537 G_L4: 8.177 
+End of epoch 118 / 200 	 Time Taken: 115 sec
+INFO:tornado.access:200 POST /events (::1) 4.64ms
+INFO:tornado.access:200 POST /events (::1) 5.89ms
+(epoch: 119, iters: 31700, time: 33.559, data: 0.387) G_GAN: 1.788 D_real: 1.768 D_fake: 0.085 G_L1: 5.514 G_L2: 5.174 G_L3: 4.997 G_L4: 4.958 
+(epoch: 119, iters: 31800, time: 75.405, data: 0.392) G_GAN: 0.813 D_real: 0.545 D_fake: 0.666 G_L1: 2.096 G_L2: 1.888 G_L3: 1.722 G_L4: 1.594 
+End of epoch 119 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 5.90ms
+INFO:tornado.access:200 POST /events (::1) 29.93ms
+INFO:tornado.access:200 POST /events (::1) 0.48ms
+INFO:tornado.access:200 POST /events (::1) 5.94ms
+INFO:tornado.access:200 POST /events (::1) 4.29ms
+(epoch: 120, iters: 31900, time: 4.507, data: 0.746) G_GAN: 1.709 D_real: 0.568 D_fake: 0.176 G_L1: 2.513 G_L2: 2.237 G_L3: 2.002 G_L4: 1.812 
+(epoch: 120, iters: 32000, time: 54.972, data: 7.140) G_GAN: 3.332 D_real: 0.025 D_fake: 0.058 G_L1: 6.749 G_L2: 6.524 G_L3: 6.371 G_L4: 6.315 
+(epoch: 120, iters: 32100, time: 95.921, data: 0.387) G_GAN: 2.635 D_real: 0.054 D_fake: 0.589 G_L1: 2.026 G_L2: 1.869 G_L3: 1.792 G_L4: 1.722 
+saving the model at the end of epoch 120, iters 32160
+End of epoch 120 / 200 	 Time Taken: 121 sec
+INFO:tornado.access:200 POST /events (::1) 5.90ms
+INFO:tornado.access:200 POST /events (::1) 2.48ms
+INFO:tornado.access:200 POST /events (::1) 28.48ms
+INFO:tornado.access:200 POST /events (::1) 0.52ms
+INFO:tornado.access:200 POST /events (::1) 5.06ms
+(epoch: 121, iters: 32200, time: 17.499, data: 0.616) G_GAN: 2.115 D_real: 0.694 D_fake: 2.050 G_L1: 7.102 G_L2: 7.076 G_L3: 7.079 G_L4: 7.088 
+(epoch: 121, iters: 32300, time: 61.382, data: 0.386) G_GAN: 2.361 D_real: 0.109 D_fake: 0.349 G_L1: 2.799 G_L2: 2.535 G_L3: 2.283 G_L4: 2.087 
+(epoch: 121, iters: 32400, time: 105.029, data: 2.411) G_GAN: 1.790 D_real: 0.474 D_fake: 0.117 G_L1: 4.664 G_L2: 4.458 G_L3: 4.357 G_L4: 4.347 
+End of epoch 121 / 200 	 Time Taken: 116 sec
+INFO:tornado.access:200 POST /events (::1) 5.96ms
+INFO:tornado.access:200 POST /events (::1) 7.66ms
+(epoch: 122, iters: 32500, time: 31.171, data: 0.392) G_GAN: 1.236 D_real: 0.159 D_fake: 0.239 G_L1: 3.958 G_L2: 3.458 G_L3: 2.995 G_L4: 2.605 
+(epoch: 122, iters: 32600, time: 75.154, data: 0.388) G_GAN: 1.473 D_real: 0.608 D_fake: 0.047 G_L1: 5.522 G_L2: 5.510 G_L3: 5.512 G_L4: 5.522 
+End of epoch 122 / 200 	 Time Taken: 115 sec
+INFO:tornado.access:200 POST /events (::1) 6.10ms
+INFO:tornado.access:200 POST /events (::1) 33.40ms
+INFO:tornado.access:200 POST /events (::1) 0.47ms
+INFO:tornado.access:200 POST /events (::1) 5.41ms
+INFO:tornado.access:200 POST /events (::1) 6.01ms
+(epoch: 123, iters: 32700, time: 2.432, data: 0.389) G_GAN: 1.257 D_real: 0.362 D_fake: 1.090 G_L1: 3.121 G_L2: 2.914 G_L3: 2.743 G_L4: 2.655 
+(epoch: 123, iters: 32800, time: 45.120, data: 1.946) G_GAN: 2.241 D_real: 0.309 D_fake: 0.326 G_L1: 3.288 G_L2: 3.088 G_L3: 2.936 G_L4: 2.842 
+(epoch: 123, iters: 32900, time: 88.211, data: 0.386) G_GAN: 1.453 D_real: 0.218 D_fake: 0.563 G_L1: 2.937 G_L2: 2.527 G_L3: 2.095 G_L4: 1.794 
+End of epoch 123 / 200 	 Time Taken: 116 sec
+INFO:tornado.access:200 POST /events (::1) 6.05ms
+INFO:tornado.access:200 POST /events (::1) 3.51ms
+INFO:tornado.access:200 POST /events (::1) 22.18ms
+INFO:tornado.access:200 POST /events (::1) 0.50ms
+INFO:tornado.access:200 POST /events (::1) 6.04ms
+(epoch: 124, iters: 33000, time: 15.891, data: 0.390) G_GAN: 1.371 D_real: 0.871 D_fake: 0.265 G_L1: 2.445 G_L2: 2.211 G_L3: 1.969 G_L4: 1.721 
+(epoch: 124, iters: 33100, time: 57.293, data: 0.410) G_GAN: 2.462 D_real: 0.000 D_fake: 0.843 G_L1: 9.521 G_L2: 9.120 G_L3: 8.754 G_L4: 8.357 
+(epoch: 124, iters: 33200, time: 101.444, data: 1.760) G_GAN: 1.701 D_real: 0.258 D_fake: 0.189 G_L1: 3.454 G_L2: 3.279 G_L3: 3.121 G_L4: 2.987 
+End of epoch 124 / 200 	 Time Taken: 114 sec
+INFO:tornado.access:200 POST /events (::1) 6.09ms
+INFO:tornado.access:200 POST /events (::1) 6.13ms
+INFO:tornado.access:200 POST /events (::1) 6.08ms
+(epoch: 125, iters: 33300, time: 30.684, data: 0.389) G_GAN: 2.993 D_real: 0.011 D_fake: 1.084 G_L1: 4.098 G_L2: 3.878 G_L3: 3.670 G_L4: 3.568 
+(epoch: 125, iters: 33400, time: 72.550, data: 0.389) G_GAN: 1.907 D_real: 0.119 D_fake: 0.563 G_L1: 3.562 G_L2: 3.176 G_L3: 2.785 G_L4: 2.414 
+(epoch: 125, iters: 33500, time: 115.269, data: 0.388) G_GAN: 2.635 D_real: 0.029 D_fake: 0.263 G_L1: 2.531 G_L2: 2.388 G_L3: 2.297 G_L4: 2.229 
+End of epoch 125 / 200 	 Time Taken: 115 sec
+INFO:tornado.access:200 POST /events (::1) 38.63ms
+INFO:tornado.access:200 POST /events (::1) 0.49ms
+INFO:tornado.access:200 POST /events (::1) 4.09ms
+INFO:tornado.access:200 POST /events (::1) 5.47ms
+(epoch: 126, iters: 33600, time: 44.916, data: 1.848) G_GAN: 3.529 D_real: 0.238 D_fake: 0.032 G_L1: 4.661 G_L2: 4.400 G_L3: 4.226 G_L4: 4.147 
+(epoch: 126, iters: 33700, time: 87.210, data: 0.389) G_GAN: 1.638 D_real: 0.000 D_fake: 0.422 G_L1: 5.661 G_L2: 5.410 G_L3: 5.161 G_L4: 4.948 
+End of epoch 126 / 200 	 Time Taken: 116 sec
+INFO:tornado.access:200 POST /events (::1) 5.61ms
+INFO:tornado.access:200 POST /events (::1) 3.09ms
+INFO:tornado.access:200 POST /events (::1) 28.86ms
+INFO:tornado.access:200 POST /events (::1) 0.57ms
+INFO:tornado.access:200 POST /events (::1) 3.75ms
+(epoch: 127, iters: 33800, time: 13.959, data: 0.392) G_GAN: 2.334 D_real: 0.197 D_fake: 0.295 G_L1: 3.696 G_L2: 3.108 G_L3: 2.715 G_L4: 2.514 
+(epoch: 127, iters: 33900, time: 55.740, data: 0.392) G_GAN: 2.183 D_real: 0.348 D_fake: 0.258 G_L1: 11.091 G_L2: 11.097 G_L3: 11.112 G_L4: 11.128 
+(epoch: 127, iters: 34000, time: 105.346, data: 7.157) G_GAN: 1.471 D_real: 0.997 D_fake: 0.103 G_L1: 3.345 G_L2: 2.956 G_L3: 2.528 G_L4: 2.135 
+End of epoch 127 / 200 	 Time Taken: 120 sec
+INFO:tornado.access:200 POST /events (::1) 8.03ms
+INFO:tornado.access:200 POST /events (::1) 6.31ms
+INFO:tornado.access:200 POST /events (::1) 6.54ms
+(epoch: 128, iters: 34100, time: 28.050, data: 0.390) G_GAN: 1.932 D_real: 0.026 D_fake: 0.592 G_L1: 6.681 G_L2: 6.660 G_L3: 6.661 G_L4: 6.670 
+(epoch: 128, iters: 34200, time: 69.971, data: 0.388) G_GAN: 1.860 D_real: 0.096 D_fake: 0.169 G_L1: 3.085 G_L2: 2.706 G_L3: 2.273 G_L4: 1.888 
+(epoch: 128, iters: 34300, time: 113.143, data: 0.387) G_GAN: 2.110 D_real: 0.207 D_fake: 0.155 G_L1: 6.232 G_L2: 6.085 G_L3: 6.006 G_L4: 5.993 
+End of epoch 128 / 200 	 Time Taken: 115 sec
+INFO:tornado.access:200 POST /events (::1) 31.40ms
+INFO:tornado.access:200 POST /events (::1) 0.50ms
+INFO:tornado.access:200 POST /events (::1) 5.68ms
+INFO:tornado.access:200 POST /events (::1) 6.25ms
+(epoch: 129, iters: 34400, time: 44.137, data: 2.360) G_GAN: 3.752 D_real: 0.104 D_fake: 0.035 G_L1: 3.559 G_L2: 3.305 G_L3: 3.054 G_L4: 2.780 
+(epoch: 129, iters: 34500, time: 85.614, data: 0.388) G_GAN: 2.238 D_real: 0.751 D_fake: 0.081 G_L1: 2.018 G_L2: 1.637 G_L3: 1.294 G_L4: 0.995 
+End of epoch 129 / 200 	 Time Taken: 116 sec
+INFO:tornado.access:200 POST /events (::1) 3.63ms
+INFO:tornado.access:200 POST /events (::1) 6.31ms
+INFO:tornado.access:200 POST /events (::1) 32.33ms
+INFO:tornado.access:200 POST /events (::1) 0.54ms
+INFO:tornado.access:200 POST /events (::1) 6.01ms
+(epoch: 130, iters: 34600, time: 12.790, data: 0.392) G_GAN: 4.285 D_real: 0.000 D_fake: 0.031 G_L1: 10.441 G_L2: 10.135 G_L3: 9.918 G_L4: 9.805 
+(epoch: 130, iters: 34700, time: 55.719, data: 0.391) G_GAN: 2.827 D_real: 0.073 D_fake: 0.089 G_L1: 4.991 G_L2: 4.939 G_L3: 4.928 G_L4: 4.929 
+(epoch: 130, iters: 34800, time: 99.019, data: 2.063) G_GAN: 2.497 D_real: 0.378 D_fake: 0.097 G_L1: 7.146 G_L2: 7.029 G_L3: 7.016 G_L4: 7.030 
+End of epoch 130 / 200 	 Time Taken: 115 sec
+INFO:tornado.access:200 POST /events (::1) 6.33ms
+INFO:tornado.access:200 POST /events (::1) 6.36ms
+INFO:tornado.access:200 POST /events (::1) 3.64ms
+(epoch: 131, iters: 34900, time: 26.092, data: 0.388) G_GAN: 1.521 D_real: 0.910 D_fake: 0.547 G_L1: 2.342 G_L2: 2.079 G_L3: 1.834 G_L4: 1.627 
+(epoch: 131, iters: 35000, time: 69.749, data: 0.389) G_GAN: 1.563 D_real: 0.087 D_fake: 0.381 G_L1: 4.026 G_L2: 3.851 G_L3: 3.738 G_L4: 3.685 
+saving the latest model (epoch 131, total_iters 35000)
+(epoch: 131, iters: 35100, time: 111.193, data: 0.391) G_GAN: 1.963 D_real: 0.783 D_fake: 0.116 G_L1: 3.993 G_L2: 3.379 G_L3: 2.761 G_L4: 2.204 
+End of epoch 131 / 200 	 Time Taken: 114 sec
+INFO:tornado.access:200 POST /events (::1) 30.44ms
+INFO:tornado.access:200 POST /events (::1) 0.66ms
+INFO:tornado.access:200 POST /events (::1) 6.25ms
+INFO:tornado.access:200 POST /events (::1) 6.42ms
+(epoch: 132, iters: 35200, time: 40.840, data: 2.208) G_GAN: 2.129 D_real: 0.002 D_fake: 0.209 G_L1: 3.839 G_L2: 3.557 G_L3: 3.302 G_L4: 3.071 
+(epoch: 132, iters: 35300, time: 84.774, data: 0.388) G_GAN: 2.551 D_real: 0.032 D_fake: 0.932 G_L1: 2.054 G_L2: 1.765 G_L3: 1.512 G_L4: 1.285 
+End of epoch 132 / 200 	 Time Taken: 116 sec
+INFO:tornado.access:200 POST /events (::1) 6.46ms
+INFO:tornado.access:200 POST /events (::1) 6.38ms
+INFO:tornado.access:200 POST /events (::1) 31.93ms
+INFO:tornado.access:200 POST /events (::1) 0.49ms
+INFO:tornado.access:200 POST /events (::1) 6.15ms
+(epoch: 133, iters: 35400, time: 10.733, data: 0.390) G_GAN: 1.395 D_real: 0.244 D_fake: 0.350 G_L1: 2.766 G_L2: 2.376 G_L3: 2.014 G_L4: 1.761 
+(epoch: 133, iters: 35500, time: 52.452, data: 0.391) G_GAN: 3.194 D_real: 0.147 D_fake: 0.089 G_L1: 11.987 G_L2: 11.991 G_L3: 12.012 G_L4: 12.033 
+(epoch: 133, iters: 35600, time: 97.156, data: 1.814) G_GAN: 1.750 D_real: 0.555 D_fake: 0.954 G_L1: 5.144 G_L2: 5.054 G_L3: 5.032 G_L4: 5.042 
+End of epoch 133 / 200 	 Time Taken: 115 sec
+INFO:tornado.access:200 POST /events (::1) 6.50ms
+INFO:tornado.access:200 POST /events (::1) 6.51ms
+INFO:tornado.access:200 POST /events (::1) 6.49ms
+(epoch: 134, iters: 35700, time: 24.168, data: 0.390) G_GAN: 2.561 D_real: 0.000 D_fake: 0.174 G_L1: 12.021 G_L2: 11.908 G_L3: 11.812 G_L4: 11.785 
+(epoch: 134, iters: 35800, time: 66.018, data: 0.389) G_GAN: 1.991 D_real: 0.177 D_fake: 0.220 G_L1: 4.450 G_L2: 4.371 G_L3: 4.337 G_L4: 4.335 
+(epoch: 134, iters: 35900, time: 108.793, data: 0.386) G_GAN: 1.662 D_real: 0.003 D_fake: 0.681 G_L1: 3.736 G_L2: 3.469 G_L3: 3.210 G_L4: 3.026 
+End of epoch 134 / 200 	 Time Taken: 113 sec
+INFO:tornado.access:200 POST /events (::1) 32.37ms
+INFO:tornado.access:200 POST /events (::1) 0.53ms
+INFO:tornado.access:200 POST /events (::1) 2.63ms
+INFO:tornado.access:200 POST /events (::1) 6.50ms
+(epoch: 135, iters: 36000, time: 45.966, data: 7.692) G_GAN: 1.643 D_real: 0.298 D_fake: 0.535 G_L1: 2.466 G_L2: 2.191 G_L3: 1.965 G_L4: 1.838 
+(epoch: 135, iters: 36100, time: 87.317, data: 0.391) G_GAN: 2.073 D_real: 0.000 D_fake: 0.366 G_L1: 12.031 G_L2: 11.794 G_L3: 11.634 G_L4: 11.544 
+End of epoch 135 / 200 	 Time Taken: 122 sec
+INFO:tornado.access:200 POST /events (::1) 3.28ms
+INFO:tornado.access:200 POST /events (::1) 6.57ms
+INFO:tornado.access:200 POST /events (::1) 27.56ms
+INFO:tornado.access:200 POST /events (::1) 0.37ms
+INFO:tornado.access:200 POST /events (::1) 2.92ms
+(epoch: 136, iters: 36200, time: 9.004, data: 0.386) G_GAN: 0.929 D_real: 1.384 D_fake: 0.197 G_L1: 1.662 G_L2: 1.419 G_L3: 1.235 G_L4: 1.068 
+(epoch: 136, iters: 36300, time: 51.502, data: 0.391) G_GAN: 2.531 D_real: 0.132 D_fake: 0.298 G_L1: 3.033 G_L2: 2.555 G_L3: 2.105 G_L4: 1.762 
+(epoch: 136, iters: 36400, time: 95.099, data: 2.001) G_GAN: 2.536 D_real: 0.087 D_fake: 0.723 G_L1: 4.163 G_L2: 3.952 G_L3: 3.788 G_L4: 3.693 
+End of epoch 136 / 200 	 Time Taken: 116 sec
+INFO:tornado.access:200 POST /events (::1) 6.65ms
+INFO:tornado.access:200 POST /events (::1) 6.17ms
+INFO:tornado.access:200 POST /events (::1) 6.57ms
+(epoch: 137, iters: 36500, time: 22.676, data: 0.588) G_GAN: 2.758 D_real: 0.178 D_fake: 0.066 G_L1: 3.754 G_L2: 3.387 G_L3: 3.040 G_L4: 2.798 
+(epoch: 137, iters: 36600, time: 64.702, data: 0.388) G_GAN: 1.836 D_real: 0.026 D_fake: 0.323 G_L1: 4.643 G_L2: 4.315 G_L3: 4.091 G_L4: 3.995 
+(epoch: 137, iters: 36700, time: 107.612, data: 0.390) G_GAN: 1.268 D_real: 1.176 D_fake: 0.484 G_L1: 7.741 G_L2: 7.652 G_L3: 7.631 G_L4: 7.643 
+End of epoch 137 / 200 	 Time Taken: 115 sec
+INFO:tornado.access:200 POST /events (::1) 30.50ms
+INFO:tornado.access:200 POST /events (::1) 0.55ms
+INFO:tornado.access:200 POST /events (::1) 6.06ms
+INFO:tornado.access:200 POST /events (::1) 3.09ms
+(epoch: 138, iters: 36800, time: 38.109, data: 2.398) G_GAN: 2.149 D_real: 0.140 D_fake: 0.254 G_L1: 7.472 G_L2: 7.417 G_L3: 7.363 G_L4: 7.289 
+(epoch: 138, iters: 36900, time: 79.330, data: 0.521) G_GAN: 1.470 D_real: 0.177 D_fake: 0.362 G_L1: 3.046 G_L2: 2.615 G_L3: 2.142 G_L4: 1.722 
+End of epoch 138 / 200 	 Time Taken: 115 sec
+INFO:tornado.access:200 POST /events (::1) 6.74ms
+INFO:tornado.access:200 POST /events (::1) 5.11ms
+INFO:tornado.access:200 POST /events (::1) 38.12ms
+INFO:tornado.access:200 POST /events (::1) 0.56ms
+INFO:tornado.access:200 POST /events (::1) 6.08ms
+(epoch: 139, iters: 37000, time: 8.408, data: 0.399) G_GAN: 1.458 D_real: 0.375 D_fake: 0.694 G_L1: 2.416 G_L2: 2.041 G_L3: 1.676 G_L4: 1.340 
+(epoch: 139, iters: 37100, time: 51.558, data: 0.396) G_GAN: 1.179 D_real: 0.572 D_fake: 0.504 G_L1: 2.117 G_L2: 1.763 G_L3: 1.485 G_L4: 1.272 
+(epoch: 139, iters: 37200, time: 94.907, data: 2.339) G_GAN: 2.150 D_real: 1.221 D_fake: 0.049 G_L1: 2.684 G_L2: 2.297 G_L3: 1.873 G_L4: 1.475 
+End of epoch 139 / 200 	 Time Taken: 116 sec
+INFO:tornado.access:200 POST /events (::1) 4.10ms
+INFO:tornado.access:200 POST /events (::1) 6.75ms
+INFO:tornado.access:200 POST /events (::1) 6.71ms
+(epoch: 140, iters: 37300, time: 21.697, data: 0.387) G_GAN: 2.509 D_real: 0.371 D_fake: 0.072 G_L1: 6.906 G_L2: 6.861 G_L3: 6.839 G_L4: 6.849 
+(epoch: 140, iters: 37400, time: 64.615, data: 0.385) G_GAN: 1.452 D_real: 1.234 D_fake: 0.320 G_L1: 3.192 G_L2: 2.815 G_L3: 2.424 G_L4: 2.108 
+(epoch: 140, iters: 37500, time: 106.372, data: 0.388) G_GAN: 3.312 D_real: 0.001 D_fake: 0.167 G_L1: 7.603 G_L2: 7.339 G_L3: 7.114 G_L4: 6.983 
+saving the model at the end of epoch 140, iters 37520
+End of epoch 140 / 200 	 Time Taken: 115 sec
+INFO:tornado.access:200 POST /events (::1) 37.35ms
+INFO:tornado.access:200 POST /events (::1) 0.49ms
+INFO:tornado.access:200 POST /events (::1) 6.19ms
+INFO:tornado.access:200 POST /events (::1) 5.69ms
+(epoch: 141, iters: 37600, time: 35.820, data: 2.047) G_GAN: 2.197 D_real: 0.034 D_fake: 0.133 G_L1: 12.162 G_L2: 12.144 G_L3: 12.156 G_L4: 12.174 
+(epoch: 141, iters: 37700, time: 79.151, data: 0.388) G_GAN: 1.645 D_real: 0.013 D_fake: 0.397 G_L1: 3.152 G_L2: 2.838 G_L3: 2.478 G_L4: 2.080 
+End of epoch 141 / 200 	 Time Taken: 115 sec
+INFO:tornado.access:200 POST /events (::1) 6.73ms
+INFO:tornado.access:200 POST /events (::1) 6.81ms
+INFO:tornado.access:200 POST /events (::1) 27.29ms
+INFO:tornado.access:200 POST /events (::1) 0.64ms
+INFO:tornado.access:200 POST /events (::1) 6.55ms
+(epoch: 142, iters: 37800, time: 5.839, data: 0.388) G_GAN: 3.251 D_real: 0.146 D_fake: 0.043 G_L1: 2.469 G_L2: 2.056 G_L3: 1.639 G_L4: 1.286 
+(epoch: 142, iters: 37900, time: 47.932, data: 0.390) G_GAN: 2.435 D_real: 0.095 D_fake: 0.211 G_L1: 5.779 G_L2: 5.514 G_L3: 5.379 G_L4: 5.365 
+(epoch: 142, iters: 38000, time: 98.985, data: 7.871) G_GAN: 2.765 D_real: 0.741 D_fake: 0.212 G_L1: 8.041 G_L2: 7.962 G_L3: 7.956 G_L4: 7.969 
+End of epoch 142 / 200 	 Time Taken: 122 sec
+INFO:tornado.access:200 POST /events (::1) 6.77ms
+INFO:tornado.access:200 POST /events (::1) 5.77ms
+INFO:tornado.access:200 POST /events (::1) 6.86ms
+(epoch: 143, iters: 38100, time: 18.913, data: 0.389) G_GAN: 2.021 D_real: 0.538 D_fake: 0.155 G_L1: 4.808 G_L2: 4.569 G_L3: 4.365 G_L4: 4.228 
+(epoch: 143, iters: 38200, time: 60.938, data: 0.390) G_GAN: 1.976 D_real: 0.412 D_fake: 0.078 G_L1: 3.765 G_L2: 3.359 G_L3: 2.929 G_L4: 2.574 
+(epoch: 143, iters: 38300, time: 103.804, data: 0.391) G_GAN: 2.925 D_real: 0.281 D_fake: 0.090 G_L1: 2.990 G_L2: 2.801 G_L3: 2.669 G_L4: 2.612 
+End of epoch 143 / 200 	 Time Taken: 114 sec
+INFO:tornado.access:200 POST /events (::1) 27.53ms
+INFO:tornado.access:200 POST /events (::1) 0.55ms
+INFO:tornado.access:200 POST /events (::1) 6.88ms
+INFO:tornado.access:200 POST /events (::1) 8.94ms
+(epoch: 144, iters: 38400, time: 34.215, data: 1.974) G_GAN: 3.363 D_real: 0.003 D_fake: 1.059 G_L1: 4.428 G_L2: 3.990 G_L3: 3.460 G_L4: 2.919 
+(epoch: 144, iters: 38500, time: 76.923, data: 0.392) G_GAN: 2.187 D_real: 0.029 D_fake: 0.467 G_L1: 3.817 G_L2: 3.417 G_L3: 3.130 G_L4: 2.966 
+End of epoch 144 / 200 	 Time Taken: 115 sec
+INFO:tornado.access:200 POST /events (::1) 7.03ms
+INFO:tornado.access:200 POST /events (::1) 4.66ms
+slurmstepd: error: *** JOB 1027745 ON tamar CANCELLED AT 2024-08-01T19:54:59 ***
