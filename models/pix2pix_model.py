@@ -9,6 +9,8 @@ import kornia
 
 import re
 from .classification_wrapper import ModelLossWrapper # line added for classification wrapper 
+from torch.cuda.amp import GradScaler, autocast
+
 
 
 def get_image_IHC_grade(filename):
@@ -50,6 +52,8 @@ class Pix2PixModel(BaseModel):
             parser.set_defaults(pool_size=0, gan_mode='vanilla')
             parser.add_argument('--lambda_L1', type=float, default=25.0, help='weight for L1 loss')
             parser.add_argument('--lambda_class', type=float, default=10.0, help='weight for the classification loss')      # line added for classification wrapper
+            parser.add_argument('--accumulation_steps', type=int, default=4, help='number of gradient accumulation steps')
+            parser.add_argument('--use_classification_wrapper', type=bool, default=True, help='if true use classification wrapper loss.')
 
         return parser
 
@@ -60,7 +64,12 @@ class Pix2PixModel(BaseModel):
             opt (Option class)-- stores all the experiment flags; needs to be a subclass of BaseOptions
         """
         BaseModel.__init__(self, opt)
-        self.model_wrapper = ModelLossWrapper("./saved_models/resnet100", self.device)    # line added for classification wrapper
+        self.use_classification_wrapper = opt.use_classification_wrapper
+        if self.use_classification_wrapper: 
+            self.model_wrapper = ModelLossWrapper("./saved_models/efficientnet_b7_1", self.device)    # line added for classification wrapper
+        self.scaler = GradScaler()                                                        # line added for mixed precision training
+        self.current_step = 0                                                             # Initialize current_step
+        self.accumulation_steps = opt.accumulation_steps                                  # Initialize accumulation_steps
 
         # specify the training losses you want to print out. The training/test scripts will call <BaseModel.get_current_losses>
         if 'noGAN' in opt.pattern:
@@ -112,11 +121,11 @@ class Pix2PixModel(BaseModel):
             self.model_names = ['G']
         # define networks (both generator and discriminator)
         self.netG = networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG, opt.norm,
-                                      not opt.no_dropout, opt.init_type, opt.init_gain, self.gpu_ids)
+                                    not opt.no_dropout, opt.init_type, opt.init_gain, self.gpu_ids)
 
         if self.isTrain:  # define a discriminator; conditional GANs need to take both input and output images; Therefore, #channels for D is input_nc + output_nc
             self.netD = networks.define_D(opt.input_nc + opt.output_nc, opt.ndf, opt.netD,
-                                          opt.n_layers_D, opt.norm, opt.init_type, opt.init_gain, self.gpu_ids)
+                                        opt.n_layers_D, opt.norm, opt.init_type, opt.init_gain, self.gpu_ids)
             if opt.netD == 'conv':
                 prenet = torch.load('models/vgg19_conv.pth')
                 netdict = {}
@@ -133,6 +142,7 @@ class Pix2PixModel(BaseModel):
             self.optimizer_D = torch.optim.Adam(self.netD.parameters(), lr=opt.lr, betas=(opt.beta1, 0.999))
             self.optimizers.append(self.optimizer_G)
             self.optimizers.append(self.optimizer_D)
+
 
     def set_input(self, input):
         """Unpack input data from the dataloader and perform necessary pre-processing steps.
@@ -235,153 +245,187 @@ class Pix2PixModel(BaseModel):
 
     def backward_D(self):
         """Calculate GAN loss for the discriminator"""
-        if self.opt.netD == 'conv':
-            fake_feature = self.netD(self.fake_B)
-            real_feature = self.netD(self.real_B)
-            self.loss_D = - self.criterionL1(fake_feature.detach(), real_feature) * self.opt.weight_conv
-        else:    
-            # Fake; stop backprop to the generator by detaching fake_B
-            fake_AB = torch.cat((self.real_A, self.fake_B), 1)  # we use conditional GANs; we need to feed both input and output to the discriminator
-            pred_fake = self.netD(fake_AB.detach())
-            self.loss_D_fake = self.criterionGAN(pred_fake, False)
-            # Real
-            real_AB = torch.cat((self.real_A, self.real_B), 1)
-            pred_real = self.netD(real_AB)
-            self.loss_D_real = self.criterionGAN(pred_real, True)
-            # combine loss and calculate gradients
-            self.loss_D = (self.loss_D_fake + self.loss_D_real) * 0.5
-            
-            # part added for classification wrapper for discriminator
-            class_loss = self.model_wrapper.compute_loss(None, self.image_paths, pred_real, "discriminator")
-            self.loss_D += class_loss * self.opt.lambda_class  # lambda_class is a weighting factor for classification loss
-            
-        self.loss_D.backward()
-
-    def backward_G(self):
-        """Calculate GAN and L1 loss for the generator"""
-        # First, G(A) should fake the discriminator
-        self.loss_G = 0
-        if 'noGAN' not in self.opt.pattern:
+        with autocast():
             if self.opt.netD == 'conv':
                 fake_feature = self.netD(self.fake_B)
                 real_feature = self.netD(self.real_B)
-                self.loss_G_GAN = self.criterionL1(fake_feature, real_feature) * self.opt.weight_conv
+                self.loss_D = - self.criterionL1(fake_feature.detach(), real_feature) * self.opt.weight_conv
             else:
-                fake_AB = torch.cat((self.real_A, self.fake_B), 1)
-                pred_fake = self.netD(fake_AB)
-                self.loss_G_GAN = self.criterionGAN(pred_fake, True)
-            self.loss_G += self.loss_G_GAN
+                # Fake; stop backprop to the generator by detaching fake_B
+                fake_AB = torch.cat((self.real_A, self.fake_B), 1)  # we use conditional GANs; we need to feed both input and output to the discriminator
+                pred_fake = self.netD(fake_AB.detach())
+                self.loss_D_fake = self.criterionGAN(pred_fake, False)
+                # Real
+                real_AB = torch.cat((self.real_A, self.real_B), 1)
+                pred_real = self.netD(real_AB)
+                self.loss_D_real = self.criterionGAN(pred_real, True)
+                # combine loss and calculate gradients
+                self.loss_D = (self.loss_D_fake + self.loss_D_real) * 0.5
 
-        if 'L1' in self.opt.pattern:
-            self.loss_G_L1 = self.criterionL1(self.fake_B, self.real_B) * self.opt.lambda_L1
-            self.loss_G += self.loss_G_L1
-            if 'L2' in self.opt.pattern:
-                octave1_layer2_fake=kornia.filters.gaussian_blur2d(self.fake_B,(3,3),(1,1))
-                octave1_layer3_fake=kornia.filters.gaussian_blur2d(octave1_layer2_fake,(3,3),(1,1))
-                octave1_layer4_fake=kornia.filters.gaussian_blur2d(octave1_layer3_fake,(3,3),(1,1))
-                octave1_layer5_fake=kornia.filters.gaussian_blur2d(octave1_layer4_fake,(3,3),(1,1))
-                octave2_layer1_fake=kornia.filters.blur_pool2d(octave1_layer5_fake, 1, stride=2)
-                octave1_layer2_real=kornia.filters.gaussian_blur2d(self.real_B,(3,3),(1,1))
-                octave1_layer3_real=kornia.filters.gaussian_blur2d(octave1_layer2_real,(3,3),(1,1))
-                octave1_layer4_real=kornia.filters.gaussian_blur2d(octave1_layer3_real,(3,3),(1,1))
-                octave1_layer5_real=kornia.filters.gaussian_blur2d(octave1_layer4_real,(3,3),(1,1))
-                octave2_layer1_real=kornia.filters.blur_pool2d(octave1_layer5_real, 1, stride=2)
-                self.loss_G_L2 = self.criterionL1(octave2_layer1_fake, octave2_layer1_real) * self.opt.weight_L2
-                self.loss_G += self.loss_G_L2
-                if 'L3' in self.opt.pattern:
-                    octave2_layer2_fake=kornia.filters.gaussian_blur2d(octave2_layer1_fake,(3,3),(1,1))
-                    octave2_layer3_fake=kornia.filters.gaussian_blur2d(octave2_layer2_fake,(3,3),(1,1))
-                    octave2_layer4_fake=kornia.filters.gaussian_blur2d(octave2_layer3_fake,(3,3),(1,1))
-                    octave2_layer5_fake=kornia.filters.gaussian_blur2d(octave2_layer4_fake,(3,3),(1,1))
-                    octave3_layer1_fake=kornia.filters.blur_pool2d(octave2_layer5_fake, 1, stride=2)
-                    octave2_layer2_real=kornia.filters.gaussian_blur2d(octave2_layer1_real,(3,3),(1,1))
-                    octave2_layer3_real=kornia.filters.gaussian_blur2d(octave2_layer2_real,(3,3),(1,1))
-                    octave2_layer4_real=kornia.filters.gaussian_blur2d(octave2_layer3_real,(3,3),(1,1))
-                    octave2_layer5_real=kornia.filters.gaussian_blur2d(octave2_layer4_real,(3,3),(1,1))
-                    octave3_layer1_real=kornia.filters.blur_pool2d(octave2_layer5_real, 1, stride=2)
-                    self.loss_G_L3 = self.criterionL1(octave3_layer1_fake, octave3_layer1_real) * self.opt.weight_L3
-                    self.loss_G += self.loss_G_L3
-                    if 'L4' in self.opt.pattern:
-                        octave3_layer2_fake=kornia.filters.gaussian_blur2d(octave3_layer1_fake,(3,3),(1,1))
-                        octave3_layer3_fake=kornia.filters.gaussian_blur2d(octave3_layer2_fake,(3,3),(1,1))
-                        octave3_layer4_fake=kornia.filters.gaussian_blur2d(octave3_layer3_fake,(3,3),(1,1))
-                        octave3_layer5_fake=kornia.filters.gaussian_blur2d(octave3_layer4_fake,(3,3),(1,1))
-                        octave4_layer1_fake=kornia.filters.blur_pool2d(octave3_layer5_fake, 1, stride=2)
-                        octave3_layer2_real=kornia.filters.gaussian_blur2d(octave3_layer1_real,(3,3),(1,1))
-                        octave3_layer3_real=kornia.filters.gaussian_blur2d(octave3_layer2_real,(3,3),(1,1))
-                        octave3_layer4_real=kornia.filters.gaussian_blur2d(octave3_layer3_real,(3,3),(1,1))
-                        octave3_layer5_real=kornia.filters.gaussian_blur2d(octave3_layer4_real,(3,3),(1,1))
-                        octave4_layer1_real=kornia.filters.blur_pool2d(octave3_layer5_real, 1, stride=2)
-                        self.loss_G_L4 = self.criterionL1(octave4_layer1_fake, octave4_layer1_real) * self.opt.weight_L4
-                        self.loss_G += self.loss_G_L4
-            if 'mask' in self.opt.pattern:
-                self.loss_G_L1 = self.criterionL1(self.fake_B * self.mask, self.real_B * self.mask) * self.opt.lambda_L1
-        
+                if self.use_classification_wrapper:
+                    # part added for classification wrapper for discriminator
+                    class_loss = self.model_wrapper.compute_loss(None, self.image_paths, pred_real, "discriminator")
+                    self.loss_D += class_loss * self.opt.lambda_class  # lambda_class is a weighting factor for classification loss
 
-        if 'fft' in self.opt.pattern:
-            prenet = torch.load('models/vgg19_conv.pth')
-            self.weight1_1 = prenet['conv1_1.weight'].type(torch.FloatTensor).cuda()
-            #self.weight1_1 = prenet['conv1_1.weight'].type(torch.FloatTensor)
-            fake_low,fake_high = self.frequency_division(self.fake_B)
-            real_low,real_high = self.frequency_division(self.real_B)
-            self.loss_G_fft = self.criterionL1(fake_low.to(self.opt.gpu_ids[0]),real_low.to(self.opt.gpu_ids[0]))*self.opt.weight_low_L1+self.criterionL1(fake_high.to(self.opt.gpu_ids[0]),real_high.to(self.opt.gpu_ids[0]))*self.opt.weight_high_L1
-            self.loss_G += self.loss_G_fft
-
-        if 'perc' in self.opt.pattern or 'contextual' in self.opt.pattern:
-            real_features = self.vggnet_fix(self.real_B, ['r12', 'r22', 'r32', 'r42', 'r52'], preprocess=True)
-            fake_features = self.vggnet_fix(self.fake_B, ['r12', 'r22', 'r32', 'r42', 'r52'], preprocess=True)
-            if 'perc' in self.opt.pattern:
-                feat_loss = torch.nn.MSELoss()(fake_features[self.perceptual_layer], real_features[self.perceptual_layer].detach())
-                self.loss_G_perc = feat_loss * self.opt.weight_perceptual
-                self.loss_G += self.loss_G_perc
-            if 'contextual' in self.opt.pattern:
-                self.loss_G_contextual = self.get_ctx_loss(fake_features, real_features) * self.opt.lambda_vgg * self.opt.ctx_w
-                self.loss_G += self.loss_G_contextual
-        
-        if 'conv' in self.opt.pattern:
-            # real_conv = self.vggnet_fix(self.real_B, ['r11'], preprocess=True)
-            # fake_conv = self.vggnet_fix(self.fake_B, ['r11'], preprocess=True)
-            # conv_loss = 0
-            # for i in range(len(fake_conv)):
-            #     conv_loss += self.criterionL1(fake_conv[i], real_conv[i].detach())
-            prenet = torch.load('models/vgg19_conv.pth')
-            self.weight1_1 = prenet['conv1_1.weight'].type(torch.FloatTensor).cuda()
-            fake_feature = F.conv2d(self.fake_B, self.weight1_1, padding=1)
-            real_feature = F.conv2d(self.real_B, self.weight1_1, padding=1)
-            conv_loss = self.criterionL1(fake_feature, real_feature)
-            self.loss_G_conv = conv_loss * self.opt.weight_conv
-            self.loss_G += self.loss_G_conv
-
-        if 'sobel' in self.opt.pattern:
-            real_sobels = self.sobel_conv(self.real_B)
-            fake_sobels = self.sobel_conv(self.fake_B)
-            sobel_loss = 0
-            for i in range(len(fake_sobels)):
-                sobel_loss += self.criterionL1(fake_sobels[i], real_sobels[i].detach())
-            self.loss_G_sobel = sobel_loss * self.opt.weight_sobel
-            self.loss_G += self.loss_G_sobel
-        
+        self.scaler.scale(self.loss_D).backward(retain_graph=True)
 
 
-        # part added for classification wrapper for generator : 
-        
-        # Adding classification loss from the ModelLossWrapper
-        class_loss = self.model_wrapper.compute_loss(self.fake_B, self.image_paths, None,"generator")
-        self.loss_G += class_loss * self.opt.lambda_class  # lambda_class is a weighting factor for classification loss
+
+    def backward_G(self):
+        """Calculate GAN and L1 loss for the generator"""
+        with autocast():
+            # First, G(A) should fake the discriminator
+            self.loss_G = 0
+            if 'noGAN' not in self.opt.pattern:
+                if self.opt.netD == 'conv':
+                    fake_feature = self.netD(self.fake_B)
+                    real_feature = self.netD(self.real_B)
+                    self.loss_G_GAN = self.criterionL1(fake_feature, real_feature) * self.opt.weight_conv
+                else:
+                    fake_AB = torch.cat((self.real_A, self.fake_B), 1)
+                    pred_fake = self.netD(fake_AB)
+                    self.loss_G_GAN = self.criterionGAN(pred_fake, True)
+                self.loss_G += self.loss_G_GAN
+
+            if 'L1' in self.opt.pattern:
+                self.loss_G_L1 = self.criterionL1(self.fake_B, self.real_B) * self.opt.lambda_L1
+                self.loss_G += self.loss_G_L1
+                if 'L2' in self.opt.pattern:
+                    octave1_layer2_fake = kornia.filters.gaussian_blur2d(self.fake_B, (3, 3), (1, 1))
+                    octave1_layer3_fake = kornia.filters.gaussian_blur2d(octave1_layer2_fake, (3, 3), (1, 1))
+                    octave1_layer4_fake = kornia.filters.gaussian_blur2d(octave1_layer3_fake, (3, 3), (1, 1))
+                    octave1_layer5_fake = kornia.filters.gaussian_blur2d(octave1_layer4_fake, (3, 3), (1, 1))
+                    octave2_layer1_fake = kornia.filters.blur_pool2d(octave1_layer5_fake, 1, stride=2)
+                    octave1_layer2_real = kornia.filters.gaussian_blur2d(self.real_B, (3, 3), (1, 1))
+                    octave1_layer3_real = kornia.filters.gaussian_blur2d(octave1_layer2_real, (3, 3), (1, 1))
+                    octave1_layer4_real = kornia.filters.gaussian_blur2d(octave1_layer3_real, (3, 3), (1, 1))
+                    octave1_layer5_real = kornia.filters.gaussian_blur2d(octave1_layer4_real, (3, 3), (1, 1))
+                    octave2_layer1_real = kornia.filters.blur_pool2d(octave1_layer5_real, 1, stride=2)
+                    self.loss_G_L2 = self.criterionL1(octave2_layer1_fake, octave2_layer1_real) * self.opt.weight_L2
+                    self.loss_G += self.loss_G_L2
+                    if 'L3' in self.opt.pattern:
+                        octave2_layer2_fake = kornia.filters.gaussian_blur2d(octave2_layer1_fake, (3, 3), (1, 1))
+                        octave2_layer3_fake = kornia.filters.gaussian_blur2d(octave2_layer2_fake, (3, 3), (1, 1))
+                        octave2_layer4_fake = kornia.filters.gaussian_blur2d(octave2_layer3_fake, (3, 3), (1, 1))
+                        octave2_layer5_fake = kornia.filters.gaussian_blur2d(octave2_layer4_fake, (3, 3), (1, 1))
+                        octave3_layer1_fake = kornia.filters.blur_pool2d(octave2_layer5_fake, 1, stride=2)
+                        octave2_layer2_real = kornia.filters.gaussian_blur2d(octave2_layer1_real, (3, 3), (1, 1))
+                        octave2_layer3_real = kornia.filters.gaussian_blur2d(octave2_layer2_real, (3, 3), (1, 1))
+                        octave2_layer4_real = kornia.filters.gaussian_blur2d(octave2_layer3_real, (3, 3), (1, 1))
+                        octave2_layer5_real = kornia.filters.gaussian_blur2d(octave2_layer4_real, (3, 3), (1, 1))
+                        octave3_layer1_real = kornia.filters.blur_pool2d(octave2_layer5_real, 1, stride=2)
+                        self.loss_G_L3 = self.criterionL1(octave3_layer1_fake, octave3_layer1_real) * self.opt.weight_L3
+                        self.loss_G += self.loss_G_L3
+                        if 'L4' in self.opt.pattern:
+                            octave3_layer2_fake = kornia.filters.gaussian_blur2d(octave3_layer1_fake, (3, 3), (1, 1))
+                            octave3_layer3_fake = kornia.filters.gaussian_blur2d(octave3_layer2_fake, (3, 3), (1, 1))
+                            octave3_layer4_fake = kornia.filters.gaussian_blur2d(octave3_layer3_fake, (3, 3), (1, 1))
+                            octave3_layer5_fake = kornia.filters.gaussian_blur2d(octave3_layer4_fake, (3, 3), (1, 1))
+                            octave4_layer1_fake = kornia.filters.blur_pool2d(octave3_layer5_fake, 1, stride=2)
+                            octave3_layer2_real = kornia.filters.gaussian_blur2d(octave3_layer1_real, (3, 3), (1, 1))
+                            octave3_layer3_real = kornia.filters.gaussian_blur2d(octave3_layer2_real, (3, 3), (1, 1))
+                            octave3_layer4_real = kornia.filters.gaussian_blur2d(octave3_layer3_real, (3, 3), (1, 1))
+                            octave3_layer5_real = kornia.filters.gaussian_blur2d(octave3_layer4_real, (3, 3), (1, 1))
+                            octave4_layer1_real = kornia.filters.blur_pool2d(octave3_layer5_real, 1, stride=2)
+                            self.loss_G_L4 = self.criterionL1(octave4_layer1_fake, octave4_layer1_real) * self.opt.weight_L4
+                            self.loss_G += self.loss_G_L4
+                if 'mask' in self.opt.pattern:
+                    self.loss_G_L1 = self.criterionL1(self.fake_B * self.mask, self.real_B * self.mask) * self.opt.lambda_L1
+
+            if 'fft' in self.opt.pattern:
+                prenet = torch.load('models/vgg19_conv.pth')
+                self.weight1_1 = prenet['conv1_1.weight'].type(torch.FloatTensor).cuda()
+                fake_low, fake_high = self.frequency_division(self.fake_B)
+                real_low, real_high = self.frequency_division(self.real_B)
+                self.loss_G_fft = self.criterionL1(fake_low.to(self.opt.gpu_ids[0]), real_low.to(self.opt.gpu_ids[0])) * self.opt.weight_low_L1 + self.criterionL1(fake_high.to(self.opt.gpu_ids[0]), real_high.to(self.opt.gpu_ids[0])) * self.opt.weight_high_L1
+                self.loss_G += self.loss_G_fft
+
+            if 'perc' in self.opt.pattern or 'contextual' in self.opt.pattern:
+                real_features = self.vggnet_fix(self.real_B, ['r12', 'r22', 'r32', 'r42', 'r52'], preprocess=True)
+                fake_features = self.vggnet_fix(self.fake_B, ['r12', 'r22', 'r32', 'r42', 'r52'], preprocess=True)
+                if 'perc' in self.opt.pattern:
+                    feat_loss = torch.nn.MSELoss()(fake_features[self.perceptual_layer], real_features[self.perceptual_layer].detach())
+                    self.loss_G_perc = feat_loss * self.opt.weight_perceptual
+                    self.loss_G += self.loss_G_perc
+                if 'contextual' in self.opt.pattern:
+                    self.loss_G_contextual = self.get_ctx_loss(fake_features, real_features) * self.opt.lambda_vgg * self.opt.ctx_w
+                    self.loss_G += self.loss_G_contextual
+
+            if 'conv' in self.opt.pattern:
+                prenet = torch.load('models/vgg19_conv.pth')
+                self.weight1_1 = prenet['conv1_1.weight'].type(torch.FloatTensor).cuda()
+                fake_feature = F.conv2d(self.fake_B, self.weight1_1, padding=1)
+                real_feature = F.conv2d(self.real_B, self.weight1_1, padding=1)
+                conv_loss = self.criterionL1(fake_feature, real_feature)
+                self.loss_G_conv = conv_loss * self.opt.weight_conv
+                self.loss_G += self.loss_G_conv
+
+            if 'sobel' in self.opt.pattern:
+                real_sobels = self.sobel_conv(self.real_B)
+                fake_sobels = self.sobel_conv(self.fake_B)
+                sobel_loss = 0
+                for i in range(len(fake_sobels)):
+                    sobel_loss += self.criterionL1(fake_sobels[i], real_sobels[i].detach())
+                self.loss_G_sobel = sobel_loss * self.opt.weight_sobel
+                self.loss_G += self.loss_G_sobel
+
+            if self.use_classification_wrapper:
+                # part added for classification wrapper for generator
+                # Adding classification loss from the ModelLossWrapper
+                class_loss = self.model_wrapper.compute_loss(self.fake_B, self.image_paths, None, "generator")
+                self.loss_G += class_loss * self.opt.lambda_class  # lambda_class is a weighting factor for classification loss
+
+        self.scaler.scale(self.loss_G).backward(retain_graph=True)
 
 
-        self.loss_G.backward()
+
+    # def optimize_parameters(self, fixD=False):
+    #     self.forward()                   # compute fake images: G(A)
+    #     if 'noGAN' not in self.opt.pattern and not fixD:
+    #         # update D
+    #         self.set_requires_grad(self.netD, True)  # enable backprop for D
+    #         self.optimizer_D.zero_grad()     # set D's gradients to zero
+    #         self.backward_D()                # calculate gradients for D
+    #         self.optimizer_D.step()          # update D's weights
+    #     # update G
+    #     self.set_requires_grad(self.netD, False)  # D requires no gradients when optimizing G
+    #     self.optimizer_G.zero_grad()        # set G's gradients to zero
+    #     self.backward_G()                   # calculate graidents for G
+    #     self.optimizer_G.step()             # udpate G's weights
+
+    #     torch.cuda.empty_cache()  # Clear the cache after each optimization step
+
 
     def optimize_parameters(self, fixD=False):
-        self.forward()                   # compute fake images: G(A)
+        self.forward()  # compute fake images: G(A)
+        
         if 'noGAN' not in self.opt.pattern and not fixD:
             # update D
             self.set_requires_grad(self.netD, True)  # enable backprop for D
-            self.optimizer_D.zero_grad()     # set D's gradients to zero
-            self.backward_D()                # calculate gradients for D
-            self.optimizer_D.step()          # update D's weights
+            self.optimizer_D.zero_grad()  # set D's gradients to zero
+            with autocast():
+                self.backward_D()  # calculate gradients for D
+            self.scaler.scale(self.loss_D).backward(retain_graph=True)  # Retain graph for the generator's backward pass
+            
+            if (self.current_step + 1) % self.accumulation_steps == 0:
+                self.scaler.step(self.optimizer_D)  # update D's weights
+                self.scaler.update()
+            
         # update G
         self.set_requires_grad(self.netD, False)  # D requires no gradients when optimizing G
-        self.optimizer_G.zero_grad()        # set G's gradients to zero
-        self.backward_G()                   # calculate graidents for G
-        self.optimizer_G.step()             # udpate G's weights
+        self.optimizer_G.zero_grad()  # set G's gradients to zero
+        with autocast():
+            self.backward_G()  # calculate gradients for G
+        self.scaler.scale(self.loss_G).backward(retain_graph=True)  # No need to retain the graph here
+        
+        if (self.current_step + 1) % self.accumulation_steps == 0:
+            self.scaler.step(self.optimizer_G)  # update G's weights
+            self.scaler.update()
+        
+        # Increment the current step
+        self.current_step += 1
+
+        torch.cuda.empty_cache()  # Clear the cache after each optimization step
+
+
+

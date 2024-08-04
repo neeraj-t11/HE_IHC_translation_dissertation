@@ -3,7 +3,7 @@ import torch.nn.functional as F
 import re
 
 class ModelLossWrapper:
-    def __init__(self, model_path="../saved_models/resnet100", device='cuda'):
+    def __init__(self, model_path="../saved_models/efficientnet_b7_1.pth", device='cuda'):
         self.model = self.load_model(model_path)
         self.model = self.model.to(device)
         self.model.eval()
@@ -33,17 +33,25 @@ class ModelLossWrapper:
             return loss
         
         if usefor == "discriminator":
-            real_labels = torch.tensor([self.extract_label(path) for path in img_paths], device=self.device)
+            real_labels = torch.tensor([self.extract_label(path) for path in img_paths], dtype=torch.long, device=self.device)
             disc_predictions = disc_predictions.to(self.device)
             
-            loss = F.cross_entropy(disc_predictions, real_labels)
+            # Ensure disc_predictions is 2D with shape (batch_size, num_classes)
+            if disc_predictions.dim() == 4:  # If discriminator output is in the form of patches
+                disc_predictions = disc_predictions.mean(dim=[2, 3])  # Average the predictions over the spatial dimensions
+            
+            # Convert disc_predictions to binary labels
+            _, predicted_classes = torch.max(disc_predictions, dim=1)
+            predicted_binary = (predicted_classes == 3).long()  # Assuming class '3' is the '3+' class
+            
+            loss = F.cross_entropy(predicted_binary.unsqueeze(1).float(), real_labels.unsqueeze(1).float())
             return loss
 
 if __name__ == "__main__":
     # Check if CUDA is available, else use CPU
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
-    model_path = "saved_models/resnet100.pth"
+    model_path = "saved_models/efficientnet_b7_1.pth"
     wrapper = ModelLossWrapper(model_path, device=device)
 
     input_image = None
@@ -51,10 +59,3 @@ if __name__ == "__main__":
     disc_pred = None
     usefor = "generator"
     wrapper.compute_loss(input_image, img_paths, disc_pred ,usefor)
-
-# Simulate a training loop
-# gan_model = SomeGANModel()
-# for input_image in dataloader:
-#    loss = wrapper.integrate_loss(gan_model, input_image)
-#    loss.backward()
-#    optimizer.step()

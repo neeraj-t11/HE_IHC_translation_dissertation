@@ -6,10 +6,9 @@ from util.visualizer import Visualizer
 import torch
 import torch.optim as optim
 import torch.nn as nn
-
 import json
+from classifiers.binary_classifier_EfficientNet import IHCClassifier
 
-from classifiers.binary_classifier_resnet import IHCClassifier
 if __name__ == '__main__':
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
@@ -31,17 +30,17 @@ if __name__ == '__main__':
     total_iters = 0                # the total number of training iterations
     epoch_iter = 0 
     for epoch in range(opt.epoch_count, opt.n_epochs + opt.n_epochs_decay + 1):
+        iter_start_time = time.time()  # Initialize iter_start_time at the start of each epoch
         for i, data in enumerate(dataset):  # iterate over data
-            print('i: ',i, 'data: ', data)
             total_iters += opt.batch_size
             epoch_iter += opt.batch_size
 
             model.set_input(data)         # unpack data from the dataset and apply preprocessing
 
-            # Save the contents of 'data' variable to a text file
-            with open(f'data_iter_{total_iters}.txt', 'w') as outfile:
-                json.dump(data, outfile, default=str)
-            print(f"Data saved to data_iter_{total_iters}.txt")
+            # # Save the contents of 'data' variable to a text file
+            # with open(f'data_iter_{total_iters}.txt', 'w') as outfile:
+            #     json.dump(data, outfile, default=str)
+            # print(f"Data saved to data_iter_{total_iters}.txt")
 
             model.optimize_parameters()   # calculate loss functions, get gradients, update network weights
 
@@ -83,4 +82,4 @@ if __name__ == '__main__':
             model.save_networks('latest')
             model.save_networks(epoch)
 
-        print('End of epoch %d / %d \t Time Taken: %d sec' % (epoch, opt.n_epochs + opt.n_epochs_decay, time.time() - epoch_start_time))
+        print('End of epoch %d / %d \t Time Taken: %d sec' % (epoch, opt.n_epochs + opt.n_epochs_decay, time.time() - iter_start_time))
