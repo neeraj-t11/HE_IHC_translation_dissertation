@@ -8,7 +8,7 @@ import os
 
 import cv2
 import numpy as np
-from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
+from sklearn.metrics import confusion_matrix, accuracy_score, classification_report, balanced_accuracy_score
 
 def load_image(file_path):
     """ Load an image from disk. """
@@ -115,11 +115,12 @@ def train(model, dataloader, optimizer, criterion, device):
     torch.save(model, "./saved_models/densenet121_1")
     print(f"Training finished. Loss: {total_loss / len(dataloader)}")
 
-def test(model, dataloader, criterion, device):
+def test(model, dataloader, criterion, device, model_name, excel_path='model_performance.xlsx'):
     model.eval()
     total_loss = 0
     all_preds = []
     all_labels = []
+    
     with torch.no_grad():
         for images, labels in dataloader:
             images, labels = images.to(device), labels.to(device)
@@ -129,17 +130,46 @@ def test(model, dataloader, criterion, device):
             _, predicted = torch.max(outputs, 1)
             all_preds.extend(predicted.cpu().numpy())
             all_labels.extend(labels.cpu().numpy())
+    
+    all_preds = np.array(all_preds)
+    all_labels = np.array(all_labels)
+    
+    # Compute confusion matrix
+    cm = confusion_matrix(all_labels, all_preds)
     total_accuracy = accuracy_score(all_labels, all_preds) * 100
-    conf_matrix = confusion_matrix(all_labels, all_preds)
-    class_report = classification_report(all_labels, all_preds, output_dict=True)
-    class_accuracy = {str(k): v['precision'] for k, v in class_report.items() if k.isdigit()}
-    print(f"Testing finished. Loss: {total_loss / len(dataloader):.4f}, Total Accuracy: {total_accuracy:.2f}%")
+    balanced_accuracy = balanced_accuracy_score(all_labels, all_preds) * 100
+    
+    # Calculate accuracy for each class
+    class_accuracy = cm.diagonal() / cm.sum(axis=1) * 100
+    
+    # Prepare data for Excel
+    data = {
+        'Model': [model_name],
+        'Confusion Matrix': [cm.tolist()],
+        'Class Accuracy': [class_accuracy.tolist()],
+        'Total Accuracy': [total_accuracy],
+        'Balanced Accuracy': [balanced_accuracy]
+    }
+    df = pd.DataFrame(data)
+    
+    # Write or update Excel file
+    try:
+        existing_df = pd.read_excel(excel_path)
+        df = pd.concat([existing_df, df], ignore_index=True)
+    except FileNotFoundError:
+        pass
+    
+    df.to_excel(excel_path, index=False)
+    
+    print(f"Testing finished. Loss: {total_loss / len(dataloader):.4f}, Total Accuracy: {total_accuracy:.2f}%, Balanced Accuracy: {balanced_accuracy:.2f}%")
     print("Confusion Matrix:")
-    print(conf_matrix)
+    print(cm)
     print("Class-specific Accuracy:")
-    for cls, acc in class_accuracy.items():
-        print(f"Class {cls} Accuracy: {acc:.2f}")
+    for idx, acc in enumerate(class_accuracy):
+        print(f"Class {idx} Accuracy: {acc:.2f}%")
+
 
 if __name__ == "__main__":
     train(model, train_loader, optimizer, criterion, device)
-    test(model, test_loader, criterion, device)
+    test(model, test_loader, criterion, device, model_name='DenseNet121')
+

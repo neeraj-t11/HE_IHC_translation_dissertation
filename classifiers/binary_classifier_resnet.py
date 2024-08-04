@@ -9,7 +9,7 @@ import os
 
 import cv2
 import numpy as np
-from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
+from sklearn.metrics import confusion_matrix, accuracy_score, classification_report, balanced_accuracy_score, balanced_accuracy_score
 
 def load_image(file_path):
     """ Load an image from disk. """
