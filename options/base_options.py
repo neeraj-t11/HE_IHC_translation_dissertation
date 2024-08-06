@@ -54,9 +54,13 @@ class BaseOptions():
         parser.add_argument('--load_iter', type=int, default='0', help='which iteration to load? if load_iter > 0, the code will load models by iter_[load_iter]; otherwise, the code will load models by [epoch]')
         parser.add_argument('--verbose', action='store_true', help='if specified, print more debugging information')
         parser.add_argument('--suffix', default='', type=str, help='customized suffix: opt.name = opt.name + suffix: e.g., {model}_{netG}_size{load_size}')
-        # 模式选择
+    
         parser.add_argument('--pattern', type=str, default='L1_L2_L3_L4', help='L1 | L2 | L3 | L4 |')
 
+
+        parser.add_argument('--use_classification_wrapper', action='store_true', help='if specified, use the classification wrapper')
+        parser.add_argument('--accumulation_steps', type=int, default=4, help='number of gradient accumulation steps')
+        
         self.initialized = True
         return parser
 
