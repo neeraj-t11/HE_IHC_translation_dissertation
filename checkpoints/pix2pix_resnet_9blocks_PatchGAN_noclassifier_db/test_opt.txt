@@ -1,0 +1,42 @@
+----------------- Options ---------------
+       accumulation_steps: 4                             
+             aspect_ratio: 1.0                           
+               batch_size: 1                             	[default: 2]
+          checkpoints_dir: ./checkpoints                 
+                crop_size: 256                           
+                 dataroot: ./datasets/BCI                
+             dataset_mode: aligned                       
+                direction: AtoB                          
+          display_winsize: 256                           
+                    epoch: latest                        
+                     eval: False                         
+                  gpu_ids: 0                             
+                init_gain: 0.02                          
+                init_type: xavier                        	[default: normal]
+                 input_nc: 3                             
+                  isTrain: False                         	[default: None]
+                load_iter: 0                             	[default: 0]
+                load_size: 320                           
+         max_dataset_size: inf                           
+                    model: pix2pix                       
+               n_layers_D: 3                             
+                     name: pix2pix_resnet_9blocks_PatchGAN_noclassifier_db	[default: pyramidpix2pix]
+                      ndf: 64                            
+                     netD: basic                         
+                     netG: resnet_9blocks                
+                      ngf: 64                            
+               no_dropout: False                         
+                  no_flip: False                         
+                     norm: instance                      	[default: batch]
+                 num_test: 1000                          
+              num_threads: 8                             	[default: 4]
+                output_nc: 3                             
+                  pattern: L1_L2_L3_L4                   
+                    phase: test                          
+               preprocess: resize_and_crop               	[default: scale_width_and_midcrop]
+              results_dir: ./results/                    
+           serial_batches: False                         
+                   suffix:                               
+use_classification_wrapper: False                         
+                  verbose: False                         
+----------------- End -------------------
