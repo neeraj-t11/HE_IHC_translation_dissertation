@@ -11,6 +11,9 @@ import re
 from .classification_wrapper import ModelLossWrapper # line added for classification wrapper 
 from torch.cuda.amp import GradScaler, autocast
 
+import warnings
+# Suppress all warnings
+warnings.filterwarnings("ignore")
 
 
 def get_image_IHC_grade(filename):
@@ -54,6 +57,7 @@ class Pix2PixModel(BaseModel):
             parser.add_argument('--lambda_class', type=float, default=10.0, help='weight for the classification loss')      # line added for classification wrapper
             # parser.add_argument('--accumulation_steps', type=int, default=4, help='number of gradient accumulation steps')
             # parser.add_argument('--use_classification_wrapper', type=bool, default=True, help='if true use classification wrapper loss.')
+            parser.add_argument('--lambda_fm', type=float, default=25.0, help='weight for the feature matching loss')
 
         return parser
 
@@ -66,7 +70,7 @@ class Pix2PixModel(BaseModel):
         BaseModel.__init__(self, opt)
         self.use_classification_wrapper = opt.use_classification_wrapper
         if self.use_classification_wrapper: 
-            self.model_wrapper = ModelLossWrapper("./saved_models/efficientnet_b7_1", self.device)    # line added for classification wrapper
+            self.model_wrapper = ModelLossWrapper("./saved_models/regnet_y_400mf.pth", self.device)    # line added for classification wrapper
         self.scaler = GradScaler()                                                        # line added for mixed precision training
         self.current_step = 0                                                             # Initialize current_step
         self.accumulation_steps = opt.accumulation_steps                                  # Initialize accumulation_steps
@@ -374,6 +378,11 @@ class Pix2PixModel(BaseModel):
                 # Adding classification loss from the ModelLossWrapper
                 class_loss = self.model_wrapper.compute_loss(self.fake_B, self.image_paths, None, "generator")
                 self.loss_G += class_loss * self.opt.lambda_class  # lambda_class is a weighting factor for classification loss
+
+                # Feature Matching Loss
+                feature_matching_loss = self.model_wrapper.compute_feature_matching_loss(self.real_B, self.fake_B)
+                self.loss_G += feature_matching_loss * self.opt.lambda_fm  # lambda_class is a weighting factor for Feature Matching loss
+
 
         self.scaler.scale(self.loss_G).backward(retain_graph=True)
 
