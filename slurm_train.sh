@@ -23,11 +23,12 @@ python train.py \
   --dataroot ./datasets/BCI \
   --pattern L1_L2_L3_L4 \
   --model pix2pix \
-  --name pix2pix_resnet_9blocks_PatchGAN_noclassifier_db \
+  --name pix2pix_resnet_9blocks_PatchGAN_classifierfm_db \
   --batch_size 1 \
   --init_type xavier \
   --num_threads 8 \
   --norm instance \
   --preprocess resize_and_crop \
-  --use_classification_wrapper False
+  --use_classification_wrapper
    # --netG attention_unet_32 \
+   
