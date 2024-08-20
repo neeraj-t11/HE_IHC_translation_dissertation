@@ -54,10 +54,10 @@ class Pix2PixModel(BaseModel):
         if is_train:
             parser.set_defaults(pool_size=0, gan_mode='vanilla')
             parser.add_argument('--lambda_L1', type=float, default=25.0, help='weight for L1 loss')
-            parser.add_argument('--lambda_class', type=float, default=10.0, help='weight for the classification loss')      # line added for classification wrapper
+            parser.add_argument('--lambda_class', type=float, default=20.0, help='weight for the classification loss')      # line added for classification wrapper
             # parser.add_argument('--accumulation_steps', type=int, default=4, help='number of gradient accumulation steps')
             # parser.add_argument('--use_classification_wrapper', type=bool, default=True, help='if true use classification wrapper loss.')
-            parser.add_argument('--lambda_fm', type=float, default=25.0, help='weight for the feature matching loss')
+            parser.add_argument('--lambda_fm', type=float, default=30.0, help='weight for the feature matching loss')
 
         return parser
 
@@ -269,7 +269,8 @@ class Pix2PixModel(BaseModel):
                 if self.use_classification_wrapper:
                     # part added for classification wrapper for discriminator
                     class_loss = self.model_wrapper.compute_loss(None, self.image_paths, pred_real, "discriminator")
-                    self.loss_D += class_loss * self.opt.lambda_class  # lambda_class is a weighting factor for classification loss
+                    # self.loss_D += class_loss * self.opt.lambda_class  # lambda_class is a weighting factor for classification loss
+                    self.loss_D += class_loss * 50.0  # lambda_class is a weighting factor for classification loss
 
         self.scaler.scale(self.loss_D).backward(retain_graph=True)
 
@@ -380,7 +381,7 @@ class Pix2PixModel(BaseModel):
                 self.loss_G += class_loss * self.opt.lambda_class  # lambda_class is a weighting factor for classification loss
 
                 # Feature Matching Loss
-                feature_matching_loss = self.model_wrapper.compute_feature_matching_loss(self.real_B, self.fake_B)
+                feature_matching_loss = self.model_wrapper.compute_feature_matching_loss(self.real_B, self.fake_B, class_loss)
                 self.loss_G += feature_matching_loss * self.opt.lambda_fm  # lambda_class is a weighting factor for Feature Matching loss
 
 

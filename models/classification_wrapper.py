@@ -21,7 +21,6 @@ class RegNetFeatureExtractor(nn.Module):
             x = layer(x)
             if name in self.feature_layers:
                 features.append(x)
-                # print(f"Layer {name} output shape: {x.shape}")
 
         # Flatten the output of the last layer ('avgpool')
         x = torch.flatten(x, 1)  # Flatten to (batch_size, num_features)
@@ -38,6 +37,18 @@ class ModelLossWrapper:
         # Initialize the RegNet feature extractor
         self.feature_extractor = RegNetFeatureExtractor().to(device)
         self.feature_extractor.eval()
+
+        # Initialize weights for feature layers
+        self.feature_weights = nn.Parameter(torch.ones(len(self.feature_extractor.feature_layers), device=self.device))
+
+        # Parameters for Adaptive Learning Rate Adjustment
+        self.alpha = 0.01  # Learning rate for the weight updates
+        self.beta1 = 0.9   # Decay rate for the first moment
+        self.beta2 = 0.999  # Decay rate for the second moment
+        self.epsilon = 1e-8 # Small constant to prevent division by zero
+        self.m_t = torch.zeros_like(self.feature_weights, device=self.device)
+        self.v_t = torch.zeros_like(self.feature_weights, device=self.device)
+        self.t = 0
 
     def load_model(self, model_path):
         """Load and return the entire model."""
@@ -77,27 +88,65 @@ class ModelLossWrapper:
             loss = F.cross_entropy(predicted_binary.unsqueeze(1).float(), real_labels.unsqueeze(1).float())
             return loss
 
-    def compute_feature_matching_loss(self, real_images, fake_images):
+
+
+    def compute_feature_matching_loss(self, real_images, fake_images, class_loss):
         # Extract features
         real_features, _ = self.feature_extractor(real_images)
         fake_features, _ = self.feature_extractor(fake_images)
         
         # Initialize loss
         loss = 0.0
+        self.t += 1  # Time step for adaptive learning rate
         
         # Iterate over the selected feature maps
-        for real_feat, fake_feat in zip(real_features, fake_features):
+        for idx, (real_feat, fake_feat) in enumerate(zip(real_features, fake_features)):
             # Ensure both features have the same shape
             if real_feat.shape != fake_feat.shape:
                 raise ValueError(f"Shape mismatch: {real_feat.shape} vs {fake_feat.shape}")
             
             # Compute L1 loss between real and fake features
-            loss += F.l1_loss(fake_feat, real_feat.detach())
+            layer_loss = F.l1_loss(fake_feat, real_feat.detach())
+            
+            # Normalize the layer loss
+            normalized_layer_loss = layer_loss / (torch.norm(layer_loss) + self.epsilon)
+            
+            # Calculate gradients for the adaptive learning rate
+            g_t = normalized_layer_loss.detach()
+
+            # Update biased first moment estimate
+            self.m_t[idx] = self.beta1 * self.m_t[idx] + (1 - self.beta1) * g_t
+            # Update biased second moment estimate
+            self.v_t[idx] = self.beta2 * self.v_t[idx] + (1 - self.beta2) * (g_t ** 2)
+
+            # Bias-corrected first and second moment estimates
+            m_hat = self.m_t[idx] / (1 - self.beta1 ** self.t)
+            v_hat = self.v_t[idx] / (1 - self.beta2 ** self.t)
+
+            # Adaptive learning rate adjustment
+            adaptive_lr = self.alpha / (torch.sqrt(v_hat) + self.epsilon)
+
+            # Calculate the new weight without reassigning it to feature_weights
+            new_weight = self.feature_weights[idx] + adaptive_lr * m_hat
+
+            # classification loss adaptive weighting
+            classification_weight = 1 / (class_loss + self.epsilon)
+
+            # Apply the new weight to this layer's loss
+            weighted_loss = new_weight * normalized_layer_loss * classification_weight
+            
+            loss += weighted_loss
+        
+        # Normalize the weights (optional, but can help stabilize training)
+        with torch.no_grad():
+            self.feature_weights /= self.feature_weights.sum()
         
         # Average the loss over the number of feature maps
         loss /= len(real_features)
         
         return loss
+
+
 
 if __name__ == "__main__":
     # Check if CUDA is available, else use CPU
