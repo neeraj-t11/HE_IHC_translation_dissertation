@@ -232,9 +232,17 @@ def review_image_pairs(he_dir, ihc_dir, output_excel):
     root.mainloop()
 
 # Directories and output file
-he_dir = 'datasets/BCI/A/train'
-ihc_dir = 'datasets/BCI/B/train'
-output_excel = 'data_preprocessing/train_image_pair_status.xlsx'
+# he_dir = 'datasets/BCI/A/train'
+# ihc_dir = 'datasets/BCI/B/train'
+# output_excel = 'data_preprocessing/train_image_pair_status.xlsx'
+
+# # Start reviewing
+# review_image_pairs(he_dir, ihc_dir, output_excel)
+
+
+he_dir = 'datasets/BCI/A/test'
+ihc_dir = 'datasets/BCI/B/test'
+output_excel = 'data_preprocessing/test_image_pair_status.xlsx'
 
 # Start reviewing
 review_image_pairs(he_dir, ihc_dir, output_excel)
